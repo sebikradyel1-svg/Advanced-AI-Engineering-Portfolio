@@ -1,0 +1,12 @@
+{
+  "project_name": "animals",
+  "num_classes": 5,
+  "class_names": [
+    "caine",
+    "cal",
+    "iepure",
+    "pasare",
+    "pisica"
+  ],
+  "img_size": 224
+}
