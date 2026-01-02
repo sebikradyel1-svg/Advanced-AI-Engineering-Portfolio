@@ -27,8 +27,12 @@ This repository contains production-ready Python scripts focusing on the latest 
 - Neural Network Architecture (Transformers)
 - Production-level Python Coding
 
+![RAG Architecture](./images/Rag%20Architecture.png)
+![Transfer Learning](./images/2_transfer_learning_comparison.png)
+![Transformer Encoder](./images/Transformes_encoder.png)
+![RLHF Pipeline](./images/RLHF%20Pipeline.png)
 ---
 
 ## 📫 Connect with me:
-- **LinkedIn:** www.linkedin.com/in/paul-sebastian-kradyel-6849b8338
+- **LinkedIn:** www.linkedin.com/in/paul-sebastian-kradyel
 - **Email:** paulsebastiankradyel@gmail.com
