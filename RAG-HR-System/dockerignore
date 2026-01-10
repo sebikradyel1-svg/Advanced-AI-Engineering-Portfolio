@@ -1,0 +1,96 @@
+# ==============================================================================
+# .dockerignore - Files excluded from Docker build
+# ==============================================================================
+# INSTRUCTIONS:
+# 1. Rename this file to ".dockerignore" (with the dot at the beginning)
+# 2. Place in your project root folder (same folder as Dockerfile)
+# ==============================================================================
+
+# GIT
+.git
+.gitignore
+.gitattributes
+
+# PYTHON CACHE
+__pycache__
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# VIRTUAL ENVIRONMENTS
+venv/
+env/
+.venv/
+.env/
+ENV/
+
+# IDE & EDITORS
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# JUPYTER CHECKPOINTS
+.ipynb_checkpoints/
+*-checkpoint.ipynb
+
+# TESTING
+.pytest_cache/
+.coverage
+htmlcov/
+
+# BUILD & DISTRIBUTION
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# DOCKER
+Dockerfile*
+docker-compose*.yml
+.docker/
+
+# SECRETS - IMPORTANT!
+.env
+.env.*
+*.env
+secrets/
+*.pem
+*.key
+
+# DATA FILES (mount as volumes instead)
+data/
+*.csv
+*.parquet
+*.h5
+*.pkl
+!data/sample/
+
+# TRAINED MODELS (too large)
+models/
+*.pt
+*.pth
+*.onnx
+*.bin
+checkpoints/
+
+# LOGS & OUTPUTS
+logs/
+*.log
+outputs/
+results/
+wandb/
+mlruns/
+
+# DOCUMENTATION
+docs/
+*.md
+!README.md
+
+# MISC
+*.bak
+*.tmp
+.DS_Store
+Thumbs.db
