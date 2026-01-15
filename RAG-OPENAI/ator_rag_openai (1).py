@@ -18,25 +18,6 @@ from langchain.chains import ConversationalRetrievalChain
 from langchain.chat_models import ChatOpenAI
 from langchain.prompts import PromptTemplate
 
-# =====================================================================
-# 🔒 SECURITATE API KEY - API KEY SECURITY
-# =====================================================================
-# NU MAI EXISTĂ API KEY HARDCODAT ÎN COD!
-# NO MORE HARDCODED API KEY IN CODE!
-#
-# API key-ul se încarcă automat din:
-# The API key is automatically loaded from:
-#
-# 1. Variabilă de mediu (recomandat / recommended):
-#    export OPENAI_API_KEY="sk-..."
-#
-# 2. Fișier .env (pentru dezvoltare locală / for local development):
-#    OPENAI_API_KEY=sk-...
-#
-# IMPORTANT: .env este în .gitignore și NU se urcă pe GitHub!
-# IMPORTANT: .env is in .gitignore and is NOT uploaded to GitHub!
-# =====================================================================
-
 # Încarcă variabilele din .env dacă există
 # Load variables from .env if it exists
 try:
