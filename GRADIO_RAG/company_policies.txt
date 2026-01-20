@@ -1,0 +1,677 @@
+================================================================================
+                        TECHCORP SOLUTIONS INC.
+                    EMPLOYEE HANDBOOK & HR POLICIES
+                           Effective: January 2025
+================================================================================
+
+TABLE OF CONTENTS
+1. Time Off & Leave Policies
+2. Remote Work & Flexible Schedules
+3. Compensation & Benefits
+4. Performance Management
+5. Code of Conduct & Ethics
+6. Health & Safety
+7. IT & Security Policies
+8. Training & Development
+9. Grievance & Complaint Procedures
+10. Termination & Offboarding
+
+================================================================================
+                    SECTION 1: TIME OFF & LEAVE POLICIES
+================================================================================
+
+1.1 PAID TIME OFF (PTO)
+-----------------------
+All full-time employees are entitled to paid time off based on their tenure:
+- 0-2 years of service: 15 days per year (1.25 days per month)
+- 3-5 years of service: 20 days per year (1.67 days per month)
+- 6-10 years of service: 25 days per year (2.08 days per month)
+- 10+ years of service: 30 days per year (2.5 days per month)
+
+PTO accrues on the first day of each month. Unused PTO can be carried over to 
+the next year, up to a maximum of 10 days. Any PTO beyond 10 days will be 
+forfeited on December 31st unless approved by HR for special circumstances.
+
+Part-time employees receive prorated PTO based on their scheduled hours.
+
+1.2 HOW TO REQUEST TIME OFF
+---------------------------
+To request time off, employees must:
+1. Submit a request through the HR Portal (hr.techcorp.com) at least 2 weeks 
+   in advance for planned vacations
+2. For urgent requests (less than 2 weeks), email your direct manager and CC 
+   hr@techcorp.com
+3. Wait for approval before making travel arrangements
+4. Requests during peak business periods (Q4, product launches) may be limited
+
+Emergency time off: In case of emergencies, notify your manager as soon as 
+possible via phone or text, then submit the formal request within 24 hours.
+
+1.3 SICK LEAVE
+--------------
+Employees receive 10 paid sick days per year, separate from PTO. Sick leave 
+can be used for:
+- Personal illness or injury
+- Medical appointments (doctor, dentist, specialist)
+- Caring for an immediate family member who is ill
+- Mental health days
+
+If you are sick for more than 3 consecutive days, you must provide a doctor's 
+note upon return. Unused sick days do not carry over and are not paid out upon 
+termination.
+
+1.4 PARENTAL LEAVE
+------------------
+TechCorp offers comprehensive parental leave:
+
+Primary Caregiver (birth/adoption):
+- 16 weeks fully paid leave
+- Can be taken consecutively or split within the first year
+- Additional 4 weeks at 60% pay if needed
+
+Secondary Caregiver:
+- 6 weeks fully paid leave
+- Must be taken within 6 months of birth/adoption
+
+Adoption & Foster Care:
+- Same benefits as biological parents
+- Additional 5 days paid leave for legal proceedings
+
+To apply: Submit parental leave request to HR at least 8 weeks before expected 
+leave date (or as soon as possible for adoption).
+
+1.5 BEREAVEMENT LEAVE
+---------------------
+Paid bereavement leave is provided as follows:
+- Immediate family (spouse, child, parent, sibling): 5 days
+- Extended family (grandparent, in-law, aunt, uncle): 3 days
+- Close friend or colleague: 1 day
+
+Additional unpaid leave may be approved upon request.
+
+1.6 JURY DUTY & VOTING
+----------------------
+Employees called for jury duty will receive full pay for up to 10 days. Provide 
+your jury summons to HR. If jury duty extends beyond 10 days, contact HR to 
+discuss options.
+
+For voting, employees may take up to 2 hours paid time off on election days if 
+their work schedule does not allow sufficient time to vote.
+
+1.7 HOLIDAYS
+------------
+TechCorp observes the following paid holidays:
+- New Year's Day (January 1)
+- Martin Luther King Jr. Day (Third Monday of January)
+- Presidents' Day (Third Monday of February)
+- Memorial Day (Last Monday of May)
+- Independence Day (July 4)
+- Labor Day (First Monday of September)
+- Thanksgiving Day (Fourth Thursday of November)
+- Day after Thanksgiving
+- Christmas Eve (December 24)
+- Christmas Day (December 25)
+- New Year's Eve (December 31)
+
+Floating Holidays: Employees also receive 2 floating holidays per year to use 
+for religious observances, cultural celebrations, or personal occasions.
+
+================================================================================
+                 SECTION 2: REMOTE WORK & FLEXIBLE SCHEDULES
+================================================================================
+
+2.1 REMOTE WORK POLICY
+----------------------
+TechCorp supports a hybrid work model. Eligible employees may work remotely 
+up to 3 days per week, subject to manager approval and role requirements.
+
+Eligibility Requirements:
+- Completed probationary period (90 days)
+- Demonstrated ability to work independently
+- Role does not require physical presence
+- Satisfactory performance reviews
+
+Remote Work Guidelines:
+- Maintain a dedicated, quiet workspace
+- Ensure reliable internet connection (minimum 50 Mbps)
+- Be available during core hours (10 AM - 3 PM local time)
+- Attend all required in-person meetings and events
+- Use company-approved VPN for all work activities
+- Keep your calendar updated with your location
+
+2.2 FLEXIBLE SCHEDULES
+----------------------
+Employees may request flexible schedules, including:
+- Compressed work week (4 x 10-hour days)
+- Adjusted start/end times (e.g., 7 AM - 3 PM instead of 9 AM - 5 PM)
+- Part-time arrangements
+
+All flexible schedule requests must be approved by your manager and HR. 
+Requests should be submitted through the HR Portal.
+
+2.3 CORE HOURS
+--------------
+Regardless of flexible arrangements, all employees must be available during 
+core hours: 10:00 AM to 3:00 PM in their local time zone. This ensures 
+overlap for team collaboration and meetings.
+
+2.4 HOME OFFICE STIPEND
+-----------------------
+Remote and hybrid employees are eligible for a one-time home office setup 
+stipend of $500 and a monthly internet/utilities stipend of $75.
+
+To claim: Submit receipts through the expense system within 30 days of purchase.
+
+================================================================================
+                   SECTION 3: COMPENSATION & BENEFITS
+================================================================================
+
+3.1 PAY SCHEDULE
+----------------
+Employees are paid bi-weekly on Fridays. If payday falls on a holiday, payment 
+will be processed on the preceding business day.
+
+Direct deposit is required for all employees. Update your banking information 
+through the HR Portal under "Payroll Settings."
+
+3.2 SALARY REVIEWS
+------------------
+Salary reviews occur annually in March, following the performance review cycle. 
+Factors considered include:
+- Individual performance ratings
+- Market compensation data
+- Company financial performance
+- Internal equity
+
+Off-cycle salary adjustments may occur for promotions, significant role changes, 
+or retention purposes.
+
+3.3 HEALTH INSURANCE
+--------------------
+TechCorp offers comprehensive health insurance through BlueCross BlueShield:
+
+Plans Available:
+- PPO Plan: Higher premiums, lower deductibles, wider network
+- HDHP Plan: Lower premiums, higher deductibles, HSA eligible
+
+Coverage begins on the first day of the month following your start date.
+
+Employee Contributions (monthly):
+- Employee only: $150 (PPO) / $75 (HDHP)
+- Employee + Spouse: $350 (PPO) / $175 (HDHP)
+- Employee + Children: $300 (PPO) / $150 (HDHP)
+- Family: $500 (PPO) / $250 (HDHP)
+
+3.4 DENTAL & VISION
+-------------------
+Dental Insurance (Delta Dental):
+- Preventive care: 100% covered
+- Basic procedures: 80% covered
+- Major procedures: 50% covered
+- Annual maximum: $2,000
+
+Vision Insurance (VSP):
+- Annual eye exam: $10 copay
+- Frames: $150 allowance every 2 years
+- Lenses: $25 copay
+- Contact lenses: $150 allowance annually
+
+3.5 RETIREMENT BENEFITS (401K)
+------------------------------
+TechCorp offers a 401(k) retirement plan with company matching:
+- Company matches 100% of contributions up to 4% of salary
+- Additional 50% match on contributions between 4-6%
+- Vesting schedule: 25% per year, fully vested after 4 years
+
+Example: If you earn $100,000 and contribute 6%:
+- Your contribution: $6,000
+- Company match: $4,000 (100% of first 4%) + $1,000 (50% of next 2%) = $5,000
+- Total annual contribution: $11,000
+
+Employees can enroll or change contributions at any time through Fidelity.
+
+3.6 LIFE & DISABILITY INSURANCE
+-------------------------------
+Life Insurance:
+- Basic life: 2x annual salary (company paid)
+- Supplemental life: Available for purchase up to 5x salary
+
+Disability Insurance:
+- Short-term disability: 60% of salary for up to 12 weeks
+- Long-term disability: 60% of salary after 12 weeks (company paid)
+
+3.7 OTHER BENEFITS
+------------------
+- Employee Assistance Program (EAP): Free confidential counseling
+- Gym membership reimbursement: Up to $50/month
+- Professional development: $2,000 annual learning budget
+- Commuter benefits: Pre-tax transit and parking
+- Employee stock purchase plan: 15% discount on company stock
+- Tuition reimbursement: Up to $5,250/year for approved programs
+
+================================================================================
+                    SECTION 4: PERFORMANCE MANAGEMENT
+================================================================================
+
+4.1 PERFORMANCE REVIEW CYCLE
+----------------------------
+TechCorp conducts formal performance reviews twice per year:
+- Mid-year review: July (feedback and development focused)
+- Annual review: January (comprehensive evaluation, tied to compensation)
+
+Additionally, managers should provide continuous feedback through regular 
+1-on-1 meetings (recommended weekly or bi-weekly).
+
+4.2 PERFORMANCE RATINGS
+-----------------------
+Employees are rated on a 5-point scale:
+
+5 - Exceptional: Consistently exceeds all expectations, role model
+4 - Exceeds Expectations: Regularly exceeds goals, strong contributor
+3 - Meets Expectations: Consistently meets all job requirements
+2 - Needs Improvement: Sometimes falls short, requires development
+1 - Unsatisfactory: Consistently fails to meet expectations
+
+Ratings of 2 or below trigger a Performance Improvement Plan (PIP).
+
+4.3 GOAL SETTING
+----------------
+All employees must have documented goals using the SMART framework:
+- Specific: Clear and well-defined
+- Measurable: Quantifiable success criteria
+- Achievable: Realistic given resources and constraints
+- Relevant: Aligned with team and company objectives
+- Time-bound: Clear deadlines
+
+Goals should be set within the first 30 days of each review period and 
+documented in the performance management system.
+
+4.4 PERFORMANCE IMPROVEMENT PLANS (PIP)
+---------------------------------------
+If an employee's performance falls below expectations, a PIP may be initiated:
+
+Duration: Typically 30-90 days depending on the issues identified
+
+PIP Components:
+- Specific performance gaps identified
+- Clear expectations and success metrics
+- Resources and support provided
+- Check-in schedule (usually weekly)
+- Consequences if improvement is not achieved
+
+Successful completion of a PIP removes the employee from the improvement 
+process. Failure to meet PIP requirements may result in termination.
+
+4.5 PROMOTIONS
+--------------
+Promotions are based on:
+- Consistent high performance (rating of 4 or above)
+- Demonstration of next-level competencies
+- Business need and headcount availability
+- Manager recommendation and skip-level approval
+
+To be considered for promotion, discuss your career goals with your manager 
+during 1-on-1s and ensure your achievements are documented.
+
+================================================================================
+                    SECTION 5: CODE OF CONDUCT & ETHICS
+================================================================================
+
+5.1 PROFESSIONAL CONDUCT
+------------------------
+All employees are expected to:
+- Treat colleagues, customers, and partners with respect
+- Communicate professionally in all interactions
+- Maintain confidentiality of sensitive information
+- Avoid conflicts of interest
+- Report concerns through appropriate channels
+
+5.2 ANTI-HARASSMENT POLICY
+--------------------------
+TechCorp has zero tolerance for harassment of any kind, including:
+- Sexual harassment
+- Discrimination based on race, gender, age, religion, disability, or any 
+  protected characteristic
+- Bullying or intimidation
+- Retaliation against those who report concerns
+
+All harassment complaints will be investigated promptly and confidentially. 
+Substantiated claims will result in disciplinary action up to and including 
+termination.
+
+To report harassment: Contact HR directly, use the anonymous ethics hotline 
+(1-800-555-ETHICS), or report through the HR Portal.
+
+5.3 CONFLICTS OF INTEREST
+-------------------------
+Employees must avoid situations where personal interests conflict with company 
+interests. Examples include:
+- Having a financial interest in a competitor or vendor
+- Hiring or supervising relatives
+- Accepting gifts over $100 from vendors or customers
+- Outside employment that interferes with job duties
+
+Disclose any potential conflicts to your manager and HR immediately.
+
+5.4 CONFIDENTIALITY
+-------------------
+Employees have access to confidential information including:
+- Trade secrets and intellectual property
+- Customer data and contracts
+- Financial information
+- Employee personal information
+
+This information must not be shared with unauthorized parties, even after 
+employment ends. Violations may result in termination and legal action.
+
+5.5 SOCIAL MEDIA POLICY
+-----------------------
+When using social media:
+- Do not share confidential company information
+- Clearly state opinions are your own, not the company's
+- Do not disparage colleagues, customers, or competitors
+- Follow all applicable laws and regulations
+
+================================================================================
+                      SECTION 6: HEALTH & SAFETY
+================================================================================
+
+6.1 WORKPLACE SAFETY
+--------------------
+TechCorp is committed to providing a safe work environment. Employees must:
+- Report all injuries, accidents, or near-misses immediately
+- Follow all safety protocols and procedures
+- Use required protective equipment
+- Keep work areas clean and free of hazards
+- Know emergency exit locations and procedures
+
+6.2 EMERGENCY PROCEDURES
+------------------------
+In case of emergency:
+- Fire: Evacuate immediately using nearest exit, meet at designated assembly 
+  point, do not use elevators
+- Medical emergency: Call 911, then notify security at ext. 5555
+- Severe weather: Move to interior rooms away from windows
+- Active threat: Run, Hide, Fight (in that order)
+
+Emergency contact numbers are posted in all common areas.
+
+6.3 ERGONOMICS
+--------------
+To prevent repetitive strain injuries:
+- Adjust your chair so feet are flat on the floor
+- Position monitor at arm's length, top of screen at eye level
+- Keep wrists straight when typing
+- Take regular breaks (5 minutes every hour)
+
+Request an ergonomic assessment through HR if you experience discomfort.
+
+6.4 MENTAL HEALTH SUPPORT
+-------------------------
+TechCorp recognizes the importance of mental health. Resources available:
+- Employee Assistance Program (EAP): 8 free counseling sessions per year
+- Mental health days: Use sick leave for mental health needs
+- Meditation app subscription (Calm or Headspace)
+- Manager training on recognizing and supporting mental health
+
+If you're struggling, please reach out to HR or the EAP. All conversations 
+are confidential.
+
+================================================================================
+                     SECTION 7: IT & SECURITY POLICIES
+================================================================================
+
+7.1 ACCEPTABLE USE
+------------------
+Company technology resources (computers, phones, internet) are provided for 
+business purposes. Limited personal use is acceptable if it:
+- Does not interfere with job duties
+- Does not consume excessive resources
+- Complies with all other policies
+
+Prohibited activities include:
+- Accessing inappropriate or illegal content
+- Installing unauthorized software
+- Sharing passwords or login credentials
+- Using company resources for personal business ventures
+
+7.2 PASSWORD POLICY
+-------------------
+All passwords must:
+- Be at least 12 characters long
+- Include uppercase, lowercase, numbers, and symbols
+- Be changed every 90 days
+- Not be reused for 12 generations
+- Not be shared with anyone, including IT
+
+Use the company password manager (LastPass) for secure storage.
+
+7.3 DATA PROTECTION
+-------------------
+Employees handling personal data must:
+- Access only data necessary for job duties
+- Store data only in approved systems
+- Never transfer data to personal devices or accounts
+- Report any data breaches immediately to IT Security
+
+Violations of data protection policies may result in disciplinary action and 
+legal consequences.
+
+7.4 BRING YOUR OWN DEVICE (BYOD)
+--------------------------------
+Personal devices may be used for work with IT approval. Requirements:
+- Device must have current security updates
+- Company MDM software must be installed
+- Device can be remotely wiped if lost or upon termination
+- Work data must be kept separate from personal data
+
+Submit a BYOD request through the IT Portal for approval.
+
+7.5 INCIDENT REPORTING
+----------------------
+Report security incidents immediately:
+- Email: security@techcorp.com
+- Phone: IT Helpdesk ext. 4357
+- After hours: Security hotline 1-800-555-HELP
+
+Incidents include: phishing attempts, malware, unauthorized access, lost/stolen 
+devices, and suspicious activity.
+
+================================================================================
+                   SECTION 8: TRAINING & DEVELOPMENT
+================================================================================
+
+8.1 ONBOARDING
+--------------
+New employees complete a comprehensive onboarding program:
+
+Week 1:
+- Company overview and culture
+- HR policies and benefits enrollment
+- IT setup and security training
+- Meet your team
+
+Weeks 2-4:
+- Role-specific training
+- Buddy program pairing
+- Initial goal setting with manager
+
+90-Day Check-in:
+- Formal review of onboarding experience
+- Performance expectations discussion
+- End of probationary period evaluation
+
+8.2 REQUIRED TRAINING
+---------------------
+All employees must complete annually:
+- Security awareness training (2 hours)
+- Anti-harassment training (1 hour)
+- Data privacy training (1 hour)
+- Ethics and compliance training (1 hour)
+
+Managers must additionally complete:
+- Leadership fundamentals (4 hours)
+- Performance management training (2 hours)
+- Inclusive leadership (2 hours)
+
+8.3 PROFESSIONAL DEVELOPMENT BUDGET
+-----------------------------------
+Each employee receives $2,000 annually for professional development:
+
+Eligible expenses:
+- Conferences and seminars
+- Online courses and certifications
+- Books and learning materials
+- Professional membership fees
+
+To use: Submit a development request through the HR Portal for manager approval 
+before incurring expenses.
+
+8.4 TUITION REIMBURSEMENT
+-------------------------
+Employees pursuing degrees related to their role may receive up to $5,250/year:
+
+Eligibility:
+- Employed for at least 1 year
+- Course is job-related or part of approved degree program
+- Grade of B or higher (or pass for pass/fail courses)
+
+Process:
+1. Submit tuition reimbursement application before starting course
+2. Receive pre-approval from HR and manager
+3. Complete course and submit transcript
+4. Receive reimbursement within 30 days
+
+Note: Employees must remain employed for 1 year after receiving reimbursement 
+or repay the amount on a prorated basis.
+
+8.5 INTERNAL MOBILITY
+---------------------
+TechCorp encourages internal career growth. To apply for internal positions:
+- Meet minimum qualifications listed
+- Be in current role for at least 12 months
+- Have satisfactory performance (rating 3 or above)
+- Discuss with current manager before applying
+
+Internal candidates receive priority consideration for open positions.
+
+================================================================================
+               SECTION 9: GRIEVANCE & COMPLAINT PROCEDURES
+================================================================================
+
+9.1 OPEN DOOR POLICY
+--------------------
+TechCorp maintains an open door policy. Employees are encouraged to discuss 
+concerns with their manager first. If uncomfortable doing so, employees may 
+contact:
+- Skip-level manager
+- Human Resources
+- Anonymous ethics hotline
+
+9.2 FORMAL GRIEVANCE PROCESS
+----------------------------
+For formal complaints:
+
+Step 1: Submit written complaint to HR within 30 days of incident
+Step 2: HR acknowledges receipt within 2 business days
+Step 3: HR investigates (typically 10-15 business days)
+Step 4: HR communicates findings and resolution
+Step 5: Appeal to VP of HR if unsatisfied (within 5 business days)
+
+All grievances are handled confidentially to the extent possible.
+
+9.3 NON-RETALIATION
+-------------------
+Retaliation against employees who report concerns in good faith is strictly 
+prohibited. Retaliation includes:
+- Termination or demotion
+- Reduction in pay or hours
+- Negative performance reviews as punishment
+- Harassment or exclusion
+
+Report any suspected retaliation to HR immediately.
+
+9.4 WHISTLEBLOWER PROTECTION
+----------------------------
+Employees who report illegal activity or serious policy violations are 
+protected under company policy and applicable laws. Reports can be made to:
+- Direct supervisor
+- Human Resources
+- Legal department
+- Anonymous ethics hotline: 1-800-555-ETHICS
+
+================================================================================
+                  SECTION 10: TERMINATION & OFFBOARDING
+================================================================================
+
+10.1 VOLUNTARY RESIGNATION
+--------------------------
+Employees wishing to resign should:
+- Provide written notice to manager (2 weeks minimum, 4 weeks for managers)
+- Complete exit interview with HR
+- Return all company property on last day
+- Ensure knowledge transfer to colleagues
+
+Failure to provide adequate notice may affect rehire eligibility and final 
+pay timing.
+
+10.2 INVOLUNTARY TERMINATION
+----------------------------
+Employment may be terminated for:
+- Performance issues (after PIP process)
+- Policy violations
+- Misconduct
+- Position elimination
+- Business restructuring
+
+Employees will receive:
+- Explanation of termination reason
+- Final paycheck including accrued PTO
+- COBRA information for benefits continuation
+- Severance (if applicable, based on tenure and circumstances)
+
+10.3 OFFBOARDING CHECKLIST
+--------------------------
+On your last day:
+□ Return laptop, phone, and all equipment
+□ Return ID badge and parking pass
+□ Remove personal belongings from office/desk
+□ Transfer files and knowledge to designated colleague
+□ Complete exit interview with HR
+□ Update personal contact information for tax documents
+
+10.4 REFERENCES
+---------------
+TechCorp provides employment verification only (dates of employment, title). 
+Personal references from colleagues are at their individual discretion.
+
+10.5 REHIRE POLICY
+------------------
+Former employees may be eligible for rehire if:
+- Left in good standing
+- Provided adequate notice
+- No policy violations on record
+- Position is available
+
+Apply through the standard hiring process. Previous tenure may be considered 
+for benefits purposes.
+
+================================================================================
+                           ACKNOWLEDGMENT
+================================================================================
+
+This handbook is not a contract of employment. TechCorp reserves the right to 
+modify policies at any time. Employees will be notified of significant changes.
+
+For questions about any policy, contact Human Resources:
+- Email: hr@techcorp.com
+- Phone: (555) 123-4567
+- HR Portal: hr.techcorp.com
+- Office: Building A, Suite 100
+
+Last Updated: January 2025
+Version: 3.2
+
+================================================================================
+                    END OF EMPLOYEE HANDBOOK
+================================================================================
