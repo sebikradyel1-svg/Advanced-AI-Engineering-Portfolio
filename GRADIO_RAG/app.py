@@ -54,7 +54,7 @@ class RAGConfig:
     chunk_overlap: int = 50
     embeddings_model: str = "sentence-transformers/all-MiniLM-L6-v2"
     # Folosim un model minuscul (Tiny) care ocupă sub 100MB RAM
-    llm_model: str = "prajjwal/bert-tiny"
+    llm_model: str = "facebook/bart-tiny"
     top_k_retrieval: int = 3
     faiss_index_path: str = "faiss_index"
 
