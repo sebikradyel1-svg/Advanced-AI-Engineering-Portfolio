@@ -17,7 +17,7 @@ os.environ['TOKENIZERS_PARALLELISM'] = 'false'
 os.environ['PYTORCH_CUDA_ALLOC_CONF'] = 'expandable_segments:True'
 
 # Limit torch threads
-torch.set_num_threads(1)
+torch.set_num_threads(4)
 torch.set_num_interop_threads(1)
 
 # LangChain components
@@ -53,8 +53,7 @@ class RAGConfig:
     chunk_size: int = 500
     chunk_overlap: int = 50
     embeddings_model: str = "sentence-transformers/all-MiniLM-L6-v2"
-    # Folosim un model minuscul (Tiny) care ocupă sub 100MB RAM
-    llm_model: str = "google/t5-efficient-tiny-nh2"
+    llm_model: str = "google/flan-t5-base"
     top_k_retrieval: int = 3
     faiss_index_path: str = "faiss_index"
 
@@ -312,7 +311,7 @@ Answer:"""
 rag_system = HRKnowledgeRAGSystem()
 
 # Pre-warm models at startup (uncomment if you have enough RAM)
-# rag_system.start_prewarm()
+rag_system.start_prewarm()
 
 
 def process_upload(file) -> str:
