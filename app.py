@@ -1,13 +1,24 @@
 # HR RAG Knowledge Assistant - Gradio Web Interface
-# OPTIMIZED for Render free tier - Pre-warms models at startup!
+# ULTRA-OPTIMIZED for Render free tier (512MB RAM)
 
 import os
+import gc
 import tempfile
 import gradio as gr
 import torch
 from typing import List, Tuple
 from dataclasses import dataclass
 import threading
+
+# Memory optimizations - set BEFORE importing heavy libraries
+os.environ['OMP_NUM_THREADS'] = '1'
+os.environ['MKL_NUM_THREADS'] = '1'
+os.environ['TOKENIZERS_PARALLELISM'] = 'false'
+os.environ['PYTORCH_CUDA_ALLOC_CONF'] = 'expandable_segments:True'
+
+# Limit torch threads
+torch.set_num_threads(1)
+torch.set_num_interop_threads(1)
 
 # LangChain components
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -27,8 +38,14 @@ logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
-import torch
-torch.set_num_threads(1) # Limitează consumul de procesor/RAM
+
+
+def clear_memory():
+    """Force garbage collection to free RAM."""
+    gc.collect()
+    if torch.cuda.is_available():
+        torch.cuda.empty_cache()
+
 
 @dataclass
 class RAGConfig:
@@ -36,7 +53,7 @@ class RAGConfig:
     chunk_size: int = 500
     chunk_overlap: int = 50
     embeddings_model: str = "sentence-transformers/all-MiniLM-L6-v2"
-    llm_model: str = "google/flan-t5-small"
+    llm_model: str = "google/flan-t5-small"  # Small model for 512MB RAM
     top_k_retrieval: int = 3
     faiss_index_path: str = "faiss_index"
 
@@ -71,14 +88,16 @@ class DocumentProcessor:
 
 
 class HRKnowledgeRAGSystem:
-    """Main RAG system - OPTIMIZED with background pre-warming."""
+    """Main RAG system - ULTRA-OPTIMIZED for low RAM."""
     
     def __init__(self, config: RAGConfig = RAGConfig()):
         self.config = config
-        self.device = "cuda" if torch.cuda.is_available() else "cpu"
+        self.device = "cpu"  # Force CPU for Render free tier
         self.vector_db = None
         self.embeddings = None
         self.llm_pipeline = None
+        self.tokenizer = None
+        self.model = None
         self.chat_history: List[Tuple[str, str]] = []
         self.is_initialized = False
         self.models_ready = False
@@ -90,7 +109,9 @@ class HRKnowledgeRAGSystem:
         try:
             logger.info("🔥 Pre-warming models in background...")
             self.setup_embeddings()
+            clear_memory()  # Clean up after embeddings
             self.setup_llm()
+            clear_memory()  # Clean up after LLM
             self.models_ready = True
             logger.info("✅ Models pre-warmed and ready!")
         except Exception as e:
@@ -108,28 +129,44 @@ class HRKnowledgeRAGSystem:
             if self.embeddings is None:
                 logger.info(f"Loading embeddings model: {self.config.embeddings_model}")
                 self.embeddings = HuggingFaceEmbeddings(
-                    model_name=self.config.embeddings_model
+                    model_name=self.config.embeddings_model,
+                    model_kwargs={'device': 'cpu'},
+                    encode_kwargs={'normalize_embeddings': True}
                 )
+                clear_memory()
         return self.embeddings
 
     def setup_llm(self):
-        """Initialize the LLM pipeline."""
+        """Initialize the LLM pipeline with memory optimizations."""
         with self._loading_lock:
             if self.llm_pipeline is None:
                 logger.info(f"Loading LLM: {self.config.llm_model}")
-                tokenizer = AutoTokenizer.from_pretrained(self.config.llm_model)
-                model = AutoModelForSeq2SeqLM.from_pretrained(self.config.llm_model)
                 
-                if self.device == "cuda":
-                    model = model.to("cuda")
+                # Load with memory optimizations
+                self.tokenizer = AutoTokenizer.from_pretrained(
+                    self.config.llm_model,
+                    use_fast=True
+                )
+                
+                self.model = AutoModelForSeq2SeqLM.from_pretrained(
+                    self.config.llm_model,
+                    low_cpu_mem_usage=True,  # Memory optimization
+                    torch_dtype=torch.float32
+                )
+                
+                # Set to evaluation mode (saves memory)
+                self.model.eval()
                 
                 self.llm_pipeline = pipeline(
                     "text2text-generation",
-                    model=model,
-                    tokenizer=tokenizer,
-                    max_length=512,
-                    device=0 if self.device == "cuda" else -1
+                    model=self.model,
+                    tokenizer=self.tokenizer,
+                    max_length=256,  # Reduced for memory
+                    device=-1  # CPU
                 )
+                
+                clear_memory()
+                logger.info("✅ LLM loaded successfully")
         return self.llm_pipeline
 
     def load_prebuilt_index(self) -> str:
@@ -143,8 +180,9 @@ class HRKnowledgeRAGSystem:
             
             logger.info(f"Loading pre-built FAISS index from {index_path}...")
             
-            # These will be instant if pre-warmed, otherwise load now
+            # Setup embeddings
             self.setup_embeddings()
+            clear_memory()
             
             # Load pre-built index
             self.vector_db = FAISS.load_local(
@@ -152,9 +190,11 @@ class HRKnowledgeRAGSystem:
                 self.embeddings,
                 allow_dangerous_deserialization=True
             )
+            clear_memory()
             
-            # Setup LLM (instant if pre-warmed)
+            # Setup LLM
             self.setup_llm()
+            clear_memory()
             
             self.is_initialized = True
             self.chat_history = []
@@ -171,12 +211,15 @@ class HRKnowledgeRAGSystem:
         try:
             processor = DocumentProcessor(self.config)
             docs = processor.process_file(file_path)
+            clear_memory()
             
             self.setup_embeddings()
             logger.info("Building vector database from uploaded document...")
             self.vector_db = FAISS.from_documents(docs, self.embeddings)
+            clear_memory()
             
             self.setup_llm()
+            clear_memory()
             
             self.is_initialized = True
             self.chat_history = []
@@ -190,18 +233,17 @@ class HRKnowledgeRAGSystem:
         """Build the prompt for the LLM."""
         history_text = ""
         if self.chat_history:
-            recent_history = self.chat_history[-3:]
+            recent_history = self.chat_history[-2:]  # Keep only 2 for memory
             history_parts = [f"Q: {q}\nA: {a}" for q, a in recent_history]
             history_text = "\n".join(history_parts)
         
-        prompt = f"""Answer the question based ONLY on the following context. 
-If the answer is not in the context, say "I don't have that information in the documents."
-Be concise and professional.
+        # Shorter, more efficient prompt
+        prompt = f"""Answer based on this context only. Be concise.
 
 Context:
-{context}
+{context[:1500]}
 
-{f"Previous conversation:{chr(10)}{history_text}{chr(10)}{chr(10)}" if history_text else ""}Question: {question}
+{f"History:{chr(10)}{history_text}{chr(10)}" if history_text else ""}Question: {question}
 
 Answer:"""
         return prompt
@@ -212,6 +254,7 @@ Answer:"""
             return "⚠️ System not initialized. Please click 'Load Sample Policies' or upload a document.", ""
         
         try:
+            # Retrieve relevant documents
             docs = self.vector_db.similarity_search(
                 question, 
                 k=self.config.top_k_retrieval
@@ -219,29 +262,47 @@ Answer:"""
             
             context = "\n\n".join([doc.page_content for doc in docs])
             
+            # Generate answer
             prompt = self._build_prompt(question, context)
-            result = self.llm_pipeline(prompt, max_length=256, do_sample=False)
+            
+            with torch.no_grad():  # Disable gradient computation for inference
+                result = self.llm_pipeline(
+                    prompt, 
+                    max_length=128,  # Shorter output for memory
+                    do_sample=False,
+                    num_beams=1  # Greedy decoding (less memory)
+                )
+            
             answer = result[0]['generated_text'].strip()
             
+            # Keep limited history
             self.chat_history.append((question, answer))
+            if len(self.chat_history) > 5:
+                self.chat_history = self.chat_history[-5:]
             
+            # Format sources
             sources = []
             for i, doc in enumerate(docs, 1):
-                source_text = doc.page_content[:200] + "..." if len(doc.page_content) > 200 else doc.page_content
+                source_text = doc.page_content[:150] + "..." if len(doc.page_content) > 150 else doc.page_content
                 sources.append(f"**Source {i}:**\n{source_text}")
             
             sources_text = "\n\n".join(sources) if sources else "No sources retrieved."
+            
+            # Clean up memory after each query
+            clear_memory()
             
             logger.info(f"Query processed: {question[:50]}...")
             return answer, sources_text
             
         except Exception as e:
             logger.error(f"Error processing query: {e}")
+            clear_memory()
             return f"❌ Error processing query: {str(e)}", ""
 
-    def clear_memory(self):
+    def clear_chat_memory(self):
         """Clear conversation memory."""
         self.chat_history = []
+        clear_memory()
         logger.info("Conversation memory cleared")
         return "🧹 Conversation history cleared."
 
@@ -249,9 +310,8 @@ Answer:"""
 # Global RAG system instance
 rag_system = HRKnowledgeRAGSystem()
 
-# 🔥 START PRE-WARMING IMMEDIATELY when module loads
-# Models will load in background while Gradio UI starts
-#rag_system.start_prewarm()
+# Pre-warm models at startup (uncomment if you have enough RAM)
+# rag_system.start_prewarm()
 
 
 def process_upload(file) -> str:
@@ -277,20 +337,22 @@ def chat_response(message: str, history: List[List[str]]) -> Tuple[str, str]:
 
 
 def load_sample_data() -> str:
-    """Load pre-built sample policies - FAST if models pre-warmed!"""
+    """Load pre-built sample policies."""
     if rag_system.models_ready:
         logger.info("⚡ Models already pre-warmed - loading will be instant!")
     else:
-        logger.info("⏳ Models still loading in background...")
+        logger.info("⏳ Loading models on demand...")
     return rag_system.load_prebuilt_index()
 
 
 def get_status() -> str:
     """Return current system status."""
-    if rag_system.models_ready:
-        return "🟢 Models ready! Click 'Load Sample Policies' for instant start."
+    if rag_system.is_initialized:
+        return "🟢 System ready! Ask a question."
+    elif rag_system.models_ready:
+        return "🟢 Models ready! Click 'Load Sample Policies'."
     else:
-        return "🟡 Models loading in background... Please wait a moment."
+        return "🟡 Click 'Load Sample Policies' to start."
 
 
 def health_check():
@@ -394,7 +456,8 @@ def create_interface():
             """
             ---
             **Tech Stack:** LangChain • FAISS • HuggingFace Transformers • Gradio  
-            **Model:** FLAN-T5 Base | **Embeddings:** all-MiniLM-L6-v2
+            **Model:** FLAN-T5 Small | **Embeddings:** all-MiniLM-L6-v2  
+            **Optimized for:** Low-memory deployment (512MB RAM)
             """
         )
         
@@ -447,7 +510,6 @@ def create_interface():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 7860))
     logger.info(f"Starting HR Knowledge Assistant on port {port}")
-    logger.info("🔥 Models are pre-warming in background...")
     
     demo = create_interface()
     demo.launch(
