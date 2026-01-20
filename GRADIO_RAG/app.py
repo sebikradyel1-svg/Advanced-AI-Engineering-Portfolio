@@ -1,6 +1,5 @@
 # HR RAG Knowledge Assistant - Gradio Web Interface
-# Production-ready deployment with PRE-BUILT FAISS index
-# Loads instantly on Render free tier!
+# OPTIMIZED for Render free tier - Pre-warms models at startup!
 
 import os
 import tempfile
@@ -8,6 +7,7 @@ import gradio as gr
 import torch
 from typing import List, Tuple
 from dataclasses import dataclass
+import threading
 
 # LangChain components
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -37,7 +37,7 @@ class RAGConfig:
     embeddings_model: str = "sentence-transformers/all-MiniLM-L6-v2"
     llm_model: str = "google/flan-t5-base"
     top_k_retrieval: int = 3
-    faiss_index_path: str = "faiss_index"  # Pre-built index location
+    faiss_index_path: str = "faiss_index"
 
 
 class DocumentProcessor:
@@ -70,7 +70,7 @@ class DocumentProcessor:
 
 
 class HRKnowledgeRAGSystem:
-    """Main RAG system with PRE-BUILT index support."""
+    """Main RAG system - OPTIMIZED with background pre-warming."""
     
     def __init__(self, config: RAGConfig = RAGConfig()):
         self.config = config
@@ -80,38 +80,59 @@ class HRKnowledgeRAGSystem:
         self.llm_pipeline = None
         self.chat_history: List[Tuple[str, str]] = []
         self.is_initialized = False
+        self.models_ready = False
+        self._loading_lock = threading.Lock()
         logger.info(f"RAG System created on device: {self.device}")
+
+    def _prewarm_models(self):
+        """Pre-load models in background thread."""
+        try:
+            logger.info("🔥 Pre-warming models in background...")
+            self.setup_embeddings()
+            self.setup_llm()
+            self.models_ready = True
+            logger.info("✅ Models pre-warmed and ready!")
+        except Exception as e:
+            logger.error(f"Pre-warm failed: {e}")
+
+    def start_prewarm(self):
+        """Start background pre-warming of models."""
+        thread = threading.Thread(target=self._prewarm_models, daemon=True)
+        thread.start()
+        logger.info("🚀 Started background model pre-warming")
 
     def setup_embeddings(self):
         """Initialize the embeddings model."""
-        if self.embeddings is None:
-            logger.info(f"Loading embeddings model: {self.config.embeddings_model}")
-            self.embeddings = HuggingFaceEmbeddings(
-                model_name=self.config.embeddings_model
-            )
+        with self._loading_lock:
+            if self.embeddings is None:
+                logger.info(f"Loading embeddings model: {self.config.embeddings_model}")
+                self.embeddings = HuggingFaceEmbeddings(
+                    model_name=self.config.embeddings_model
+                )
         return self.embeddings
 
     def setup_llm(self):
         """Initialize the LLM pipeline."""
-        if self.llm_pipeline is None:
-            logger.info(f"Loading LLM: {self.config.llm_model}")
-            tokenizer = AutoTokenizer.from_pretrained(self.config.llm_model)
-            model = AutoModelForSeq2SeqLM.from_pretrained(self.config.llm_model)
-            
-            if self.device == "cuda":
-                model = model.to("cuda")
-            
-            self.llm_pipeline = pipeline(
-                "text2text-generation",
-                model=model,
-                tokenizer=tokenizer,
-                max_length=512,
-                device=0 if self.device == "cuda" else -1
-            )
+        with self._loading_lock:
+            if self.llm_pipeline is None:
+                logger.info(f"Loading LLM: {self.config.llm_model}")
+                tokenizer = AutoTokenizer.from_pretrained(self.config.llm_model)
+                model = AutoModelForSeq2SeqLM.from_pretrained(self.config.llm_model)
+                
+                if self.device == "cuda":
+                    model = model.to("cuda")
+                
+                self.llm_pipeline = pipeline(
+                    "text2text-generation",
+                    model=model,
+                    tokenizer=tokenizer,
+                    max_length=512,
+                    device=0 if self.device == "cuda" else -1
+                )
         return self.llm_pipeline
 
     def load_prebuilt_index(self) -> str:
-        """Load pre-built FAISS index from disk - INSTANT!"""
+        """Load pre-built FAISS index - uses pre-warmed models if ready."""
         try:
             index_path = self.config.faiss_index_path
             
@@ -121,17 +142,17 @@ class HRKnowledgeRAGSystem:
             
             logger.info(f"Loading pre-built FAISS index from {index_path}...")
             
-            # Setup embeddings first
+            # These will be instant if pre-warmed, otherwise load now
             self.setup_embeddings()
             
-            # Load pre-built index - FAST!
+            # Load pre-built index
             self.vector_db = FAISS.load_local(
                 index_path, 
                 self.embeddings,
                 allow_dangerous_deserialization=True
             )
             
-            # Setup LLM
+            # Setup LLM (instant if pre-warmed)
             self.setup_llm()
             
             self.is_initialized = True
@@ -227,6 +248,10 @@ Answer:"""
 # Global RAG system instance
 rag_system = HRKnowledgeRAGSystem()
 
+# 🔥 START PRE-WARMING IMMEDIATELY when module loads
+# Models will load in background while Gradio UI starts
+rag_system.start_prewarm()
+
 
 def process_upload(file) -> str:
     """Handle file upload."""
@@ -251,8 +276,20 @@ def chat_response(message: str, history: List[List[str]]) -> Tuple[str, str]:
 
 
 def load_sample_data() -> str:
-    """Load pre-built sample policies - INSTANT!"""
+    """Load pre-built sample policies - FAST if models pre-warmed!"""
+    if rag_system.models_ready:
+        logger.info("⚡ Models already pre-warmed - loading will be instant!")
+    else:
+        logger.info("⏳ Models still loading in background...")
     return rag_system.load_prebuilt_index()
+
+
+def get_status() -> str:
+    """Return current system status."""
+    if rag_system.models_ready:
+        return "🟢 Models ready! Click 'Load Sample Policies' for instant start."
+    else:
+        return "🟡 Models loading in background... Please wait a moment."
 
 
 def health_check():
@@ -261,6 +298,7 @@ def health_check():
         "status": "healthy",
         "device": rag_system.device,
         "initialized": rag_system.is_initialized,
+        "models_ready": rag_system.models_ready,
         "prebuilt_index_exists": os.path.exists("faiss_index")
     }
 
@@ -276,7 +314,7 @@ def create_interface():
             # 🏢 HR Knowledge Assistant
             ### AI-Powered Company Policy Q&A System
             
-            Click **"Load Sample Policies"** to get started instantly, or upload your own document.
+            Click **"Load Sample Policies"** to get started, or upload your own document.
             """
         )
         
@@ -300,6 +338,17 @@ def create_interface():
             with gr.Column(scale=1):
                 gr.Markdown("### 📄 Document Management")
                 
+                # Status indicator
+                status_display = gr.Textbox(
+                    label="System Status",
+                    value=get_status(),
+                    interactive=False,
+                    lines=1,
+                )
+                
+                # Refresh status button
+                refresh_btn = gr.Button("🔄 Refresh Status", size="sm")
+                
                 # PROMINENT SAMPLE BUTTON
                 sample_btn = gr.Button(
                     "📋 Load Sample Policies", 
@@ -316,7 +365,7 @@ def create_interface():
                 )
                 
                 upload_status = gr.Textbox(
-                    label="Status",
+                    label="Load Status",
                     interactive=False,
                     lines=2,
                     value="👆 Click 'Load Sample Policies' to start!"
@@ -385,6 +434,11 @@ def create_interface():
             load_sample_data,
             outputs=[upload_status],
         )
+        
+        refresh_btn.click(
+            get_status,
+            outputs=[status_display],
+        )
     
     return demo
 
@@ -392,6 +446,7 @@ def create_interface():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 7860))
     logger.info(f"Starting HR Knowledge Assistant on port {port}")
+    logger.info("🔥 Models are pre-warming in background...")
     
     demo = create_interface()
     demo.launch(
