@@ -27,16 +27,16 @@ COPY requirements.txt .
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Pre-download models during build (optional but recommended)
-# This caches the models in the image
+# Pre-download models during build (cached in Docker image!)
 RUN python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')"
 RUN python -c "from transformers import AutoTokenizer, AutoModelForSeq2SeqLM; AutoTokenizer.from_pretrained('google/flan-t5-base'); AutoModelForSeq2SeqLM.from_pretrained('google/flan-t5-base')"
 
-# Copy application code
-COPY app.py .
-
 # Create cache directory with proper permissions
 RUN mkdir -p /app/.cache && chmod 777 /app/.cache
+
+# Copy application code AND faiss_index
+COPY app.py .
+COPY faiss_index/ ./faiss_index/
 
 # Expose port (Render assigns PORT dynamically)
 EXPOSE 7860
