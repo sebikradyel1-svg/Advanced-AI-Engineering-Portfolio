@@ -17,7 +17,7 @@ os.environ['TOKENIZERS_PARALLELISM'] = 'false'
 os.environ['PYTORCH_CUDA_ALLOC_CONF'] = 'expandable_segments:True'
 
 # Limit torch threads
-torch.set_num_threads(2)
+torch.set_num_threads(1)
 torch.set_num_interop_threads(1)
 
 # LangChain components
@@ -54,7 +54,7 @@ class RAGConfig:
     chunk_overlap: int = 50
     embeddings_model: str = "sentence-transformers/all-MiniLM-L6-v2"
     # Folosim un model minuscul (Tiny) care ocupă sub 100MB RAM
-    llm_model: str = "sshleifer/distilbart-cnn-6-6"
+    llm_model: str = "google/t5-efficient-tiny-nh2"
     top_k_retrieval: int = 3
     faiss_index_path: str = "faiss_index"
 
