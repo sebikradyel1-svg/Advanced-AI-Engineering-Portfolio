@@ -1,93 +1,228 @@
-# 🤖 Advanced AI Engineering Portfolio
+# 🏢 HR RAG Knowledge Assistant
 
-This repository contains production-ready Python scripts focusing on the latest advancements in Large Language Models (LLMs) and Neural Network architectures.
+An AI-powered HR policy Q&A system using Retrieval-Augmented Generation (RAG). Ask questions about company policies and get instant, accurate answers with source citations.
 
-## 🚀 Key Projects
+![Python](https://img.shields.io/badge/Python-3.10-blue)
+![LangChain](https://img.shields.io/badge/LangChain-0.1.11-green)
+![Gradio](https://img.shields.io/badge/Gradio-4.21.0-orange)
+![License](https://img.shields.io/badge/License-MIT-yellow)
 
-### 1. Enterprise HR RAG System
-- **File:** `hr_rag_system_updated.py`
-- **Tech Stack:** LangChain, FAISS, HuggingFace Embeddings, OpenAI/Flan-T5.
-- **Description:** A complete Retrieval-Augmented Generation system that transforms static HR PDF/text policies into an interactive Q&A bot. Includes document chunking, vector indexing, and context-aware retrieval.
+## 🌐 Live Demo
 
-### 2. RLHF Alignment & Reward Modeling
-- **Files:** `KL_Guard_RLHF.py`, `reward_model_training.py`
-- **Tech Stack:** PyTorch, TRL (Transformer Reinforcement Learning), PPO.
-- **Description:** Implementation of Reinforcement Learning from Human Feedback. It includes a custom KL-divergence guard to ensure the model stays aligned with the base distribution while optimizing for human preferences.
+**[Try it here →](https://advanced-ai-engineering-portfolio.onrender.com)**
 
-### 3. Custom Transformer Stock Predictor
-- **File:** `transformer_stock_prediction.py`
-- **Description:** A ground-up implementation of the Transformer architecture (Multi-Head Attention, Positional Encoding) applied to financial time-series forecasting.
-
-### 4. Computer Vision & NLP Transfer Learning
-- **Files:** `universal_classifier.py`, `transfer_learning_text.py`
-- **Description:** Versatile scripts for image classification (VGG16) and text sentiment analysis (BERT) using advanced transfer learning techniques.
+> ⚠️ Note: Free tier may take 30-60 seconds to wake up on first visit.
 
 ---
 
-## 🐳 Docker Support
+## 🎯 Features
 
-Each project includes Docker configuration for **reproducible environments** and **easy deployment**.
+- **Instant Policy Lookup** - Ask questions in natural language
+- **Source Citations** - See exactly which documents support each answer
+- **Conversation Memory** - Follow-up questions understand context
+- **Custom Document Upload** - Load your own HR policies (.txt)
+- **Low-Memory Optimized** - Runs on 512MB RAM (Render free tier)
 
-### Quick Start
+---
+
+## 🛠️ Tech Stack
+
+| Component | Technology |
+|-----------|------------|
+| **LLM** | FLAN-T5 Small (google/flan-t5-small) |
+| **Embeddings** | all-MiniLM-L6-v2 (sentence-transformers) |
+| **Vector Store** | FAISS (faiss-cpu) |
+| **Framework** | LangChain |
+| **UI** | Gradio |
+| **Deployment** | Docker + Render |
+
+---
+
+## 📁 Project Structure
+
+```
+GRADIO_RAG/
+├── app.py                  # Main application (Gradio UI + RAG logic)
+├── Dockerfile              # Docker configuration for deployment
+├── requirements.txt        # Python dependencies (CPU-optimized)
+├── company_policies.txt    # Sample HR policies document
+├── faiss_index/            # Pre-built vector index
+│   ├── index.faiss
+│   └── index.pkl
+├── render.yaml             # Render deployment config
+└── README.md
+```
+
+---
+
+## 🚀 Quick Start
+
+### Option 1: Use the Live Demo
+Click the demo link above and try it instantly!
+
+### Option 2: Run Locally
 
 ```bash
 # Clone the repository
 git clone https://github.com/sebikradyel1-svg/Advanced-AI-Engineering-Portfolio.git
-cd Advanced-AI-Engineering-Portfolio
+cd Advanced-AI-Engineering-Portfolio/GRADIO_RAG
 
-# Build and run any project
-cd RAG-HR-System
-docker build -t hr-rag:latest .
-docker run -it hr-rag:latest
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run the app
+python app.py
 ```
 
-### Available Docker Images
+Open `http://localhost:7860` in your browser.
 
-| Project | Build Command | Run Command |
-|---------|---------------|-------------|
-| **HR RAG System** | `docker build -t hr-rag .` | `docker run -it hr-rag` |
-| **KL Guard RLHF** | `docker build -t kl-rlhf .` | `docker run -it kl-rlhf` |
-| **Transformers** | `docker build -t transformer .` | `docker run -it transformer` |
-
-### GPU Support (NVIDIA)
-
-For projects requiring GPU acceleration:
+### Option 3: Run with Docker
 
 ```bash
-# Install NVIDIA Container Toolkit first, then:
-docker run --gpus all -it hr-rag:latest
+docker build -t hr-rag-assistant .
+docker run -p 7860:7860 hr-rag-assistant
 ```
 
-### Docker Features
+---
 
-- ✅ **Multi-stage builds** - Optimized image sizes
-- ✅ **Non-root user** - Security best practices
-- ✅ **Health checks** - Container monitoring
-- ✅ **Cached layers** - Fast rebuilds
+## 💡 Usage
+
+1. **Click "Load Sample Policies"** to initialize the system
+2. **Ask a question** like:
+   - "How many vacation days do I get per year?"
+   - "What are the standard working hours?"
+   - "Is remote work allowed?"
+   - "What medical benefits are provided?"
+3. **View source citations** to verify answers
 
 ---
 
-## 🛠️ Skills Demonstrated
+## ⚡ Optimizations for Low-Memory Deployment
 
-- LLM Orchestration & RAG
-- Model Fine-tuning & RLHF
-- Neural Network Architecture (Transformers)
-- Production-level Python Coding
-- **Docker & Containerization**
-- **MLOps Best Practices**
+This project is optimized to run on **512MB RAM** (Render free tier):
 
----
-
-## 📊 Architecture Diagrams
-
-![RAG Architecture](./images/Rag%20Architecture.png)
-![Transfer Learning](./images/2_transfer_learning_comparison.png)
-![Transformer Encoder](./images/Transformes_encoder.png)
-![RLHF Pipeline](./images/RLHF%20Pipeline.png)
+| Optimization | Description |
+|--------------|-------------|
+| **CPU-only PyTorch** | `torch==2.2.1+cpu` - No CUDA libraries (~1GB saved) |
+| **FLAN-T5-Small** | Smaller model (~150MB vs ~1GB for base) |
+| **Garbage Collection** | `gc.collect()` after each query |
+| **torch.no_grad()** | Disabled gradients during inference |
+| **low_cpu_mem_usage** | Efficient model loading |
+| **Pre-built FAISS Index** | No embedding computation at runtime |
+| **Thread Limiting** | `OMP_NUM_THREADS=1` to reduce memory spikes |
 
 ---
 
-## 📫 Connect with me
+## 🏗️ Architecture
 
-- **LinkedIn:** [www.linkedin.com/in/paul-sebastian-kradyel](http://www.linkedin.com/in/paul-sebastian-kradyel)
-- **Email:** [paulsebastiankradyel@gmail.com](mailto:paulsebastiankradyel@gmail.com)
+```
+┌─────────────┐     ┌─────────────┐     ┌─────────────┐
+│   User      │────▶│   Gradio    │────▶│  RAG System │
+│  Question   │     │     UI      │     │             │
+└─────────────┘     └─────────────┘     └──────┬──────┘
+                                               │
+                    ┌──────────────────────────┼──────────────────────────┐
+                    │                          │                          │
+                    ▼                          ▼                          ▼
+            ┌───────────────┐         ┌───────────────┐         ┌───────────────┐
+            │  Embeddings   │         │    FAISS      │         │   FLAN-T5     │
+            │  (MiniLM-L6)  │         │  Vector DB    │         │   (Answer)    │
+            └───────────────┘         └───────────────┘         └───────────────┘
+```
+
+**Flow:**
+1. User asks a question
+2. Question is embedded using MiniLM-L6-v2
+3. FAISS retrieves top-3 relevant document chunks
+4. Context + Question sent to FLAN-T5
+5. Answer generated with source citations
+
+---
+
+## 📊 Performance
+
+| Metric | Value |
+|--------|-------|
+| Cold Start | ~30-60 seconds |
+| Query Response | ~3-5 seconds |
+| Memory Usage | ~350MB |
+| Model Load Time | ~15 seconds |
+
+---
+
+## 🔧 Configuration
+
+Edit `RAGConfig` in `app.py` to customize:
+
+```python
+@dataclass
+class RAGConfig:
+    chunk_size: int = 500           # Document chunk size
+    chunk_overlap: int = 50         # Overlap between chunks
+    embeddings_model: str = "sentence-transformers/all-MiniLM-L6-v2"
+    llm_model: str = "google/flan-t5-small"
+    top_k_retrieval: int = 3        # Number of chunks to retrieve
+    faiss_index_path: str = "faiss_index"
+```
+
+---
+
+## 📝 Adding Custom Documents
+
+1. Create a `.txt` file with your HR policies
+2. Either:
+   - **Upload via UI**: Use the file upload in the app
+   - **Pre-build index**: Run `build_index.py` locally and push `faiss_index/`
+
+---
+
+## 🐛 Troubleshooting
+
+| Issue | Solution |
+|-------|----------|
+| 502 Bad Gateway | Wait 30-60 sec for cold start |
+| Out of Memory | Reduce `chunk_size` or `top_k_retrieval` |
+| Slow responses | Normal for free tier CPU |
+| Models not loading | Check Render logs for errors |
+
+---
+
+## 🗺️ Roadmap
+
+- [ ] PDF document support
+- [ ] Multi-language support
+- [ ] Conversation export
+- [ ] ONNX optimization for faster inference
+- [ ] Streaming responses
+
+---
+
+## 📄 License
+
+MIT License - feel free to use for your own projects!
+
+---
+
+## 👨‍💻 Author
+
+**Sebastian** - AI Engineer
+
+- GitHub: [@sebikradyel1-svg](https://github.com/sebikradyel1-svg)
+- Portfolio: [Advanced-AI-Engineering-Portfolio](https://github.com/sebikradyel1-svg/Advanced-AI-Engineering-Portfolio)
+
+---
+
+## 🙏 Acknowledgments
+
+- [LangChain](https://langchain.com/) - RAG framework
+- [HuggingFace](https://huggingface.co/) - Models and transformers
+- [Gradio](https://gradio.app/) - UI framework
+- [Render](https://render.com/) - Deployment platform
+
+---
+
+**⭐ Star this repo if you found it useful!**
