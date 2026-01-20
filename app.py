@@ -27,7 +27,8 @@ logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
-
+import torch
+torch.set_num_threads(1) # Limitează consumul de procesor/RAM
 
 @dataclass
 class RAGConfig:
@@ -250,7 +251,7 @@ rag_system = HRKnowledgeRAGSystem()
 
 # 🔥 START PRE-WARMING IMMEDIATELY when module loads
 # Models will load in background while Gradio UI starts
-rag_system.start_prewarm()
+#rag_system.start_prewarm()
 
 
 def process_upload(file) -> str:
