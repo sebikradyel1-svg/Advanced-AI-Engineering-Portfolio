@@ -17,7 +17,7 @@ os.environ['TOKENIZERS_PARALLELISM'] = 'false'
 os.environ['PYTORCH_CUDA_ALLOC_CONF'] = 'expandable_segments:True'
 
 # Limit torch threads
-torch.set_num_threads(1)
+torch.set_num_threads(2)
 torch.set_num_interop_threads(1)
 
 # LangChain components
@@ -53,7 +53,7 @@ class RAGConfig:
     chunk_size: int = 500
     chunk_overlap: int = 50
     embeddings_model: str = "sentence-transformers/all-MiniLM-L6-v2"
-    llm_model: str = "google/flan-t5-small"  # Small model for 512MB RAM
+    llm_model: str = "facebook/bart-tiny"  # Small model for 512MB RAM
     top_k_retrieval: int = 3
     faiss_index_path: str = "faiss_index"
 
@@ -147,11 +147,11 @@ class HRKnowledgeRAGSystem:
                     self.config.llm_model,
                     use_fast=True
                 )
-                
                 self.model = AutoModelForSeq2SeqLM.from_pretrained(
                     self.config.llm_model,
-                    low_cpu_mem_usage=True,  # Memory optimization
-                    torch_dtype=torch.float32
+                    low_cpu_mem_usage=True,
+                    torch_dtype=torch.float32,
+                    offload_folder="offload" # Aceasta va folosi discul în loc de RAM dacă e nevoie
                 )
                 
                 # Set to evaluation mode (saves memory)
