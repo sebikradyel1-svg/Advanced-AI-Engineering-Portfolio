@@ -1,5 +1,5 @@
---extra-index-url https://download.pytorch.org/whl/cpu
-torch==2.2.1+cpu
+numpy
+torch
 transformers
 sentence-transformers
 langchain-community
