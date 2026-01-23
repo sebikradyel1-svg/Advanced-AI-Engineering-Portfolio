@@ -1,6 +1,7 @@
 # HR RAG Knowledge Assistant - Gradio Web Interface
 # ULTRA-OPTIMIZED for Render free tier (512MB RAM)
-
+from datetime import datetime
+import time
 import os
 import gc
 import tempfile
@@ -73,11 +74,9 @@ def setup_advanced_logging():
     logger.info("✅ Advanced logging setup complete")
 
 # Setup advanced logging
-from datetime import datetime
 setup_advanced_logging()
 
 # Metrics tracking
-import time
 
 class Metrics:
     """Simple metrics tracker for monitoring"""
@@ -603,12 +602,16 @@ def create_interface():
     
     return demo
 
-
+demo = create_interface()
+app = demo.app
+@app.get("/health")
+def health_api():
+    return health_check()
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 7860))
     logger.info(f"Starting HR Knowledge Assistant on port {port}")
     
-    demo = create_interface()
+    
     demo.launch(
         server_name="0.0.0.0",
         server_port=port,
