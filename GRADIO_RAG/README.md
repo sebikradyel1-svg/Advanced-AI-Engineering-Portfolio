@@ -135,11 +135,11 @@ This project is optimized to run on **512MB RAM** (Render free tier):
 ```
 
 **Flow:**
-1. User asks a question
-2. Question is embedded using MiniLM-L6-v2
-3. FAISS retrieves top-3 relevant document chunks
-4. Context + Question sent to FLAN-T5
-5. Answer generated with source citations
+1. User asks a question.
+2. Question is embedded using MiniLM-L6-v2.
+3. FAISS retrieves top-3 relevant document chunks.
+4. Context + Question sent to FLAN-T5.
+5. Answer generated with source citations.
 
 ---
 
