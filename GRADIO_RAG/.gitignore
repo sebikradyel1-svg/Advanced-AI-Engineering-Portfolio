@@ -83,3 +83,5 @@ models/
 
 # Gradio
 flagged/
+logs/*.log
+logs/*.log

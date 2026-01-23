@@ -39,6 +39,75 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+# Advanced logging setup with file handlers
+def setup_advanced_logging():
+    """Configure comprehensive logging system"""
+    from pathlib import Path
+    log_dir = Path("logs")
+    log_dir.mkdir(exist_ok=True)
+    
+    # Detailed formatter for files
+    detailed_formatter = logging.Formatter(
+        '%(asctime)s - %(name)s - %(levelname)s - [%(filename)s:%(lineno)d] - %(message)s',
+        datefmt='%Y-%m-%d %H:%M:%S'
+    )
+    
+    # File handler
+    file_handler = logging.FileHandler(
+        log_dir / f"app_{datetime.now().strftime('%Y%m%d')}.log"
+    )
+    file_handler.setLevel(logging.DEBUG)
+    file_handler.setFormatter(detailed_formatter)
+    
+    # Error handler
+    error_handler = logging.FileHandler(
+        log_dir / f"errors_{datetime.now().strftime('%Y%m%d')}.log"
+    )
+    error_handler.setLevel(logging.ERROR)
+    error_handler.setFormatter(detailed_formatter)
+    
+    # Add handlers to logger
+    logger.addHandler(file_handler)
+    logger.addHandler(error_handler)
+    
+    logger.info("✅ Advanced logging setup complete")
+
+# Setup advanced logging
+from datetime import datetime
+setup_advanced_logging()
+
+# Metrics tracking
+import time
+
+class Metrics:
+    """Simple metrics tracker for monitoring"""
+    def __init__(self):
+        self.start_time = time.time()
+        self.queries = 0
+        self.errors = 0
+        self.total_response_time = 0
+        
+    def record_query(self, response_time):
+        self.queries += 1
+        self.total_response_time += response_time
+        
+    def record_error(self):
+        self.errors += 1
+        
+    def get_stats(self):
+        uptime = time.time() - self.start_time
+        avg_response = self.total_response_time / self.queries if self.queries > 0 else 0
+        return {
+            "uptime_seconds": round(uptime, 2),
+            "uptime_hours": round(uptime / 3600, 2),
+            "total_queries": self.queries,
+            "total_errors": self.errors,
+            "avg_response_time_seconds": round(avg_response, 3),
+            "success_rate": round((self.queries - self.errors) / self.queries * 100, 2) if self.queries > 0 else 100
+        }
+
+# Global metrics
+metrics = Metrics()
 
 def clear_memory():
     """Force garbage collection to free RAM."""
@@ -250,6 +319,7 @@ Answer:"""
 
     def chat(self, question: str) -> Tuple[str, str]:
         """Process a question and return answer with sources."""
+        start_time = time.time()
         if not self.is_initialized:
             return "⚠️ System not initialized. Please click 'Load Sample Policies' or upload a document.", ""
         
@@ -290,11 +360,16 @@ Answer:"""
             
             # Clean up memory after each query
             clear_memory()
+
+            response_time = time.time() - start_time
+            metrics.record_query(response_time)
+            logger.info(f"✅ Query processed in {response_time:.2f}s")
             
-            logger.info(f"Query processed: {question[:50]}...")
             return answer, sources_text
             
         except Exception as e:
+            response_time = time.time() - start_time
+            metrics.record_error()
             logger.error(f"Error processing query: {e}")
             clear_memory()
             return f"❌ Error processing query: {str(e)}", ""
@@ -356,14 +431,27 @@ def get_status() -> str:
 
 
 def health_check():
-    """Return system health status."""
-    return {
-        "status": "healthy",
-        "device": rag_system.device,
-        "initialized": rag_system.is_initialized,
-        "models_ready": rag_system.models_ready,
-        "prebuilt_index_exists": os.path.exists("faiss_index")
-    }
+    """Return comprehensive system health status."""
+    try:
+        stats = metrics.get_stats()
+        return {
+            "status": "healthy",
+            "timestamp": datetime.now().isoformat(),
+            "device": rag_system.device,
+            "initialized": rag_system.is_initialized,
+            "models_ready": rag_system.models_ready,
+            "prebuilt_index_exists": os.path.exists("faiss_index"),
+            "metrics": stats,
+            "version": "1.0.0",
+            "environment": os.getenv("ENVIRONMENT", "production")
+        }
+    except Exception as e:
+        logger.error(f"❌ Health check failed: {e}")
+        return {
+            "status": "unhealthy",
+            "error": str(e),
+            "timestamp": datetime.now().isoformat()
+        }
 
 
 # Build Gradio Interface
@@ -452,6 +540,15 @@ def create_interface():
             inputs=msg_input,
         )
         
+        # Health check section
+        with gr.Accordion("🏥 System Health & Metrics", open=False):
+            health_output = gr.JSON(label="System Health")
+            health_btn = gr.Button("Check Health & Stats")
+            health_btn.click(
+                fn=health_check,
+                outputs=health_output
+            )
+
         gr.Markdown(
             """
             ---
