@@ -11,6 +11,11 @@ from typing import List, Tuple
 from dataclasses import dataclass
 import threading
 
+from fastapi import FastAPI
+import gradio as gr
+import uvicorn
+import os
+
 # Memory optimizations - set BEFORE importing heavy libraries
 os.environ['OMP_NUM_THREADS'] = '1'
 os.environ['MKL_NUM_THREADS'] = '1'
@@ -603,18 +608,19 @@ def create_interface():
     return demo
 
 demo = create_interface()
-app = demo.app
+
+app = FastAPI()
+
 @app.get("/health")
-def health_api():
+def health():
     return health_check()
+
+app = gr.mount_gradio_app(app, demo, path="/")
+
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 7860))
-    logger.info(f"Starting HR Knowledge Assistant on port {port}")
-    
-    
-    demo.launch(
-        server_name="0.0.0.0",
-        server_port=port,
-        share=False,
-        show_error=True,
+    uvicorn.run(
+        app,
+        host="0.0.0.0",
+        port=int(os.environ.get("PORT", 7860)),
+        log_level="info",
     )
