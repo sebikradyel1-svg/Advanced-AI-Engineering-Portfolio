@@ -70,7 +70,7 @@ jobs:
     - name: Wait for deployment
       run: sleep 30
     
-    - #name: Health check after deployment
+    #- name: Health check after deployment
       #run: |
         #curl -f https://advanced-ai-engineering-portfolio.onrender.com/health || exit 1
         #echo "✅ Deployment successful and healthy!"
