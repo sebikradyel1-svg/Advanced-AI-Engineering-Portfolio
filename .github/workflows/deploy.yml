@@ -3,9 +3,14 @@ name: Deploy to Render
 on:
   push:
     branches: [ main ]
+    paths:
+      - "GRADIO_RAG/**"  # ← Rulează doar la schimbări în GRADIO_RAG
   pull_request:
     branches: [ main ]
-  workflow_dispatch:
+    paths:
+      - "GRADIO_RAG/**"
+  workflow_dispatch:  # ← Permite trigger manual
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -64,6 +69,11 @@ jobs:
     
     - name: Wait for deployment
       run: sleep 30
+    
+    - name: Health check after deployment
+      run: |
+        curl -f https://advanced-ai-engineering-portfolio.onrender.com/health || exit 1
+        echo "✅ Deployment successful and healthy!"
     
     - name: Health check after deployment
       run: |
