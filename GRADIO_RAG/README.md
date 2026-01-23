@@ -25,7 +25,7 @@ An AI-powered HR policy Q&A system using Retrieval-Augmented Generation (RAG). A
 
 ---
 
-## 🛠️ Tech Stack
+## 🛠️ Tech Stack:
 
 | Component | Technology |
 |-----------|------------|
