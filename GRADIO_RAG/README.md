@@ -15,7 +15,7 @@ An AI-powered HR policy Q&A system using Retrieval-Augmented Generation (RAG). A
 
 ---
 
-## 🎯 Features
+## 🎯 Features:
 
 - **Instant Policy Lookup** - Ask questions in natural language
 - **Source Citations** - See exactly which documents support each answer
@@ -25,7 +25,7 @@ An AI-powered HR policy Q&A system using Retrieval-Augmented Generation (RAG). A
 
 ---
 
-## 🛠️ Tech Stack
+## 🛠️ Tech Stack:
 
 | Component | Technology |
 |-----------|------------|
