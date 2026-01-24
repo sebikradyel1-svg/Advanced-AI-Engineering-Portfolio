@@ -5,4 +5,4 @@ sentence-transformers
 langchain-community
 langchain-huggingface
 faiss-cpu
-gradio
+gradiolangchain-groq>=0.1.0
