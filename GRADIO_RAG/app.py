@@ -33,8 +33,6 @@ from langchain_community.vectorstores import FAISS
 from langchain_community.document_loaders import TextLoader
 from langchain_core.documents import Document
 
-# Transformers for LLM
-from transformers import AutoTokenizer, AutoModelForSeq2SeqLM, pipeline
 
 import logging
 
@@ -126,7 +124,7 @@ class RAGConfig:
     chunk_size: int = 500
     chunk_overlap: int = 50
     embeddings_model: str = "sentence-transformers/all-MiniLM-L6-v2"
-    llm_model: str = "google/flan-t5-large"
+    llm_model: str = "llama-3.3-70b-versatile"
     top_k_retrieval: int = 3
     faiss_index_path: str = "faiss_index"
 
@@ -341,7 +339,7 @@ Answer:"""
 
             try:
                 # Use Groq API instead of local model
-                from langchain.schema import HumanMessage
+                from langchain_core.messages import HumanMessage
                 
                 response = self.llm_pipeline.invoke([HumanMessage(content=prompt)])
                 answer = response.content.strip()

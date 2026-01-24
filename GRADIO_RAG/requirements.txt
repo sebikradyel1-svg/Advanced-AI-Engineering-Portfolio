@@ -4,6 +4,7 @@ transformers
 sentence-transformers
 langchain-community
 langchain-huggingface
+langchain-core
 faiss-cpu
 gradio
 langchain-groq>=0.1.0
