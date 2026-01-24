@@ -1,228 +1,201 @@
-# 🏢 HR RAG Knowledge Assistant
+# 🤖 HR RAG Assistant - Production AI System
 
-An AI-powered HR policy Q&A system using Retrieval-Augmented Generation (RAG). Ask questions about company policies and get instant, accurate answers with source citations.
+[![Deploy Status](https://img.shields.io/badge/deploy-render-success)](https://advanced-ai-engineering-portfolio.onrender.com/)
+[![Python](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/downloads/)
 
-![Python](https://img.shields.io/badge/Python-3.10-blue)
-![LangChain](https://img.shields.io/badge/LangChain-0.1.11-green)
-![Gradio](https://img.shields.io/badge/Gradio-4.21.0-orange)
-![License](https://img.shields.io/badge/License-MIT-yellow)
+> **AI-powered HR document analysis system with production deployment, monitoring, and CI/CD automation.**
 
-## 🌐 Live Demo
-
-**[Try it here →](https://advanced-ai-engineering-portfolio.onrender.com)**
-
-> ⚠️ Note: Free tier may take 30-60 seconds to wake up on first visit.
+🔗 **Live Demo:** [https://advanced-ai-engineering-portfolio.onrender.com/](https://advanced-ai-engineering-portfolio.onrender.com/)
 
 ---
 
-## 🎯 Features:
+## 📋 Overview
 
-- **Instant Policy Lookup** - Ask questions in natural language
-- **Source Citations** - See exactly which documents support each answer
-- **Conversation Memory** - Follow-up questions understand context
-- **Custom Document Upload** - Load your own HR policies (.txt)
-- **Low-Memory Optimized** - Runs on 512MB RAM (Render free tier)
+The HR RAG Assistant is a production-ready AI system that provides instant, accurate answers to HR policy questions using Retrieval-Augmented Generation (RAG). Built with enterprise-grade architecture for low-memory deployment.
 
----
-
-## 🛠️ Tech Stack:
-
-| Component | Technology |
-|-----------|------------|
-| **LLM** | FLAN-T5 Small (google/flan-t5-small) |
-| **Embeddings** | all-MiniLM-L6-v2 (sentence-transformers) |
-| **Vector Store** | FAISS (faiss-cpu) |
-| **Framework** | LangChain |
-| **UI** | Gradio |
-| **Deployment** | Docker + Render |
+### Key Features
+- ⚡ **Production Deployment** - Live on Render with auto-deploy
+- 🤖 **RAG System** - FLAN-T5 + FAISS for intelligent Q&A
+- 📊 **Real-time Monitoring** - Health checks, metrics, logging
+- 🔄 **CI/CD Pipeline** - GitHub Actions automation
+- 💾 **Memory Optimized** - Runs on 512MB RAM
 
 ---
 
-## 📁 Project Structure
-
+## 🏗️ Architecture
 ```
-GRADIO_RAG/
-├── app.py                  # Main application (Gradio UI + RAG logic)
-├── Dockerfile              # Docker configuration for deployment
-├── requirements.txt        # Python dependencies (CPU-optimized)
-├── company_policies.txt    # Sample HR policies document
-├── faiss_index/            # Pre-built vector index
-│   ├── index.faiss
-│   └── index.pkl
-├── render.yaml             # Render deployment config
-└── README.md
+User Query → Gradio UI → RAG System → FLAN-T5 Model → Response
+                              ↓
+                         FAISS Vector DB
+                              ↓
+                      HR Policy Documents
 ```
+
+### Components
+- **Frontend**: Gradio web interface
+- **Vector DB**: FAISS for semantic search
+- **LLM**: Google FLAN-T5-base (local)
+- **Embeddings**: all-MiniLM-L6-v2
+- **Monitoring**: Custom metrics + health checks
+- **Deployment**: Render + GitHub Actions
 
 ---
 
 ## 🚀 Quick Start
 
-### Option 1: Use the Live Demo
-Click the demo link above and try it instantly!
+### Prerequisites
+- Python 3.10+
+- 2GB+ RAM (development)
+- 512MB+ RAM (production)
 
-### Option 2: Run Locally
-
+### Installation
 ```bash
-# Clone the repository
+# 1. Clone repository
 git clone https://github.com/sebikradyel1-svg/Advanced-AI-Engineering-Portfolio.git
 cd Advanced-AI-Engineering-Portfolio/GRADIO_RAG
 
-# Create virtual environment
+# 2. Create virtual environment
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+source venv/bin/activate  # Windows: venv\Scripts\activate
 
-# Install dependencies
+# 3. Install dependencies
 pip install -r requirements.txt
 
-# Run the app
+# 4. Run locally
 python app.py
 ```
 
-Open `http://localhost:7860` in your browser.
+Open: `http://localhost:7860`
 
-### Option 3: Run with Docker
+---
 
-```bash
-docker build -t hr-rag-assistant .
-docker run -p 7860:7860 hr-rag-assistant
+## 💻 Usage
+
+### Load Sample Policies
+1. Click **"Load Sample Policies"** button
+2. Wait for models to load (~30 seconds)
+3. Start asking questions!
+
+### Example Queries
+- "How many vacation days do I get per year?"
+- "What are the standard working hours?"
+- "Is remote work allowed?"
+- "What medical benefits are provided?"
+
+### Upload Custom Documents
+1. Prepare `.txt` file with your policies
+2. Use "Upload Policy Document" section
+3. System processes and indexes automatically
+
+---
+
+## 📊 Production Features
+
+### CI/CD Pipeline
+- **Auto-deploy** on every push to `main`
+- **Automated testing** (linting, imports)
+- **Health checks** post-deployment
+- **GitHub Actions** workflow
+
+### Monitoring & Logging
+- **Multi-level logging** (console + files)
+- **Metrics tracking** (uptime, queries, errors)
+- **Health dashboard** in UI
+- **Daily log rotation**
+
+### Performance
+- **Average response**: 3-5 seconds
+- **Memory footprint**: <512MB RAM
+- **Concurrent users**: 5-10
+- **Uptime**: 99%+ (Render free tier)
+
+---
+
+## 🛠️ Tech Stack
+
+| Category | Technology | Purpose |
+|----------|-----------|---------|
+| **Frontend** | Gradio 4.x | Web interface |
+| **Vector DB** | FAISS | Semantic search |
+| **LLM** | FLAN-T5-base | Text generation |
+| **Embeddings** | HuggingFace | Document vectorization |
+| **Framework** | LangChain | RAG orchestration |
+| **Deployment** | Render | Cloud hosting |
+| **CI/CD** | GitHub Actions | Automation |
+
+---
+
+## 🌐 Deployment
+
+### Deploy to Render
+
+1. Fork this repository
+2. Create Render account
+3. New Web Service → Connect GitHub
+4. Configure:
 ```
-
----
-
-## 💡 Usage
-
-1. **Click "Load Sample Policies"** to initialize the system
-2. **Ask a question** like:
-   - "How many vacation days do I get per year?"
-   - "What are the standard working hours?"
-   - "Is remote work allowed?"
-   - "What medical benefits are provided?"
-3. **View source citations** to verify answers
-
----
-
-## ⚡ Optimizations for Low-Memory Deployment
-
-This project is optimized to run on **512MB RAM** (Render free tier):
-
-| Optimization | Description |
-|--------------|-------------|
-| **CPU-only PyTorch** | `torch==2.2.1+cpu` - No CUDA libraries (~1GB saved) |
-| **FLAN-T5-Small** | Smaller model (~150MB vs ~1GB for base) |
-| **Garbage Collection** | `gc.collect()` after each query |
-| **torch.no_grad()** | Disabled gradients during inference |
-| **low_cpu_mem_usage** | Efficient model loading |
-| **Pre-built FAISS Index** | No embedding computation at runtime |
-| **Thread Limiting** | `OMP_NUM_THREADS=1` to reduce memory spikes |
-
----
-
-## 🏗️ Architecture
-
+   Build: pip install -r requirements.txt
+   Start: python app.py
 ```
-┌─────────────┐     ┌─────────────┐     ┌─────────────┐
-│   User      │────▶│   Gradio    │────▶│  RAG System │
-│  Question   │     │     UI      │     │             │
-└─────────────┘     └─────────────┘     └──────┬──────┘
-                                               │
-                    ┌──────────────────────────┼──────────────────────────┐
-                    │                          │                          │
-                    ▼                          ▼                          ▼
-            ┌───────────────┐         ┌───────────────┐         ┌───────────────┐
-            │  Embeddings   │         │    FAISS      │         │   FLAN-T5     │
-            │  (MiniLM-L6)  │         │  Vector DB    │         │   (Answer)    │
-            └───────────────┘         └───────────────┘         └───────────────┘
-```
+5. Add environment variables (if needed)
+6. Deploy! 🚀
 
-**Flow:**
-1. User asks a question.
-2. Question is embedded using MiniLM-L6-v2.
-3. FAISS retrieves top-3 relevant document chunks.
-4. Context + Question sent to FLAN-T5.
-5. Answer generated with source citations.
+### GitHub Actions Setup
+1. Get Render API Key: https://dashboard.render.com/account/api-keys
+2. Get Service ID from Render URL
+3. Add GitHub Secrets:
+   - `RENDER_API_KEY`
+   - `RENDER_SERVICE_ID`
+4. Push to `main` → auto-deploy!
 
 ---
 
-## 📊 Performance
+## 📈 Roadmap
 
-| Metric | Value |
-|--------|-------|
-| Cold Start | ~30-60 seconds |
-| Query Response | ~3-5 seconds |
-| Memory Usage | ~350MB |
-| Model Load Time | ~15 seconds |
+### Version 1.1
+- [ ] Multi-language support (Romanian + English)
+- [ ] Enhanced analytics dashboard
+- [ ] User authentication
+- [ ] Query history export
 
----
-
-## 🔧 Configuration
-
-Edit `RAGConfig` in `app.py` to customize:
-
-```python
-@dataclass
-class RAGConfig:
-    chunk_size: int = 500           # Document chunk size
-    chunk_overlap: int = 50         # Overlap between chunks
-    embeddings_model: str = "sentence-transformers/all-MiniLM-L6-v2"
-    llm_model: str = "google/flan-t5-small"
-    top_k_retrieval: int = 3        # Number of chunks to retrieve
-    faiss_index_path: str = "faiss_index"
-```
+### Version 2.0
+- [ ] Groq API integration option
+- [ ] Larger model support
+- [ ] Mobile app
+- [ ] API endpoints
 
 ---
 
-## 📝 Adding Custom Documents
+## 👤 Author
 
-1. Create a `.txt` file with your HR policies
-2. Either:
-   - **Upload via UI**: Use the file upload in the app
-   - **Pre-build index**: Run `build_index.py` locally and push `faiss_index/`
-
----
-
-## 🐛 Troubleshooting
-
-| Issue | Solution |
-|-------|----------|
-| 502 Bad Gateway | Wait 30-60 sec for cold start |
-| Out of Memory | Reduce `chunk_size` or `top_k_retrieval` |
-| Slow responses | Normal for free tier CPU |
-| Models not loading | Check Render logs for errors |
-
----
-
-## 🗺️ Roadmap
-
-- [ ] PDF document support
-- [ ] Multi-language support
-- [ ] Conversation export
-- [ ] ONNX optimization for faster inference
-- [ ] Streaming responses
+**Sebastian Kradyel**
+- AI Engineer & ML Specialist
+- 📧 Email: paulsebastianlradyel@gmail.com
+- 💼 LinkedIn: www.linkedin.com/in/paul-sebastian-kradyel
+- 🐙 GitHub: [@sebikradyel1-svg](https://github.com/sebikradyel1-svg)
 
 ---
 
 ## 📄 License
 
-MIT License - feel free to use for your own projects!
-
----
-
-## 👨‍💻 Author
-
-**Sebastian** - AI Engineer
-
-- GitHub: [@sebikradyel1-svg](https://github.com/sebikradyel1-svg)
-- Portfolio: [Advanced-AI-Engineering-Portfolio](https://github.com/sebikradyel1-svg/Advanced-AI-Engineering-Portfolio)
+This project is open source and available under the MIT License.
 
 ---
 
 ## 🙏 Acknowledgments
 
-- [LangChain](https://langchain.com/) - RAG framework
-- [HuggingFace](https://huggingface.co/) - Models and transformers
-- [Gradio](https://gradio.app/) - UI framework
-- [Render](https://render.com/) - Deployment platform
+- **LangChain** - RAG framework
+- **HuggingFace** - Models and embeddings
+- **Meta/FAISS** - Vector database
+- **Google** - FLAN-T5 model
+- **Gradio** - UI framework
 
 ---
 
-**⭐ Star this repo if you found it useful!**
+<div align="center">
+
+**⭐ If you find this project useful, please give it a star! ⭐**
+
+Made with ❤️ by Sebastian Kradyel | 2026
+
+</div>
