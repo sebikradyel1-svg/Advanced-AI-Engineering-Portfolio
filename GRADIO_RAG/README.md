@@ -1,5 +1,7 @@
 # 🤖 HR RAG Assistant - Production AI System
 
+![Demo App](demo/Animation.gif)
+
 [![Deploy Status](https://img.shields.io/badge/deploy-render-success)](https://advanced-ai-engineering-portfolio.onrender.com/)
 [![Python](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/downloads/)
 
@@ -190,6 +192,17 @@ This project is open source and available under the MIT License.
 - **Google** - FLAN-T5 model
 - **Gradio** - UI framework
 
+![Commit](demo/01-github-push.png)
+
+*Step 1: Developer commits code*
+
+![GitHub Actions](demo/04-deploy-triggered.png )
+
+*Step 2: Automated tests run*
+
+![Render Deploy](demo/05-render-deploying.png)
+
+*Step 3: Production deployment*
 ---
 
 <div align="center">
