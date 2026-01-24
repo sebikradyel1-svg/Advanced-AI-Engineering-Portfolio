@@ -13,11 +13,13 @@
 
 ## 📋 Overview
 
-The HR RAG Assistant is a production-ready AI system that provides instant, accurate answers to HR policy questions using Retrieval-Augmented Generation (RAG). Built with enterprise-grade architecture for low-memory deployment.
+The HR RAG Assistant is a production-ready AI system that provides instant, accurate answers to HR policy questions using Retrieval-Augmented Generation (RAG). Built with a hybrid architecture: local FAISS retrieval + Groq-hosted LLM for ultra-fast inference and low-memory deployment.
+
 
 ### Key Features
 - ⚡ **Production Deployment** - Live on Render with auto-deploy
-- 🤖 **RAG System** - FLAN-T5 + FAISS for intelligent Q&A
+- 🤖 **RAG System** - FAISS (local) + Groq Llama 3 (cloud inference)
+- ⚡ **Ultra-Fast Inference** - Sub-second responses via Groq LPU
 - 📊 **Real-time Monitoring** - Health checks, metrics, logging
 - 🔄 **CI/CD Pipeline** - GitHub Actions automation
 - 💾 **Memory Optimized** - Runs on 512MB RAM
@@ -26,17 +28,17 @@ The HR RAG Assistant is a production-ready AI system that provides instant, accu
 
 ## 🏗️ Architecture
 ```
-User Query → Gradio UI → RAG System → FLAN-T5 Model → Response
+User Query → Gradio UI → RAG System → Groq Cloud (Llama 3) → Response
                               ↓
-                         FAISS Vector DB
+                         FAISS Vector DB (Local)
                               ↓
                       HR Policy Documents
-```
+
 
 ### Components
 - **Frontend**: Gradio web interface
 - **Vector DB**: FAISS for semantic search
-- **LLM**: Google FLAN-T5-base (local)
+- **LLM**: LLM: Llama 3 (via Groq API)
 - **Embeddings**: all-MiniLM-L6-v2
 - **Monitoring**: Custom metrics + health checks
 - **Deployment**: Render + GitHub Actions
@@ -106,7 +108,7 @@ Open: `http://localhost:7860`
 - **Daily log rotation**
 
 ### Performance
-- **Average response**: 3-5 seconds
+- **Average response**: <1 second (Groq inference)
 - **Memory footprint**: <512MB RAM
 - **Concurrent users**: 5-10
 - **Uptime**: 99%+ (Render free tier)
@@ -119,7 +121,7 @@ Open: `http://localhost:7860`
 |----------|-----------|---------|
 | **Frontend** | Gradio 4.x | Web interface |
 | **Vector DB** | FAISS | Semantic search |
-| **LLM** | FLAN-T5-base | Text generation |
+| **LLM** | Llama 3 (Groq API) | Ultra-low latency inference|
 | **Embeddings** | HuggingFace | Document vectorization |
 | **Framework** | LangChain | RAG orchestration |
 | **Deployment** | Render | Cloud hosting |
