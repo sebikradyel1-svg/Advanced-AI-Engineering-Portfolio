@@ -305,11 +305,54 @@ Advanced-AI-Engineering-Portfolio/
 
 ## 🎓 Certifications
 
-| Certification | Issuer |
-|---------------|--------|
-| AI Engineering Professional Certificate | IBM |
-| Data Science Professional Certificate | IBM |
-| AWS DevOps | In Progress |
+| Certification | Issuer | Courses | Date | Verify |
+|---------------|--------|---------|------|--------|
+| **IBM AI Engineering Professional Certificate** | IBM | 13 courses | Oct 2025 | [Verify](https://coursera.org/verify/professional-cert/YPCZ6H8FMLV6) |
+| **IBM Data Science Professional Certificate** | IBM | 12 courses | Sep 2025 | [Verify](https://coursera.org/verify/professional-cert/LKYLRICBD43U) |
+| **AWS DevOps and AI Specialization** | Amazon Web Services | 3 courses | Jan 2026 | [Verify](https://coursera.org/verify/specialization/TH9OFS3NCUUV) |
+| **Machine Learning in Production** | DeepLearning.AI (Andrew Ng) | 1 course | Jan 2026 | [Verify](https://coursera.org/verify/L3FE9JK5W80G) |
+
+<details>
+<summary>📚 <b>Full Course List (29 courses)</b></summary>
+
+### IBM AI Engineering (13 courses)
+- Machine Learning with Python
+- Introduction to Deep Learning & Neural Networks with Keras
+- Deep Learning with Keras and TensorFlow
+- Introduction to Neural Networks and PyTorch
+- Deep Learning with PyTorch
+- AI Capstone Project with Deep Learning
+- Generative AI and LLMs: Architecture and Data Preparation
+- Gen AI Foundational Models for NLP & Language Understanding
+- Generative AI Language Modeling with Transformers
+- Generative AI Engineering and Fine-Tuning Transformers
+- Generative AI Advance Fine-Tuning for LLMs
+- Fundamentals of AI Agents Using RAG and LangChain
+- Project: Generative AI Applications with RAG and LangChain
+
+### IBM Data Science (12 courses)
+- What is Data Science?
+- Tools for Data Science
+- Data Science Methodology
+- Python for Data Science, AI & Development
+- Python Project for Data Science
+- Databases and SQL for Data Science with Python
+- Data Analysis with Python
+- Data Visualization with Python
+- Machine Learning with Python
+- Applied Data Science Capstone
+- Generative AI: Elevate Your Data Science Career
+- Data Scientist Career Guide and Interview Preparation
+
+### AWS DevOps and AI (3 courses)
+- DevOps and AI on AWS: Upgrading Apps with Generative AI
+- DevOps and AI on AWS: CI/CD for Generative AI Applications
+- DevOps and AI on AWS: AIOps
+
+### DeepLearning.AI
+- Machine Learning in Production (MLOps) - by Andrew Ng
+
+</details>
 
 ---
 
