@@ -1,228 +1,353 @@
-# 🏢 HR RAG Knowledge Assistant
+# 🤖 Advanced AI Engineering Portfolio
 
-An AI-powered HR policy Q&A system using Retrieval-Augmented Generation (RAG). Ask questions about company policies and get instant, accurate answers with source citations.
+[![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://python.org)
+[![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-red.svg)](https://pytorch.org)
+[![Transformers](https://img.shields.io/badge/🤗%20Transformers-Latest-yellow)](https://huggingface.co/transformers)
+[![LangChain](https://img.shields.io/badge/🦜%20LangChain-Latest-green)](https://langchain.com)
+[![CI/CD](https://img.shields.io/badge/CI%2FCD-GitHub%20Actions-brightgreen)](https://github.com/features/actions)
 
-![Python](https://img.shields.io/badge/Python-3.10-blue)
-![LangChain](https://img.shields.io/badge/LangChain-0.1.11-green)
-![Gradio](https://img.shields.io/badge/Gradio-4.21.0-orange)
-![License](https://img.shields.io/badge/License-MIT-yellow)
-
-## 🌐 Live Demo
-
-**[Try it here →](https://advanced-ai-engineering-portfolio.onrender.com)**
-
-> ⚠️ Note: Free tier may take 30-60 seconds to wake up on first visit.
+> Production-ready AI/ML projects demonstrating expertise in **LLMs**, **RAG Systems**, **RLHF**, **Fine-tuning**, and **Deep Learning**
 
 ---
 
-## 🎯 Features
+## 🎯 Portfolio Overview
 
-- **Instant Policy Lookup** - Ask questions in natural language
-- **Source Citations** - See exactly which documents support each answer
-- **Conversation Memory** - Follow-up questions understand context
-- **Custom Document Upload** - Load your own HR policies (.txt)
-- **Low-Memory Optimized** - Runs on 512MB RAM (Render free tier)
+This repository showcases **9 production-ready projects** covering the full spectrum of modern AI engineering:
 
----
-
-## 🛠️ Tech Stack
-
-| Component | Technology |
-|-----------|------------|
-| **LLM** | FLAN-T5 Small (google/flan-t5-small) |
-| **Embeddings** | all-MiniLM-L6-v2 (sentence-transformers) |
-| **Vector Store** | FAISS (faiss-cpu) |
-| **Framework** | LangChain |
-| **UI** | Gradio |
-| **Deployment** | Docker + Render |
+| Category | Projects | Key Technologies |
+|----------|----------|------------------|
+| **LLM Fine-tuning** | Legal Text Generator | LoRA, PEFT, GPT-2, Gradio |
+| **RAG Systems** | GRADIO_RAG, RAG-OPENAI | Groq, OpenAI, LangChain, FAISS |
+| **RLHF & Alignment** | KL Guard RLHF, Reward Model | PPO, TRL, PyTorch |
+| **Deep Learning** | Transformers, Animal Classifier | Custom Attention, CNN, VGG16 |
+| **NLP** | Transfer Learning Text | BERT, Sentiment Analysis |
 
 ---
 
-## 📁 Project Structure
+## 🚀 Featured Projects
+
+---
+
+### 📜 1. Legal & Business Text Generator
+> **Fine-tuned LLM for professional document generation using LoRA**
+
+[![Live Demo](https://img.shields.io/badge/🤗%20Live%20Demo-Try%20Now-blue)](https://huggingface.co/spaces/KradyelSebi/legal-text-generator)
+
+| Aspect | Details |
+|--------|---------|
+| **Location** | [`legal-text-generator/`](./legal-text-generator) |
+| **Tech Stack** | GPT-2 Medium, LoRA/PEFT, Gradio, HuggingFace Spaces |
+| **Live Demo** | [huggingface.co/spaces/KradyelSebi/legal-text-generator](https://huggingface.co/spaces/KradyelSebi/legal-text-generator) |
+
+**Highlights:**
+- ✅ Parameter-efficient fine-tuning (only **0.4% params** trained)
+- ✅ 8 document types: contracts, NDAs, policies, emails, meeting minutes
+- ✅ **Production deployed** on HuggingFace Spaces
+- ✅ Custom training with 200+ legal document examples
+
+**Skills Demonstrated:** `LLM Fine-tuning` `LoRA/PEFT` `Model Deployment` `Gradio`
+
+---
+
+### 🌐 2. GRADIO RAG System (Groq-Powered)
+> **Interactive RAG chatbot with Groq LLM and Gradio interface**
+
+[![Live Demo](https://img.shields.io/badge/🚀%20Live%20Demo-Render-green)](https://advanced-ai-engineering-portfolio.onrender.com/)
+
+| Aspect | Details |
+|--------|---------|
+| **Location** | [`GRADIO_RAG/`](./GRADIO_RAG) |
+| **Tech Stack** | Groq API, LangChain, FAISS, Gradio, HuggingFace Embeddings |
+| **Live Demo** | [advanced-ai-engineering-portfolio.onrender.com](https://advanced-ai-engineering-portfolio.onrender.com/) |
+
+**Highlights:**
+- ✅ Lightning-fast inference with **Groq LPU**
+- ✅ Interactive web interface with Gradio
+- ✅ Document upload and semantic search
+- ✅ Pre-built FAISS index for instant loading
+
+**Skills Demonstrated:** `RAG Architecture` `Groq API` `Vector Search` `Web Interface`
+
+---
+
+### 🔑 3. RAG System with OpenAI
+> **Enterprise RAG implementation using OpenAI embeddings and GPT**
+
+| Aspect | Details |
+|--------|---------|
+| **Location** | [`RAG-OPENAI/`](./RAG-OPENAI) |
+| **Tech Stack** | OpenAI API, LangChain, FAISS, Python |
+
+**Highlights:**
+- ✅ OpenAI embeddings for superior semantic understanding
+- ✅ GPT-powered response generation
+- ✅ Configurable chunking strategies
+- ✅ Production-ready error handling
+
+**Skills Demonstrated:** `OpenAI API` `RAG Pipeline` `Embeddings` `LangChain`
+
+---
+
+### 🎯 4. RLHF with KL-Divergence Guard
+> **Reinforcement Learning from Human Feedback with safety constraints**
+
+| Aspect | Details |
+|--------|---------|
+| **Location** | [`KL_Guard_RLHF/`](./KL_Guard_RLHF) |
+| **Tech Stack** | PyTorch, TRL, PPO, Transformers |
+
+**Highlights:**
+- ✅ Custom **KL-divergence guard** for distribution stability
+- ✅ Prevents reward hacking and catastrophic forgetting
+- ✅ Full PPO training loop implementation
+- ✅ Configurable KL penalty coefficients
+
+<details>
+<summary>📊 RLHF Pipeline Architecture</summary>
+
+![RLHF Pipeline](images/RLHF%20Pipeline.png)
+
+</details>
+
+**Skills Demonstrated:** `RLHF` `PPO Algorithm` `Model Alignment` `PyTorch`
+
+---
+
+### ⭐ 5. Reward Model Training
+> **Training reward models for human preference learning**
+
+| Aspect | Details |
+|--------|---------|
+| **Location** | [`Reward-Model-Training/`](./Reward-Model-Training) |
+| **Tech Stack** | PyTorch, Transformers, Custom Training Loop |
+
+**Highlights:**
+- ✅ Pairwise preference learning
+- ✅ Bradley-Terry model implementation
+- ✅ Integration with RLHF pipeline
+- ✅ Custom loss functions for ranking
+
+**Skills Demonstrated:** `Reward Modeling` `Preference Learning` `Custom Training`
+
+---
+
+### 📈 6. Custom Transformer Stock Predictor
+> **Ground-up Transformer implementation for financial time-series forecasting**
+
+| Aspect | Details |
+|--------|---------|
+| **Location** | [`Transformers/`](./Transformers) |
+| **Tech Stack** | PyTorch, NumPy, Custom Architecture |
+
+**Highlights:**
+- ✅ **Multi-Head Attention from scratch**
+- ✅ Positional Encoding implementation
+- ✅ Time-series prediction for stock prices
+- ✅ Complete encoder architecture
+
+<details>
+<summary>📊 Transformer Encoder Architecture</summary>
+
+![Transformer Encoder](images/Transformes_encoder.png)
+
+</details>
+
+**Skills Demonstrated:** `Transformer Architecture` `Attention Mechanisms` `Time Series`
+
+---
+
+### 🐾 7. Universal Animal Classifier
+> **Computer Vision with Transfer Learning using VGG16**
+
+| Aspect | Details |
+|--------|---------|
+| **Location** | [`Animal-Classifier/`](./Animal-Classifier) |
+| **Tech Stack** | PyTorch, VGG16, Transfer Learning |
+
+**Highlights:**
+- ✅ Pre-trained VGG16 backbone
+- ✅ Custom classification head
+- ✅ Data augmentation pipeline
+- ✅ Multi-class classification
+
+**Skills Demonstrated:** `Transfer Learning` `CNN` `Image Classification` `PyTorch`
+
+---
+
+### 📝 8. Text Sentiment Analysis (BERT)
+> **BERT-based sentiment classification with transfer learning**
+
+| Aspect | Details |
+|--------|---------|
+| **Location** | [`Transfer_Learning_Text/`](./Transfer_Learning_Text) |
+| **Tech Stack** | BERT, HuggingFace Transformers, PyTorch |
+
+**Highlights:**
+- ✅ Fine-tuned BERT for sentiment analysis
+- ✅ Custom tokenization pipeline
+- ✅ Evaluation metrics and visualization
+- ✅ Production-ready inference
+
+<details>
+<summary>📊 Transfer Learning Comparison</summary>
+
+![Transfer Learning](images/2_transfer_learning_comparison.png)
+
+</details>
+
+**Skills Demonstrated:** `NLP` `BERT Fine-tuning` `Text Classification`
+
+---
+
+## ⚙️ CI/CD Pipeline
+
+This repository includes **GitHub Actions** for automated workflows:
+
+| Workflow | Purpose |
+|----------|---------|
+| Deployment Health Check | Automated testing and validation |
+
+Location: [`.github/workflows/`](./.github/workflows)
+
+---
+
+## 🛠️ Technical Skills
+
+### Core Technologies
+```
+Python │ PyTorch │ TensorFlow │ HuggingFace Transformers │ LangChain │ OpenAI API │ Groq API
+```
+
+### AI/ML Expertise
+```
+├── 🔤 LLM & NLP
+│   ├── Fine-tuning (LoRA, PEFT, Full)
+│   ├── Prompt Engineering
+│   ├── Text Generation & Classification
+│   └── BERT, GPT-2, Llama
+│
+├── 📚 RAG Systems
+│   ├── Vector Databases (FAISS, ChromaDB)
+│   ├── Document Processing & Chunking
+│   ├── Semantic Search & Retrieval
+│   └── OpenAI & Groq Integration
+│
+├── 🎯 RLHF & Alignment
+│   ├── Reward Modeling
+│   ├── PPO Training
+│   ├── KL-Divergence Control
+│   └── Human Preference Learning
+│
+└── 🧠 Deep Learning
+    ├── Transformers (from scratch)
+    ├── CNNs & Transfer Learning
+    ├── Attention Mechanisms
+    └── Time Series Forecasting
+```
+
+### Deployment & Tools
+```
+Docker │ Git │ GitHub Actions │ HuggingFace Hub │ Gradio │ TensorBoard │ FAISS
+```
+
+---
+
+## 📁 Repository Structure
 
 ```
-GRADIO_RAG/
-├── app.py                  # Main application (Gradio UI + RAG logic)
-├── Dockerfile              # Docker configuration for deployment
-├── requirements.txt        # Python dependencies (CPU-optimized)
-├── company_policies.txt    # Sample HR policies document
-├── faiss_index/            # Pre-built vector index
-│   ├── index.faiss
-│   └── index.pkl
-├── render.yaml             # Render deployment config
-└── README.md
+Advanced-AI-Engineering-Portfolio/
+│
+├── 📜 legal-text-generator/           # LLM Fine-tuning with LoRA
+│   ├── training/
+│   ├── app/
+│   └── screenshots/
+│
+├── 🌐 GRADIO_RAG/                     # RAG with Groq + Gradio
+│   └── gradio_rag_app.py
+│
+├── 🔑 RAG-OPENAI/                     # RAG with OpenAI
+│   └── rag_openai.py
+│
+├── 🎯 KL_Guard_RLHF/                  # RLHF with KL Guard
+│   └── KL_Guard_RLHF.py
+│
+├── ⭐ Reward-Model-Training/          # Reward Model
+│   └── reward_model_training.py
+│
+├── 📈 Transformers/                   # Custom Transformer
+│   └── transformer_stock_prediction.py
+│
+├── 🐾 Animal-Classifier/              # CNN Transfer Learning
+│   └── universal_classifier.py
+│
+├── 📝 Transfer_Learning_Text/         # BERT Fine-tuning
+│   └── transfer_learning_text.py
+│
+├── 📂 docs/                           # Documentation & FAISS indices
+│
+├── 🖼️ images/                         # Architecture diagrams
+│
+├── ⚙️ .github/workflows/              # CI/CD Pipelines
+│
+└── 📄 README.md
 ```
 
 ---
 
-## 🚀 Quick Start
+## 🔗 Live Demos
 
-### Option 1: Use the Live Demo
-Click the demo link above and try it instantly!
-
-### Option 2: Run Locally
-
-```bash
-# Clone the repository
-git clone https://github.com/sebikradyel1-svg/Advanced-AI-Engineering-Portfolio.git
-cd Advanced-AI-Engineering-Portfolio/GRADIO_RAG
-
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Run the app
-python app.py
-```
-
-Open `http://localhost:7860` in your browser.
-
-### Option 3: Run with Docker
-
-```bash
-docker build -t hr-rag-assistant .
-docker run -p 7860:7860 hr-rag-assistant
-```
+| Project | Demo Link | Platform | Status |
+|---------|-----------|----------|--------|
+| **GRADIO RAG System** | [advanced-ai-engineering-portfolio.onrender.com](https://advanced-ai-engineering-portfolio.onrender.com/) | Render | ✅ Live |
+| **Legal Text Generator** | [huggingface.co/spaces/KradyelSebi/legal-text-generator](https://huggingface.co/spaces/KradyelSebi/legal-text-generator) | HuggingFace | ✅ Live |
 
 ---
 
-## 💡 Usage
+## 🎓 Certifications
 
-1. **Click "Load Sample Policies"** to initialize the system
-2. **Ask a question** like:
-   - "How many vacation days do I get per year?"
-   - "What are the standard working hours?"
-   - "Is remote work allowed?"
-   - "What medical benefits are provided?"
-3. **View source citations** to verify answers
+| Certification | Issuer |
+|---------------|--------|
+| AI Engineering Professional Certificate | IBM |
+| Data Science Professional Certificate | IBM |
+| AWS DevOps | In Progress |
 
 ---
 
-## ⚡ Optimizations for Low-Memory Deployment
+## 📊 Project Complexity Matrix
 
-This project is optimized to run on **512MB RAM** (Render free tier):
-
-| Optimization | Description |
-|--------------|-------------|
-| **CPU-only PyTorch** | `torch==2.2.1+cpu` - No CUDA libraries (~1GB saved) |
-| **FLAN-T5-Small** | Smaller model (~150MB vs ~1GB for base) |
-| **Garbage Collection** | `gc.collect()` after each query |
-| **torch.no_grad()** | Disabled gradients during inference |
-| **low_cpu_mem_usage** | Efficient model loading |
-| **Pre-built FAISS Index** | No embedding computation at runtime |
-| **Thread Limiting** | `OMP_NUM_THREADS=1` to reduce memory spikes |
+| Project | Difficulty | Lines of Code | Key Challenge |
+|---------|------------|---------------|---------------|
+| Legal Text Generator | ⭐⭐⭐⭐ | 3000+ | LoRA fine-tuning + deployment |
+| GRADIO_RAG | ⭐⭐⭐ | 500+ | Groq integration + UI |
+| KL_Guard_RLHF | ⭐⭐⭐⭐⭐ | 800+ | PPO + KL divergence control |
+| Custom Transformer | ⭐⭐⭐⭐⭐ | 600+ | Attention from scratch |
+| Reward Model | ⭐⭐⭐⭐ | 400+ | Preference learning |
 
 ---
 
-## 🏗️ Architecture
+## 📫 Contact
 
-```
-┌─────────────┐     ┌─────────────┐     ┌─────────────┐
-│   User      │────▶│   Gradio    │────▶│  RAG System │
-│  Question   │     │     UI      │     │             │
-└─────────────┘     └─────────────┘     └──────┬──────┘
-                                               │
-                    ┌──────────────────────────┼──────────────────────────┐
-                    │                          │                          │
-                    ▼                          ▼                          ▼
-            ┌───────────────┐         ┌───────────────┐         ┌───────────────┐
-            │  Embeddings   │         │    FAISS      │         │   FLAN-T5     │
-            │  (MiniLM-L6)  │         │  Vector DB    │         │   (Answer)    │
-            └───────────────┘         └───────────────┘         └───────────────┘
-```
-
-**Flow:**
-1. User asks a question
-2. Question is embedded using MiniLM-L6-v2
-3. FAISS retrieves top-3 relevant document chunks
-4. Context + Question sent to FLAN-T5
-5. Answer generated with source citations
+<p align="center">
+  <a href="https://www.linkedin.com/in/sebastian-paul-manolache">
+    <img src="https://img.shields.io/badge/LinkedIn-Connect-blue?style=for-the-badge&logo=linkedin" alt="LinkedIn">
+  </a>
+  <a href="mailto:paulsebastiankradyel@gmail.com">
+    <img src="https://img.shields.io/badge/Email-Contact-red?style=for-the-badge&logo=gmail" alt="Email">
+  </a>
+  <a href="https://huggingface.co/KradyelSebi">
+    <img src="https://img.shields.io/badge/🤗%20HuggingFace-Profile-yellow?style=for-the-badge" alt="HuggingFace">
+  </a>
+</p>
 
 ---
 
-## 📊 Performance
-
-| Metric | Value |
-|--------|-------|
-| Cold Start | ~30-60 seconds |
-| Query Response | ~3-5 seconds |
-| Memory Usage | ~350MB |
-| Model Load Time | ~15 seconds |
+<p align="center">
+  <b>🚀 Open to AI/ML Engineering Opportunities</b><br>
+  <i>Specializing in LLMs, RAG Systems, RLHF, and Production ML</i>
+</p>
 
 ---
 
-## 🔧 Configuration
-
-Edit `RAGConfig` in `app.py` to customize:
-
-```python
-@dataclass
-class RAGConfig:
-    chunk_size: int = 500           # Document chunk size
-    chunk_overlap: int = 50         # Overlap between chunks
-    embeddings_model: str = "sentence-transformers/all-MiniLM-L6-v2"
-    llm_model: str = "google/flan-t5-small"
-    top_k_retrieval: int = 3        # Number of chunks to retrieve
-    faiss_index_path: str = "faiss_index"
-```
-
----
-
-## 📝 Adding Custom Documents
-
-1. Create a `.txt` file with your HR policies
-2. Either:
-   - **Upload via UI**: Use the file upload in the app
-   - **Pre-build index**: Run `build_index.py` locally and push `faiss_index/`
-
----
-
-## 🐛 Troubleshooting
-
-| Issue | Solution |
-|-------|----------|
-| 502 Bad Gateway | Wait 30-60 sec for cold start |
-| Out of Memory | Reduce `chunk_size` or `top_k_retrieval` |
-| Slow responses | Normal for free tier CPU |
-| Models not loading | Check Render logs for errors |
-
----
-
-## 🗺️ Roadmap
-
-- [ ] PDF document support
-- [ ] Multi-language support
-- [ ] Conversation export
-- [ ] ONNX optimization for faster inference
-- [ ] Streaming responses
-
----
-
-## 📄 License
-
-MIT License - feel free to use for your own projects!
-
----
-
-## 👨‍💻 Author
-
-**Sebastian** - AI Engineer
-
-- GitHub: [@sebikradyel1-svg](https://github.com/sebikradyel1-svg)
-- Portfolio: [Advanced-AI-Engineering-Portfolio](https://github.com/sebikradyel1-svg/Advanced-AI-Engineering-Portfolio)
-
----
-
-## 🙏 Acknowledgments
-
-- [LangChain](https://langchain.com/) - RAG framework
-- [HuggingFace](https://huggingface.co/) - Models and transformers
-- [Gradio](https://gradio.app/) - UI framework
-- [Render](https://render.com/) - Deployment platform
-
----
-
-**⭐ Star this repo if you found it useful!**
+<p align="center">
+  ⭐ <b>If you find this portfolio useful, please consider giving it a star!</b> ⭐
+</p>
