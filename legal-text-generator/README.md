@@ -2,10 +2,10 @@
 
 > Fine-tuned GPT-2 model for generating professional legal and business documents using LoRA (Low-Rank Adaptation)
 
-[![Live Demo](https://img.shields.io/badge/🤗%20Live%20Demo-HuggingFace%20Spaces-blue)](https://huggingface.co/spaces/KradyelSebi/legal-text-generator)
-[![Python](https://img.shields.io/badge/Python-3.10+-green.svg)](https://python.org)
-[![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-red.svg)](https://pytorch.org)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+## [![Live Demo](https://img.shields.io/badge/🤗%20Live%20Demo-HuggingFace%20Spaces-blue)](https://huggingface.co/spaces/KradyelSebi/legal-text-generator)
+### [![Python](https://img.shields.io/badge/Python-3.10+-green.svg)](https://python.org)
+### [![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-red.svg)](https://pytorch.org)
+### [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 ![Demo](screenshots/demo.gif)
 
