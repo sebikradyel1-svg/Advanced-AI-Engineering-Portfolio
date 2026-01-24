@@ -69,3 +69,8 @@ jobs:
     
     - name: Wait for deployment
       run: sleep 30
+    - name: Health check after deployment
+      run: |
+        echo "Testing health endpoint..."
+        curl -f https://advanced-ai-engineering-portfolio.onrender.com/ || exit 1
+        echo "✅ Deployment successful and app is responding!"
