@@ -1,0 +1,5 @@
+legal_llm_finetuned/
+__pycache__/
+*.bin
+*.pt
+logs/

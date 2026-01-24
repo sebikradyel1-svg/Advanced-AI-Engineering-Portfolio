@@ -1,0 +1,15 @@
+# Legal Text Generator - HuggingFace Spaces Requirements
+# ======================================================
+
+# Core ML Libraries
+torch>=2.0.0
+transformers>=4.35.0
+peft>=0.6.0
+accelerate>=0.24.0
+
+# Web Interface
+gradio>=6.0.0
+
+# Utilities
+safetensors>=0.4.0
+sentencepiece>=0.1.99
