@@ -33,7 +33,7 @@ User Query → Gradio UI → RAG System → Groq Cloud (Llama 3) → Response
                          FAISS Vector DB (Local)
                               ↓
                       HR Policy Documents
-
+```
 
 ### Components
 - **Frontend**: Gradio web interface
