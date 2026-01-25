@@ -1,0 +1,25 @@
+# Python - ignoră pentru toate subfolderele
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+env/
+
+# Docker
+.dockerignore
+
+# Environment variables (SĂ NU LE URCI PE GITHUB!)
+.env
+
+# Jupyter Notebooks checkpoint
+.ipynb_checkpoints/
+
+# Sisteme de operare
+.DS_Store
+Thumbs.db
+
+# Dacă ai modele mari de AI (ex: .h5, .pt, .bin) care depășesc 100MB
+*.h5
+*.pt
+*.bin
