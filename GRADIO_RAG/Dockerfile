@@ -1,5 +1,5 @@
 # HR RAG Knowledge Assistant - Docker Configuration
-# Optimized for Render.com free tier deployment
+# Optimized for Groq API deployment (2GB RAM)
 
 FROM python:3.10-slim
 
@@ -27,23 +27,23 @@ COPY requirements.txt .
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Pre-download models during build (cached in Docker image!)
-RUN python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')"
-RUN python -c "from transformers import AutoTokenizer, AutoModelForSeq2SeqLM; AutoTokenizer.from_pretrained('google/flan-t5-base'); AutoModelForSeq2SeqLM.from_pretrained('google/flan-t5-base')"
+# Pre-download ONLY embeddings model (not LLM - using Groq API!)
+RUN python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')" && \
+    echo "✅ Embeddings model cached"
 
-# Create cache directory with proper permissions
-RUN mkdir -p /app/.cache && chmod 777 /app/.cache
+# Create cache and logs directories with proper permissions
+RUN mkdir -p /app/.cache /app/logs && chmod 777 /app/.cache /app/logs
 
-# Copy application code AND faiss_index
+# Copy application code and faiss_index
 COPY app.py .
 COPY faiss_index/ ./faiss_index/
 
 # Expose port (Render assigns PORT dynamically)
 EXPOSE 7860
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
-    CMD curl -f http://localhost:${PORT:-7860}/ || exit 1
+# Health check - check if Gradio is responding
+HEALTHCHECK --interval=30s --timeout=10s --start-period=90s --retries=3 \
+    CMD curl -f http://localhost:${PORT:-7860}/ > /dev/null 2>&1 || exit 1
 
 # Run the application
 CMD ["python", "app.py"]
