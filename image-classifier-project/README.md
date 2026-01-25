@@ -14,7 +14,7 @@
 
 [![Hugging Face Spaces](https://img.shields.io/badge/🤗%20Hugging%20Face-Spaces-blue)](https://huggingface.co/spaces/KradyelSebi/animal-image-classifier)
 
-**Try it live:** [https://huggingface.co/spaces/NUMELE-TAU/animal-image-classifier](https://huggingface.co/spaces/KradyelSebi/animal-image-classifier)
+**Try it live:** [https://huggingface.co/spaces/KradyelSebi/animal-image-classifier](https://huggingface.co/spaces/KradyelSebi/animal-image-classifier)
 
 
 <p align="center">
