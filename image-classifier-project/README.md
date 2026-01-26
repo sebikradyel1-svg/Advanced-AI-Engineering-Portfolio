@@ -18,19 +18,19 @@
 <p align="center">
   <img src="docs/demo.gif" alt="Demo Clasificator" width="700">
   <br>
-  <em>Interfața modelului în timp ce clasifică o imagine în timp real.</em>
+  <em>The model interface while classifying an image in real time.</em>
 </p>
 
-## 🏗️ Interface Preview
+## 🏗️ Output
 <p align="center">
   <img src="docs/ss.png" alt="Screenshot Aplicatie" width="700">
 </p>
 
 ## 📊 Model Performance
-Analiza curbelor de antrenare arată o convergență stabilă:
+Analysis of the training curves shows stable convergence:
 
 <p align="center">
-  <img src="docs/animals_training_curves.png" alt="Curbe Antrenare" width="600">
+  <img src="docs/animals_training_curves.png" alt="Training Curbe" width="600">
 </p>
 
 
