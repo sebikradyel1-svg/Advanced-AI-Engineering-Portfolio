@@ -9,17 +9,31 @@
 > **Production-ready image classification system using VGG16 Transfer Learning, deployable on Fly.io**
 
 
-
 ## 🚀 Live Demo
 
 [![Hugging Face Spaces](https://img.shields.io/badge/🤗%20Hugging%20Face-Spaces-blue)](https://huggingface.co/spaces/KradyelSebi/animal-image-classifier)
 
 **Try it live:** [https://huggingface.co/spaces/KradyelSebi/animal-image-classifier](https://huggingface.co/spaces/KradyelSebi/animal-image-classifier)
 
+<p align="center">
+  <img src="docs/demo.gif" alt="Demo Clasificator" width="700">
+  <br>
+  <em>Interfața modelului în timp ce clasifică o imagine în timp real.</em>
+</p>
+
+## 🏗️ Interface Preview
+<p align="center">
+  <img src="docs/ss.png" alt="Screenshot Aplicatie" width="700">
+</p>
+
+## 📊 Model Performance
+Analiza curbelor de antrenare arată o convergență stabilă:
 
 <p align="center">
-  <img src="docs/demo.gif" alt="Demo" width="600">
+  <img src="docs/animals_training_curves.png" alt="Curbe Antrenare" width="600">
 </p>
+
+
 
 ## 🎯 Features
 
