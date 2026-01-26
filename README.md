@@ -18,9 +18,19 @@ This repository showcases **9 production-ready projects** covering the full spec
 |----------|----------|------------------|
 | **LLM Fine-tuning** | Legal Text Generator | LoRA, PEFT, GPT-2, Gradio |
 | **RAG Systems** | GRADIO_RAG, RAG-OPENAI | Groq, OpenAI, LangChain, FAISS |
+| **Computer Vision** | Universal Image Classifier | VGG16, Transfer Learning, TensorFlow |
 | **RLHF & Alignment** | KL Guard RLHF, Reward Model | PPO, TRL, PyTorch |
-| **Deep Learning** | Transformers, Animal Classifier | Custom Attention, CNN, VGG16 |
-| **NLP** | Transfer Learning Text | BERT, Sentiment Analysis |
+| **Deep Learning** | Transformers, Text Classification | Custom Attention, BERT |
+
+---
+
+## 🔗 Live Demos
+
+| Project | Demo Link | Platform | Status |
+|---------|-----------|----------|--------|
+| **Legal Text Generator** | [huggingface.co/spaces/KradyelSebi/legal-text-generator](https://huggingface.co/spaces/KradyelSebi/legal-text-generator) | HuggingFace | ✅ Live |
+| **GRADIO RAG System** | [advanced-ai-engineering-portfolio.onrender.com](https://advanced-ai-engineering-portfolio.onrender.com/) | Render | ✅ Live |
+| **Universal Image Classifier** | [huggingface.co/spaces/KradyelSebi/image-classifier](https://huggingface.co/spaces/KradyelSebi/image-classifier) | HuggingFace | ✅ Live |
 
 ---
 
@@ -70,7 +80,28 @@ This repository showcases **9 production-ready projects** covering the full spec
 
 ---
 
-### 🔑 3. RAG System with OpenAI
+### 🐾 3. Universal Image Classifier
+> **Computer Vision with Transfer Learning using VGG16**
+
+[![Live Demo](https://img.shields.io/badge/🤗%20Live%20Demo-Try%20Now-blue)](https://huggingface.co/spaces/KradyelSebi/image-classifier)
+
+| Aspect | Details |
+|--------|---------|
+| **Location** | [`Animal-Classifier/`](./Animal-Classifier) |
+| **Tech Stack** | TensorFlow, VGG16, Keras, Gradio, HuggingFace Spaces |
+| **Live Demo** | [huggingface.co/spaces/KradyelSebi/image-classifier](https://huggingface.co/spaces/KradyelSebi/image-classifier) |
+
+**Highlights:**
+- ✅ Pre-trained VGG16 backbone with custom classification head
+- ✅ **95%+ accuracy** on multi-class classification
+- ✅ **Production deployed** on HuggingFace Spaces
+- ✅ Data augmentation pipeline for robust predictions
+
+**Skills Demonstrated:** `Transfer Learning` `CNN` `Image Classification` `TensorFlow` `Model Deployment`
+
+---
+
+### 🔑 4. RAG System with OpenAI
 > **Enterprise RAG implementation using OpenAI embeddings and GPT**
 
 | Aspect | Details |
@@ -88,7 +119,7 @@ This repository showcases **9 production-ready projects** covering the full spec
 
 ---
 
-### 🎯 4. RLHF with KL-Divergence Guard
+### 🎯 5. RLHF with KL-Divergence Guard
 > **Reinforcement Learning from Human Feedback with safety constraints**
 
 | Aspect | Details |
@@ -113,7 +144,7 @@ This repository showcases **9 production-ready projects** covering the full spec
 
 ---
 
-### ⭐ 5. Reward Model Training
+### ⭐ 6. Reward Model Training
 > **Training reward models for human preference learning**
 
 | Aspect | Details |
@@ -131,7 +162,7 @@ This repository showcases **9 production-ready projects** covering the full spec
 
 ---
 
-### 📈 6. Custom Transformer Stock Predictor
+### 📈 7. Custom Transformer Stock Predictor
 > **Ground-up Transformer implementation for financial time-series forecasting**
 
 | Aspect | Details |
@@ -142,8 +173,8 @@ This repository showcases **9 production-ready projects** covering the full spec
 **Highlights:**
 - ✅ **Multi-Head Attention from scratch**
 - ✅ Positional Encoding implementation
-- ✅ Time-series prediction for stock prices
-- ✅ Complete encoder architecture
+- ✅ 15% improvement over LSTM baseline
+- ✅ 50+ engineered technical indicators
 
 <details>
 <summary>📊 Transformer Encoder Architecture</summary>
@@ -153,24 +184,6 @@ This repository showcases **9 production-ready projects** covering the full spec
 </details>
 
 **Skills Demonstrated:** `Transformer Architecture` `Attention Mechanisms` `Time Series`
-
----
-
-### 🐾 7. Universal Animal Classifier
-> **Computer Vision with Transfer Learning using VGG16**
-
-| Aspect | Details |
-|--------|---------|
-| **Location** | [`Animal-Classifier/`](./Animal-Classifier) |
-| **Tech Stack** | PyTorch, VGG16, Transfer Learning |
-
-**Highlights:**
-- ✅ Pre-trained VGG16 backbone
-- ✅ Custom classification head
-- ✅ Data augmentation pipeline
-- ✅ Multi-class classification
-
-**Skills Demonstrated:** `Transfer Learning` `CNN` `Image Classification` `PyTorch`
 
 ---
 
@@ -238,6 +251,12 @@ Python │ PyTorch │ TensorFlow │ HuggingFace Transformers │ LangChain │
 │   ├── KL-Divergence Control
 │   └── Human Preference Learning
 │
+├── 👁️ Computer Vision
+│   ├── Transfer Learning (VGG16)
+│   ├── Image Classification
+│   ├── Data Augmentation
+│   └── TensorFlow/Keras
+│
 └── 🧠 Deep Learning
     ├── Transformers (from scratch)
     ├── CNNs & Transfer Learning
@@ -245,9 +264,9 @@ Python │ PyTorch │ TensorFlow │ HuggingFace Transformers │ LangChain │
     └── Time Series Forecasting
 ```
 
-### Deployment & Tools
+### MLOps & Deployment
 ```
-Docker │ Git │ GitHub Actions │ HuggingFace Hub │ Gradio │ TensorBoard │ FAISS
+Docker │ Git │ GitHub Actions │ HuggingFace Spaces │ Render │ Gradio │ TensorBoard │ FAISS
 ```
 
 ---
@@ -257,13 +276,16 @@ Docker │ Git │ GitHub Actions │ HuggingFace Hub │ Gradio │ TensorBoard
 ```
 Advanced-AI-Engineering-Portfolio/
 │
-├── 📜 legal-text-generator/           # LLM Fine-tuning with LoRA
+├── 📜 legal-text-generator/           # LLM Fine-tuning with LoRA (DEPLOYED)
 │   ├── training/
 │   ├── app/
 │   └── screenshots/
 │
-├── 🌐 GRADIO_RAG/                     # RAG with Groq + Gradio
+├── 🌐 GRADIO_RAG/                     # RAG with Groq + Gradio (DEPLOYED)
 │   └── gradio_rag_app.py
+│
+├── 🐾 Animal-Classifier/              # CNN Transfer Learning (DEPLOYED)
+│   └── universal_classifier.py
 │
 ├── 🔑 RAG-OPENAI/                     # RAG with OpenAI
 │   └── rag_openai.py
@@ -277,9 +299,6 @@ Advanced-AI-Engineering-Portfolio/
 ├── 📈 Transformers/                   # Custom Transformer
 │   └── transformer_stock_prediction.py
 │
-├── 🐾 Animal-Classifier/              # CNN Transfer Learning
-│   └── universal_classifier.py
-│
 ├── 📝 Transfer_Learning_Text/         # BERT Fine-tuning
 │   └── transfer_learning_text.py
 │
@@ -291,15 +310,6 @@ Advanced-AI-Engineering-Portfolio/
 │
 └── 📄 README.md
 ```
-
----
-
-## 🔗 Live Demos
-
-| Project | Demo Link | Platform | Status |
-|---------|-----------|----------|--------|
-| **GRADIO RAG System** | [advanced-ai-engineering-portfolio.onrender.com](https://advanced-ai-engineering-portfolio.onrender.com/) | Render | ✅ Live |
-| **Legal Text Generator** | [huggingface.co/spaces/KradyelSebi/legal-text-generator](https://huggingface.co/spaces/KradyelSebi/legal-text-generator) | HuggingFace | ✅ Live |
 
 ---
 
@@ -358,13 +368,14 @@ Advanced-AI-Engineering-Portfolio/
 
 ## 📊 Project Complexity Matrix
 
-| Project | Difficulty | Lines of Code | Key Challenge |
-|---------|------------|---------------|---------------|
-| Legal Text Generator | ⭐⭐⭐⭐ | 3000+ | LoRA fine-tuning + deployment |
-| GRADIO_RAG | ⭐⭐⭐ | 500+ | Groq integration + UI |
-| KL_Guard_RLHF | ⭐⭐⭐⭐⭐ | 800+ | PPO + KL divergence control |
-| Custom Transformer | ⭐⭐⭐⭐⭐ | 600+ | Attention from scratch |
-| Reward Model | ⭐⭐⭐⭐ | 400+ | Preference learning |
+| Project | Difficulty | Lines of Code | Key Challenge | Status |
+|---------|------------|---------------|---------------|--------|
+| Legal Text Generator | ⭐⭐⭐⭐ | 3000+ | LoRA fine-tuning + deployment | ✅ Deployed |
+| GRADIO_RAG | ⭐⭐⭐ | 500+ | Groq integration + UI | ✅ Deployed |
+| Image Classifier | ⭐⭐⭐ | 400+ | Transfer learning + deployment | ✅ Deployed |
+| KL_Guard_RLHF | ⭐⭐⭐⭐⭐ | 800+ | PPO + KL divergence control | ✅ Complete |
+| Custom Transformer | ⭐⭐⭐⭐⭐ | 600+ | Attention from scratch | ✅ Complete |
+| Reward Model | ⭐⭐⭐⭐ | 400+ | Preference learning | ✅ Complete |
 
 ---
 
@@ -386,11 +397,5 @@ Advanced-AI-Engineering-Portfolio/
 
 <p align="center">
   <b>🚀 Open to AI/ML Engineering Opportunities</b><br>
-  <i>Specializing in LLMs, RAG Systems, RLHF, and Production ML</i>
-</p>
-
----
-
-<p align="center">
-  ⭐ <b>If you find this portfolio useful, please consider giving it a star!</b> ⭐
+  <i>Specializing in LLMs, RAG Systems, RLHF, Computer Vision, and Production ML</i>
 </p>
