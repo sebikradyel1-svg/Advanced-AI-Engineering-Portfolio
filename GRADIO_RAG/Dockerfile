@@ -37,13 +37,14 @@ RUN mkdir -p /app/.cache /app/logs && chmod 777 /app/.cache /app/logs
 # Copy application code and faiss_index
 COPY app.py .
 COPY faiss_index/ ./faiss_index/
+COPY company_policies.txt .
 
 # Expose port (Render assigns PORT dynamically)
 EXPOSE 7860
 
-# Health check - check if Gradio is responding
+# Health check for AWS
 HEALTHCHECK --interval=30s --timeout=10s --start-period=90s --retries=3 \
-    CMD curl -f http://localhost:${PORT:-7860}/ > /dev/null 2>&1 || exit 1
+    CMD curl -f http://localhost:7860/health || exit 1
 
 # Run the application
 CMD ["python", "app.py"]
