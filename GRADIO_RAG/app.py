@@ -10,11 +10,14 @@ import torch
 from typing import List, Tuple
 from dataclasses import dataclass
 import threading
-
+import json
 from fastapi import FastAPI
 import gradio as gr
 import uvicorn
 import os
+
+# Monitoring system
+from monitoring import monitoring, QueryTracker
 
 # Memory optimizations - set BEFORE importing heavy libraries
 os.environ['OMP_NUM_THREADS'] = '1'
@@ -74,7 +77,7 @@ def setup_advanced_logging():
     logger.addHandler(file_handler)
     logger.addHandler(error_handler)
     
-    logger.info("✅ Advanced logging setup complete")
+    logger.info("Advanced logging setup complete")
 
 # Setup advanced logging
 setup_advanced_logging()
@@ -178,13 +181,13 @@ class HRKnowledgeRAGSystem:
     def _prewarm_models(self):
         """Pre-load models in background thread."""
         try:
-            logger.info("🔥 Pre-warming models in background...")
+            logger.info(" Pre-warming models in background...")
             self.setup_embeddings()
             clear_memory()  # Clean up after embeddings
             self.setup_llm()
             clear_memory()  # Clean up after LLM
             self.models_ready = True
-            logger.info("✅ Models pre-warmed and ready!")
+            logger.info("Models pre-warmed and ready!")
         except Exception as e:
             logger.error(f"Pre-warm failed: {e}")
 
@@ -192,7 +195,7 @@ class HRKnowledgeRAGSystem:
         """Start background pre-warming of models."""
         thread = threading.Thread(target=self._prewarm_models, daemon=True)
         thread.start()
-        logger.info("🚀 Started background model pre-warming")
+        logger.info(" Started background model pre-warming")
 
     def setup_embeddings(self):
         """Initialize the embeddings model."""
@@ -211,7 +214,7 @@ class HRKnowledgeRAGSystem:
         """Initialize Groq API - FAST cloud LLM for 2GB RAM."""
         with self._loading_lock:
             if self.llm_pipeline is None:
-                logger.info("🚀 Initializing Groq API (cloud LLM)...")
+                logger.info(" Initializing Groq API (cloud LLM)...")
                 
                 try:
                     from langchain_groq import ChatGroq
@@ -228,11 +231,11 @@ class HRKnowledgeRAGSystem:
                         max_tokens=512
                     )
                     
-                    logger.info("✅ Groq API initialized - FAST mode enabled!")
-                    logger.info("💾 RAM usage: <500MB (vs 1-3GB with local models)")
+                    logger.info("Groq API initialized - FAST mode enabled!")
+                    logger.info("RAM usage: <500MB (vs 1-3GB with local models)")
                     
                 except Exception as e:
-                    logger.error(f"❌ Failed to initialize Groq: {e}")
+                    logger.error(f"Failed to initialize Groq: {e}")
                     raise
                 
                 clear_memory()
@@ -246,7 +249,7 @@ class HRKnowledgeRAGSystem:
             
             if not os.path.exists(index_path):
                 logger.warning(f"Pre-built index not found at {index_path}")
-                return "⚠️ Pre-built index not found. Please upload a document."
+                return " Pre-built index not found. Please upload a document."
             
             logger.info(f"Loading pre-built FAISS index from {index_path}...")
             
@@ -269,12 +272,12 @@ class HRKnowledgeRAGSystem:
             self.is_initialized = True
             self.chat_history = []
             
-            logger.info("✅ Pre-built index loaded successfully!")
-            return "✅ Sample policies loaded! System ready - ask me anything!"
+            logger.info("Pre-built index loaded successfully!")
+            return "Sample policies loaded! System ready - ask me anything!"
             
         except Exception as e:
             logger.error(f"Error loading pre-built index: {e}")
-            return f"❌ Error loading index: {str(e)}"
+            return f" Error loading index: {str(e)}"
 
     def load_documents(self, file_path: str) -> str:
         """Load NEW documents (for custom uploads)."""
@@ -294,10 +297,10 @@ class HRKnowledgeRAGSystem:
             self.is_initialized = True
             self.chat_history = []
             
-            return f"✅ Successfully loaded {len(docs)} document chunks. System ready!"
+            return f" Successfully loaded {len(docs)} document chunks. System ready!"
         except Exception as e:
             logger.error(f"Error loading documents: {e}")
-            return f"❌ Error loading documents: {str(e)}"
+            return f" Error loading documents: {str(e)}"
 
     def _build_prompt(self, question: str, context: str) -> str:
         """Build the prompt for the LLM."""
@@ -322,7 +325,7 @@ Answer:"""
         """Process a question and return answer with sources."""
         start_time = time.time()
         if not self.is_initialized:
-            return "⚠️ System not initialized. Please click 'Load Sample Policies' or upload a document.", ""
+            return " System not initialized. Please click 'Load Sample Policies' or upload a document.", ""
         
         try:
             # Retrieve relevant documents
@@ -345,7 +348,7 @@ Answer:"""
                 answer = response.content.strip()
                 
             except Exception as e:
-                logger.error(f"❌ Groq API error: {e}")
+                logger.error(f" Groq API error: {e}")
                 answer = f"Error generating response. Please try again. ({str(e)})"
             
             # Keep limited history
@@ -366,7 +369,7 @@ Answer:"""
 
             response_time = time.time() - start_time
             metrics.record_query(response_time)
-            logger.info(f"✅ Query processed in {response_time:.2f}s")
+            logger.info(f" Query processed in {response_time:.2f}s")
             
             return answer, sources_text
             
@@ -375,14 +378,14 @@ Answer:"""
             metrics.record_error()
             logger.error(f"Error processing query: {e}")
             clear_memory()
-            return f"❌ Error processing query: {str(e)}", ""
+            return f" Error processing query: {str(e)}", ""
 
     def clear_chat_memory(self):
         """Clear conversation memory."""
         self.chat_history = []
         clear_memory()
         logger.info("Conversation memory cleared")
-        return "🧹 Conversation history cleared."
+        return " Conversation history cleared."
 
 
 # Global RAG system instance
@@ -395,42 +398,46 @@ rag_system.start_prewarm()
 def process_upload(file) -> str:
     """Handle file upload."""
     if file is None:
-        return "⚠️ No file uploaded."
+        return "No file uploaded."
     
     try:
         file_path = file.name if hasattr(file, 'name') else file
         return rag_system.load_documents(file_path)
     except Exception as e:
         logger.error(f"Upload error: {e}")
-        return f"❌ Error processing upload: {str(e)}"
+        return f" Error processing upload: {str(e)}"
 
 
 def chat_response(message: str, history: List[List[str]]) -> Tuple[str, str]:
-    """Process chat message."""
+    """Process chat message with monitoring."""
     if not message.strip():
         return "", ""
     
-    answer, sources = rag_system.chat(message)
+    # Track query with monitoring
+    with monitoring.track_query(message) as tracker:
+        answer, sources = rag_system.chat(message)
+        tracker.set_response(answer)
+    
     return answer, sources
 
 
 def load_sample_data() -> str:
     """Load pre-built sample policies."""
     if rag_system.models_ready:
-        logger.info("⚡ Models already pre-warmed - loading will be instant!")
+        logger.info(" Models already pre-warmed - loading will be instant!")
     else:
-        logger.info("⏳ Loading models on demand...")
+        logger.info(" Loading models on demand...")
     return rag_system.load_prebuilt_index()
 
 
 def get_status() -> str:
     """Return current system status."""
     if rag_system.is_initialized:
-        return "🟢 System ready! Ask a question."
+        return " System ready! Ask a question."
     elif rag_system.models_ready:
-        return "🟢 Models ready! Click 'Load Sample Policies'."
+        return " Models ready! Click 'Load Sample Policies'."
     else:
-        return "🟡 Click 'Load Sample Policies' to start."
+        return " Click 'Load Sample Policies' to start."
 
 
 def health_check():
@@ -449,7 +456,7 @@ def health_check():
             "environment": os.getenv("ENVIRONMENT", "production")
         }
     except Exception as e:
-        logger.error(f"❌ Health check failed: {e}")
+        logger.error(f" Health check failed: {e}")
         return {
             "status": "unhealthy",
             "error": str(e),
@@ -470,7 +477,7 @@ def create_interface():
             **Model:** Llama 3.3 70B (via Groq) | **Embeddings:** all-MiniLM-L6-v2  
             **Optimized for:** 2GB RAM deployment with cloud LLM
             
-            ⚡ **Response time: 2-3s** | 🚀 **Version 2.0**
+            ⚡ **Response time: 2-3s** |  **Version 2.0**
             """
         )
         
@@ -489,10 +496,10 @@ def create_interface():
                     )
                     submit_btn = gr.Button("Send", variant="primary", scale=1)
                 
-                clear_btn = gr.Button("🗑️ Clear Chat")
+                clear_btn = gr.Button(" Clear Chat")
                     
             with gr.Column(scale=1):
-                gr.Markdown("### 📄 Document Management")
+                gr.Markdown("###  Document Management")
                 
                 # Status indicator
                 status_display = gr.Textbox(
@@ -503,11 +510,11 @@ def create_interface():
                 )
                 
                 # Refresh status button
-                refresh_btn = gr.Button("🔄 Refresh Status", size="sm")
+                refresh_btn = gr.Button(" Refresh Status", size="sm")
                 
                 # PROMINENT SAMPLE BUTTON
                 sample_btn = gr.Button(
-                    "📋 Load Sample Policies", 
+                    " Load Sample Policies", 
                     variant="primary",
                     size="lg"
                 )
@@ -546,7 +553,7 @@ def create_interface():
         )
         
         # Health check section
-        with gr.Accordion("🏥 System Health & Metrics", open=False):
+        with gr.Accordion(" System Health & Metrics", open=False):
             health_output = gr.JSON(label="System Health")
             health_btn = gr.Button("Check Health & Stats")
             health_btn.click(
@@ -615,6 +622,41 @@ app = FastAPI()
 @app.get("/health")
 def health():
     return health_check()
+@app.get("/metrics")
+def get_metrics():
+    """Prometheus-style metrics endpoint"""
+    return monitoring.get_metrics()
+
+@app.get("/metrics/summary")
+def metrics_summary():
+    """Human-readable metrics summary"""
+    metrics = monitoring.get_metrics()
+    
+    summary = f"""
+    === HR RAG System Metrics ===
+    
+     Request Statistics:
+    - Total Requests: {metrics['total_requests']}
+    - Successful: {metrics['successful_requests']}
+    - Failed: {metrics['failed_requests']}
+    - Success Rate: {metrics['success_rate']:.2f}%
+    
+     Performance:
+    - Average Response Time: {metrics['average_response_time']:.3f}s
+    - Total Response Time: {metrics['total_response_time']:.2f}s
+    
+     Uptime:
+    - Hours: {metrics['uptime_hours']}
+    - Since: {metrics['uptime_start']}
+    
+     Errors by Type:
+    {json.dumps(metrics['error_types'], indent=2) if metrics['error_types'] else '  None'}
+    
+  Requests by Hour:
+    {json.dumps(dict(list(metrics['requests_by_hour'].items())[-5:]), indent=2)}
+    """
+    
+    return {"summary": summary, "raw_metrics": metrics}
 
 app = gr.mount_gradio_app(app, demo, path="/")
 
