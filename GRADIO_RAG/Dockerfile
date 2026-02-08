@@ -36,6 +36,7 @@ RUN mkdir -p /app/.cache /app/logs && chmod 777 /app/.cache /app/logs
 
 # Copy application code and faiss_index
 COPY app.py .
+COPY monitoring.py .
 COPY faiss_index/ ./faiss_index/
 COPY company_policies.txt .
 
