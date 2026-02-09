@@ -1,3 +1,9 @@
+# Logs
+logs/*.log
+logs/*.jsonl
+logs/*_*.log
+logs/*_*.jsonl
+
 # Python - ignoră pentru toate subfolderele
 __pycache__/
 *.py[cod]
@@ -24,3 +30,43 @@ Thumbs.db
 *.pt
 *.binimage-classifier-project/venv/ 
 venv/
+
+# Logs
+logs/*.log
+logs/*.jsonl
+logs/*_*.log
+logs/*_*.jsonl
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+*.egg-info/
+dist/
+build/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment variables
+.env
+.env.local
+
+# Docker
+.dockerignore
+
+# Temp files
+*.tmp
+*.temp
