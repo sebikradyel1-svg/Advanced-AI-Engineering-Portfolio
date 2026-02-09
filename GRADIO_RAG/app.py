@@ -19,6 +19,10 @@ import os
 # Monitoring system
 from monitoring import monitoring, QueryTracker
 
+# MLflow experiment tracking
+from mlflow_tracking import get_tracker, initialize_mlflow
+import mlflow
+
 # Memory optimizations - set BEFORE importing heavy libraries
 os.environ['OMP_NUM_THREADS'] = '1'
 os.environ['MKL_NUM_THREADS'] = '1'
@@ -176,6 +180,25 @@ class HRKnowledgeRAGSystem:
         self.is_initialized = False
         self.models_ready = False
         self._loading_lock = threading.Lock()
+        # Initialize MLflow tracking
+        self.mlflow_run_id = None
+        try:
+            model_params = {
+                "embeddings_model": self.config.embeddings_model,
+                "llm_model": self.config.llm_model,
+                "llm_provider": "groq",
+                "llm_temperature": 0.3,
+                "device": str(self.device),
+                "chunk_size": self.config.chunk_size,
+                "chunk_overlap": self.config.chunk_overlap,
+                "top_k_retrieval": self.config.top_k_retrieval,
+                "system_version": "2.0"
+            }
+            self.mlflow_run_id = initialize_mlflow(model_params)
+            logger.info(f"MLflow tracking initialized - Run ID: {self.mlflow_run_id}")
+        except Exception as e:
+            logger.warning(f"MLflow initialization failed: {e}")
+            self.mlflow_run_id = None
         logger.info(f"RAG System created on device: {self.device}")
 
     def _prewarm_models(self):
@@ -412,11 +435,20 @@ def chat_response(message: str, history: List[List[str]]) -> Tuple[str, str]:
     """Process chat message with monitoring."""
     if not message.strip():
         return "", ""
-    
-    # Track query with monitoring
     with monitoring.track_query(message) as tracker:
         answer, sources = rag_system.chat(message)
-        tracker.set_response(answer)
+        tracker.set_response(answer)    
+        # Log to MLflow
+        try:
+            mlflow_tracker = get_tracker()
+            mlflow_tracker.log_query_metrics(
+                query=message,
+                response_time=tracker.response_time,
+                success=tracker.success,
+                response_length=len(answer)
+            )
+        except Exception as e:
+            logger.warning(f"MLflow logging failed: {e}")
     
     return answer, sources
 
@@ -657,7 +689,80 @@ def metrics_summary():
     """
     
     return {"summary": summary, "raw_metrics": metrics}
+@app.get("/experiments")
+def get_experiments():
+    """Get MLflow experiment information"""
+    try:
+        tracker = get_tracker()
+        info = tracker.get_experiment_info()
+        return info
+    except Exception as e:
+        return {
+            "error": str(e),
+            "mlflow_enabled": False
+        }
 
+@app.get("/experiments/runs")
+def get_experiment_runs():
+    """Get list of MLflow runs with metrics"""
+    try:
+        tracker = get_tracker()
+        runs = mlflow.search_runs(
+            experiment_ids=[tracker.experiment_id],
+            max_results=10,
+            order_by=["start_time DESC"]
+        )
+        
+        # Check if runs is empty
+        if runs is None or len(runs) == 0:
+            return {
+                "total_runs": 0,
+                "runs": [],
+                "message": "No runs found. Make some queries first!"
+            }
+        
+        # Convert to dict for JSON serialization
+        runs_list = []
+        for idx, run in runs.iterrows():
+            try:
+                # Extract metrics safely
+                metrics = {}
+                params = {}
+                
+                for col in runs.columns:
+                    if col.startswith("metrics."):
+                        value = run[col]
+                        if value is not None and not (isinstance(value, float) and str(value) == 'nan'):
+                            metrics[col.replace("metrics.", "")] = float(value)
+                    elif col.startswith("params."):
+                        value = run[col]
+                        if value is not None:
+                            params[col.replace("params.", "")] = str(value)
+                
+                run_info = {
+                    "run_id": str(run.get("run_id", "")),
+                    "start_time": str(run.get("start_time", "")),
+                    "end_time": str(run.get("end_time", "")),
+                    "status": str(run.get("status", "UNKNOWN")),
+                    "metrics": metrics,
+                    "params": params,
+                }
+                runs_list.append(run_info)
+            except Exception as e:
+                logger.warning(f"Error processing run {idx}: {e}")
+                continue
+        
+        return {
+            "total_runs": len(runs_list),
+            "runs": runs_list
+        }
+    except Exception as e:
+        logger.error(f"Error getting experiment runs: {e}")
+        return {
+            "error": str(e),
+            "runs": [],
+            "total_runs": 0
+        }
 app = gr.mount_gradio_app(app, demo, path="/")
 
 if __name__ == "__main__":

@@ -8,3 +8,4 @@ langchain-core
 faiss-cpu
 gradio
 langchain-groq>=0.1.0
+mlflow
