@@ -1,4 +1,4 @@
-name: Deploy to Render
+name: CI/CD Pipeline - AWS EC2
 
 on:
   push:
@@ -49,28 +49,58 @@ jobs:
         cd GRADIO_RAG
         python -c "import app; print('✅ App imports successfully')"
   
-  deploy:
+  build-and-push:
     needs: test
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     
     steps:
     - uses: actions/checkout@v3
     
-    - name: Deploy to Render
-      env:
-        RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
-        RENDER_SERVICE_ID: ${{ secrets.RENDER_SERVICE_ID }}
-      run: |
-        curl -X POST \
-          -H "Authorization: Bearer $RENDER_API_KEY" \
-          -H "Content-Type: application/json" \
-          https://api.render.com/v1/services/$RENDER_SERVICE_ID/deploys
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
     
-    - name: Wait for deployment
-      run: sleep 30
-    - name: Health check after deployment
+    - name: Log in to DockerHub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    
+    - name: Extract metadata
+      id: meta
+      uses: docker/metadata-action@v4
+      with:
+        images: kradyelsebastian/hr-rag-aws
+        tags: |
+          type=sha,prefix={{branch}}-
+          type=raw,value=latest,enable={{is_default_branch}}
+    
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v4
+      with:
+        context: ./GRADIO_RAG
+        push: true
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}
+        cache-from: type=registry,ref=kradyelsebastian/hr-rag-aws:buildcache
+        cache-to: type=registry,ref=kradyelsebastian/hr-rag-aws:buildcache,mode=max
+    
+    - name: Image digest
+      run: echo "Image pushed with digest ${{ steps.meta.outputs.digest }}"
+
+  # Optional: Notify deployment needed (manual step pe EC2)
+  notify:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    
+    steps:
+    - name: Deployment notification
       run: |
-        echo "Testing health endpoint..."
-        curl -f https://advanced-ai-engineering-portfolio.onrender.com/ || exit 1
-        echo "✅ Deployment successful and app is responding!"
+        echo "✅ Docker image built and pushed successfully!"
+        echo "📦 Image: kradyelsebastian/hr-rag-aws:latest"
+        echo "🚀 Manual deployment needed on AWS EC2:"
+        echo "   1. SSH into EC2"
+        echo "   2. docker pull kradyelsebastian/hr-rag-aws:latest"
+        echo "   3. docker stop hr-rag-production && docker rm hr-rag-production"
+        echo "   4. docker run -d --name hr-rag-production -p 7860:7860 -e GROQ_API_KEY=\$GROQ_API_KEY --restart unless-stopped kradyelsebastian/hr-rag-aws:latest"
