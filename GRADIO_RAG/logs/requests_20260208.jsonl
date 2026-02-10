@@ -1,0 +1,3 @@
+{"timestamp": "2026-02-08T18:57:05.416912", "query": "How many vacation days do I have per year?", "response_time": 0.92, "success": true, "error_message": null, "response_length": 49, "model_used": "groq-llama"}
+{"timestamp": "2026-02-08T18:57:09.524168", "query": "What medical benefits are provided?", "response_time": 0.47, "success": true, "error_message": null, "response_length": 102, "model_used": "groq-llama"}
+{"timestamp": "2026-02-08T18:57:13.347368", "query": "What is the 401k matching policy?", "response_time": 0.636, "success": true, "error_message": null, "response_length": 141, "model_used": "groq-llama"}

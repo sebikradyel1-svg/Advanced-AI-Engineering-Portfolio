@@ -1,216 +1,365 @@
-# 🤖 HR RAG Assistant - Production AI System
+# 🤖 Enterprise HR RAG System - Production MLOps Pipeline
 
-![Demo App](demo/Animation.gif)
+[![CI/CD Pipeline](https://github.com/sebikradyel1-svg/Advanced-AI-Engineering-Portfolio/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/sebikradyel1-svg/Advanced-AI-Engineering-Portfolio/actions)
+[![Tests](https://img.shields.io/badge/tests-37%20passed-success)](https://github.com/sebikradyel1-svg/Advanced-AI-Engineering-Portfolio)
+[![Coverage](https://img.shields.io/badge/coverage-72%25-brightgreen)](https://github.com/sebikradyel1-svg/Advanced-AI-Engineering-Portfolio)
+[![Python](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![Docker](https://img.shields.io/badge/docker-ready-blue)](https://hub.docker.com/r/kradyelsebastian/hr-rag-aws)
 
-[![Deploy Status](https://img.shields.io/badge/deploy-render-success)](https://advanced-ai-engineering-portfolio.onrender.com/)
-[![Python](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/downloads/)
+> **Production-grade RAG chatbot deployed on AWS EC2 with comprehensive MLOps monitoring, automated CI/CD, and 72% test coverage.**
 
-> **AI-powered HR document analysis system with production deployment, monitoring, and CI/CD automation.**
+![HR RAG Demo](screenshots/demo.gif)
 
-🔗 **Live Demo:** [https://advanced-ai-engineering-portfolio.onrender.com/](https://advanced-ai-engineering-portfolio.onrender.com/)
+## 🌟 Features
+
+### **MLOps & Production Infrastructure**
+- ✅ **AWS EC2 Deployment** - Full cloud production deployment
+- ✅ **CI/CD Pipeline** - Automated testing & Docker builds with GitHub Actions
+- ✅ **Comprehensive Monitoring** - Real-time request tracking, Prometheus-style metrics, health checks
+- ✅ **MLflow Integration** - Experiment tracking, parameter versioning, metrics visualization
+- ✅ **Unit Testing** - 37 tests with 72% code coverage using pytest
+- ✅ **Docker Containerization** - Multi-stage builds with image versioning
+
+### **AI/ML Capabilities**
+- ⚡ **Lightning-Fast Inference** - Groq Llama 3.3 70B (2-3s response time)
+- 🔍 **Semantic Search** - FAISS vector database with HuggingFace embeddings
+- 📚 **RAG Architecture** - LangChain orchestration for context-aware responses
+- 🎯 **High Accuracy** - Semantic chunking for precise document retrieval
 
 ---
 
-## 📋 Overview
+## 📸 Screenshots
 
-The HR RAG Assistant is a production-ready AI system that provides instant, accurate answers to HR policy questions using Retrieval-Augmented Generation (RAG). Built with a hybrid architecture: local FAISS retrieval + Groq-hosted LLM for ultra-fast inference and low-memory deployment.
+### Deployment & Interface
+<div align="center">
+  <img src="screenshots/deployment/01-interface.png" width="45%" />
+  <img src="screenshots/deployment/02-health_metrics.png" width="45%" />
+</div>
 
+### MLOps Monitoring System
+<div align="center">
+  <img src="screenshots/monitoring/04-monitoring-metrics-json.png" width="45%" />
+  <img src="screenshots/monitoring/05-monitoring-summary.png" width="45%" />
+</div>
 
-### Key Features
-- ⚡ **Production Deployment** - Live on Render with auto-deploy
-- 🤖 **RAG System** - FAISS (local) + Groq Llama 3 (cloud inference)
-- ⚡ **Ultra-Fast Inference** - Sub-second responses via Groq LPU
-- 📊 **Real-time Monitoring** - Health checks, metrics, logging
-- 🔄 **CI/CD Pipeline** - GitHub Actions automation
-- 💾 **Memory Optimized** - Runs on 512MB RAM
+### CI/CD Pipeline
+<div align="center">
+  <img src="screenshots/ci-cd/11-github-actions-success.png" width="45%" />
+  <img src="screenshots/ci-cd/12-workflow-jobs-detail.png" width="45%" />
+</div>
+
+### Testing & Coverage
+<div align="center">
+  <img src="screenshots/testing/15-unit-tests-all-passed.png" width="45%" />
+  <img src="screenshots/testing/16-test-coverage-report.png" width="45%" />
+</div>
+
+### MLflow Experiment Tracking
+<div align="center">
+  <img src="screenshots/mlflow/17-mlflow-experiments.png" width="45%" />
+  <img src="screenshots/mlflow/18-mlflow-runs-metrics.png" width="45%" />
+</div>
 
 ---
 
 ## 🏗️ Architecture
-```
-User Query → Gradio UI → RAG System → Groq Cloud (Llama 3) → Response
-                              ↓
-                         FAISS Vector DB (Local)
-                              ↓
-                      HR Policy Documents
-```
 
-### Components
-- **Frontend**: Gradio web interface
-- **Vector DB**: FAISS for semantic search
-- **LLM**: LLM: Llama 3 (via Groq API)
-- **Embeddings**: all-MiniLM-L6-v2
-- **Monitoring**: Custom metrics + health checks
-- **Deployment**: Render + GitHub Actions
+```
+┌─────────────────┐
+│   User Input    │
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────────────────────────────┐
+│         FastAPI Application             │
+│  ┌──────────────────────────────────┐  │
+│  │   Monitoring Middleware          │  │
+│  │  - Request tracking              │  │
+│  │  - Response time metrics         │  │
+│  │  - MLflow logging                │  │
+│  └──────────────────────────────────┘  │
+└────────┬────────────────────────────────┘
+         │
+         ▼
+┌─────────────────────────────────────────┐
+│         RAG Pipeline (LangChain)        │
+│                                         │
+│  ┌────────────┐      ┌──────────────┐  │
+│  │   Query    │─────▶│  Embeddings  │  │
+│  │ Processing │      │  (MiniLM-L6) │  │
+│  └────────────┘      └──────┬───────┘  │
+│                              │          │
+│                              ▼          │
+│                      ┌──────────────┐  │
+│                      │ FAISS Vector │  │
+│                      │   Database   │  │
+│                      └──────┬───────┘  │
+│                              │          │
+│                              ▼          │
+│                      ┌──────────────┐  │
+│                      │  Top K Docs  │  │
+│                      └──────┬───────┘  │
+│                              │          │
+│                              ▼          │
+│                      ┌──────────────┐  │
+│                      │ Groq LLM     │  │
+│                      │ (Llama 3.3)  │  │
+│                      └──────┬───────┘  │
+│                              │          │
+└──────────────────────────────┼──────────┘
+                               │
+                               ▼
+                      ┌──────────────┐
+                      │   Response   │
+                      └──────────────┘
+```
 
 ---
 
 ## 🚀 Quick Start
 
-### Prerequisites
+### **Prerequisites**
 - Python 3.10+
-- 2GB+ RAM (development)
-- 512MB+ RAM (production)
+- Docker (optional, for containerized deployment)
+- GROQ API key ([Get one here](https://console.groq.com))
 
-### Installation
+### **Local Development**
+
 ```bash
-# 1. Clone repository
+# Clone repository
 git clone https://github.com/sebikradyel1-svg/Advanced-AI-Engineering-Portfolio.git
 cd Advanced-AI-Engineering-Portfolio/GRADIO_RAG
 
-# 2. Create virtual environment
-python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
-
-# 3. Install dependencies
+# Install dependencies
 pip install -r requirements.txt
 
-# 4. Run locally
+# Set environment variable
+export GROQ_API_KEY="your_api_key_here"
+
+# Run application
 python app.py
 ```
 
-Open: `http://localhost:7860`
+Visit `http://localhost:7860` 🎉
+
+### **Docker Deployment**
+
+```bash
+# Pull image from DockerHub
+docker pull kradyelsebastian/hr-rag-aws:latest
+
+# Run container
+docker run -d \
+  --name hr-rag-production \
+  -p 7860:7860 \
+  -e GROQ_API_KEY="your_api_key" \
+  kradyelsebastian/hr-rag-aws:latest
+```
+
+### **AWS EC2 Deployment**
+
+```bash
+# SSH into EC2 instance
+ssh -i your-key.pem ubuntu@your-ec2-ip
+
+# Pull and run
+docker pull kradyelsebastian/hr-rag-aws:latest
+docker run -d --name hr-rag-production -p 7860:7860 \
+  -e GROQ_API_KEY="your_key" \
+  kradyelsebastian/hr-rag-aws:latest
+```
 
 ---
 
-## 💻 Usage
+## 🧪 Testing
 
-### Load Sample Policies
-1. Click **"Load Sample Policies"** button
-2. Wait for models to load (~30 seconds)
-3. Start asking questions!
+### **Run Tests**
 
-### Example Queries
-- "How many vacation days do I get per year?"
-- "What are the standard working hours?"
-- "Is remote work allowed?"
-- "What medical benefits are provided?"
+```bash
+# Run all tests
+pytest tests/ -v
 
-### Upload Custom Documents
-1. Prepare `.txt` file with your policies
-2. Use "Upload Policy Document" section
-3. System processes and indexes automatically
+# Run with coverage
+pytest tests/ --cov=. --cov-report=term-missing
+
+# Run specific test file
+pytest tests/test_monitoring.py -v
+```
+
+### **Test Results**
+- ✅ **37 tests** - All passing
+- ✅ **72% coverage** - monitoring.py (100%), test files (97%+)
+- ✅ **3 test suites** - API, monitoring, RAG system
 
 ---
 
-## 📊 Production Features
+## 📊 Monitoring Endpoints
 
-### CI/CD Pipeline
-- **Auto-deploy** on every push to `main`
-- **Automated testing** (linting, imports)
-- **Health checks** post-deployment
-- **GitHub Actions** workflow
+### **Health Check**
+```bash
+curl http://localhost:7860/health
+```
 
-### Monitoring & Logging
-- **Multi-level logging** (console + files)
-- **Metrics tracking** (uptime, queries, errors)
-- **Health dashboard** in UI
-- **Daily log rotation**
+**Response:**
+```json
+{
+  "status": "healthy",
+  "initialized": true,
+  "models_ready": true,
+  "uptime_hours": 2.5,
+  "version": "2.0"
+}
+```
 
-### Performance
-- **Average response**: <1 second (Groq inference)
-- **Memory footprint**: <512MB RAM
-- **Concurrent users**: 5-10
-- **Uptime**: 99%+ (Render free tier)
+### **Metrics (Prometheus-style)**
+```bash
+curl http://localhost:7860/metrics
+```
+
+**Response:**
+```json
+{
+  "total_requests": 142,
+  "successful_requests": 138,
+  "failed_requests": 4,
+  "success_rate": 97.18,
+  "average_response_time": 0.876,
+  "uptime_hours": 3.2
+}
+```
+
+### **MLflow Experiments**
+```bash
+curl http://localhost:7860/experiments
+```
 
 ---
 
 ## 🛠️ Tech Stack
 
-| Category | Technology | Purpose |
-|----------|-----------|---------|
-| **Frontend** | Gradio 4.x | Web interface |
-| **Vector DB** | FAISS | Semantic search |
-| **LLM** | Llama 3 (Groq API) | Ultra-low latency inference|
-| **Embeddings** | HuggingFace | Document vectorization |
-| **Framework** | LangChain | RAG orchestration |
-| **Deployment** | Render | Cloud hosting |
-| **CI/CD** | GitHub Actions | Automation |
+| Category | Technologies |
+|----------|-------------|
+| **LLM** | Groq API (Llama 3.3 70B Versatile) |
+| **Embeddings** | HuggingFace (all-MiniLM-L6-v2) |
+| **Vector DB** | FAISS |
+| **Framework** | LangChain, FastAPI, Gradio |
+| **Deployment** | AWS EC2, Docker, DockerHub |
+| **CI/CD** | GitHub Actions |
+| **Monitoring** | Custom metrics system, MLflow |
+| **Testing** | pytest, pytest-cov |
+| **Language** | Python 3.10+ |
 
 ---
 
-## 🌐 Deployment
+## 📁 Project Structure
 
-### Deploy to Render
-
-1. Fork this repository
-2. Create Render account
-3. New Web Service → Connect GitHub
-4. Configure:
 ```
-   Build: pip install -r requirements.txt
-   Start: python app.py
+GRADIO_RAG/
+├── app.py                  # Main FastAPI + Gradio application
+├── monitoring.py           # Request tracking & metrics system
+├── mlflow_tracking.py      # MLflow experiment tracking
+├── requirements.txt        # Python dependencies
+├── Dockerfile             # Docker containerization
+├── .github/
+│   └── workflows/
+│       └── ci-cd.yml      # CI/CD pipeline
+├── tests/
+│   ├── test_api.py        # FastAPI endpoint tests
+│   ├── test_monitoring.py # Monitoring system tests
+│   └── test_rag_system.py # RAG pipeline tests
+├── logs/                  # JSONL request logs
+├── mlruns/                # MLflow artifacts
+├── faiss_index/           # Pre-built FAISS index
+└── company_policies.txt   # Sample HR documents
 ```
-5. Add environment variables (if needed)
-6. Deploy! 🚀
-
-### GitHub Actions Setup
-1. Get Render API Key: https://dashboard.render.com/account/api-keys
-2. Get Service ID from Render URL
-3. Add GitHub Secrets:
-   - `RENDER_API_KEY`
-   - `RENDER_SERVICE_ID`
-4. Push to `main` → auto-deploy!
 
 ---
 
-## 📈 Roadmap
+## 🔄 CI/CD Pipeline
 
-### Version 1.1
-- [ ] Multi-language support (Romanian + English)
-- [ ] Enhanced analytics dashboard
-- [ ] User authentication
-- [ ] Query history export
+The project includes a comprehensive CI/CD pipeline that:
 
-### Version 2.0
-- [ ] Groq API integration option
-- [ ] Larger model support
-- [ ] Mobile app
-- [ ] API endpoints
+1. **Tests** - Runs all 37 unit tests on every push
+2. **Linting** - Flake8 code quality checks
+3. **Docker Build** - Builds and pushes to DockerHub (on main branch)
+4. **Versioning** - Tags images with both `latest` and commit SHA
+5. **Caching** - Optimized build times with layer caching
+
+**View workflow:** [GitHub Actions](https://github.com/sebikradyel1-svg/Advanced-AI-Engineering-Portfolio/actions)
+
+---
+
+## 📈 MLflow Experiment Tracking
+
+Track model parameters, metrics, and experiments:
+
+- **Parameters logged:** LLM model, embeddings, temperature, chunk size, etc.
+- **Metrics tracked:** Response time, success rate, query length, response length
+- **Runs:** Automatic versioning with each deployment
+- **UI:** Access via `/experiments` and `/experiments/runs` endpoints
+
+---
+
+## 🎯 Performance Metrics
+
+| Metric | Value |
+|--------|-------|
+| **Response Time** | 2-3 seconds average |
+| **Accuracy** | High semantic relevance |
+| **Uptime** | 99%+ (production) |
+| **Test Coverage** | 72% |
+| **Success Rate** | 97%+ |
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit changes (`git commit -m 'Add AmazingFeature'`)
+4. Push to branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+---
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
 ## 👤 Author
 
-**Sebastian Kradyel**
-- AI Engineer & ML Specialist
-- 📧 Email: paulsebastianlradyel@gmail.com
-- 💼 LinkedIn: www.linkedin.com/in/paul-sebastian-kradyel
-- 🐙 GitHub: [@sebikradyel1-svg](https://github.com/sebikradyel1-svg)
-
----
-
-## 📄 License
-
-This project is open source and available under the MIT License.
+**Sebastian Paul Kradyel**
+- GitHub: [@sebikradyel1-svg](https://github.com/sebikradyel1-svg)
+- LinkedIn: [paul-sebastian-kradyel](https://linkedin.com/in/paul-sebastian-kradyel)
+- Email: paulsebastiankradyel@gmail.com
 
 ---
 
 ## 🙏 Acknowledgments
 
-- **LangChain** - RAG framework
-- **HuggingFace** - Models and embeddings
-- **Meta/FAISS** - Vector database
-- **Google** - FLAN-T5 model
-- **Gradio** - UI framework
+- **Groq** - Lightning-fast LLM inference
+- **LangChain** - RAG orchestration framework
+- **HuggingFace** - Embeddings models
+- **Meta** - Llama 3.3 model
 
-![Commit](demo/01-github-push.png)
+---
 
-*Step 1: Developer commits code*
+## 📚 Related Projects
 
-![GitHub Actions](demo/04-deploy-triggered.png )
+- [Legal Text Generator](https://huggingface.co/spaces/KradyelSebi/legal-text-generator) - GPT-2 fine-tuning with LoRA
+- [Image Classifier](https://huggingface.co/spaces/KradyelSebi/animal-image-classifier) - VGG16 transfer learning
+- [SQL Portfolio](https://github.com/sebikradyel1-svg/SQL) - Advanced PostgreSQL analytics
 
-*Step 2: Automated tests run*
-
-![Render Deploy](demo/05-render-deploying.png)
-
-*Step 3: Production deployment*
 ---
 
 <div align="center">
+  
+**⭐ Star this repo if you find it useful!**
 
-**⭐ If you find this project useful, please give it a star! ⭐**
-
-Made with ❤️ by Sebastian Kradyel | 2026
+Made with ❤️ by Sebastian Kradyel
 
 </div>
