@@ -70,3 +70,4 @@ Thumbs.db
 # Temp files
 *.tmp
 *.temp
+adapter_model.safetensors
