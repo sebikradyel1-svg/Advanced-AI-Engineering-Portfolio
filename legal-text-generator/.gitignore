@@ -2,4 +2,8 @@ legal_llm_finetuned/
 __pycache__/
 *.bin
 *.pt
-logs/
+logs/training/phi3_legal_lora/adapter_model.safetensors
+training/phi3_legal_lora/checkpoint-*/
+training/phi3_legal_lora/logs/
+training/phi3_legal_lora/tokenizer.model
+training/phi3_legal_lora/tokenizer.json

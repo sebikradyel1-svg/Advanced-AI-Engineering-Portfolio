@@ -1,0 +1,20 @@
+{
+  "base_model": "microsoft/phi-3-mini-4k-instruct",
+  "lora_r": 32,
+  "lora_alpha": 64,
+  "target_modules": [
+    "qkv_proj",
+    "o_proj",
+    "gate_up_proj",
+    "down_proj"
+  ],
+  "epochs": 3,
+  "learning_rate": 0.0001,
+  "batch_size": 1,
+  "gradient_accumulation": 8,
+  "max_length": 768,
+  "train_samples": 57,
+  "eval_samples": 7,
+  "trained_at": "2026-03-02T16:33:54.791285",
+  "device": "NVIDIA GeForce RTX 3060 Laptop GPU"
+}

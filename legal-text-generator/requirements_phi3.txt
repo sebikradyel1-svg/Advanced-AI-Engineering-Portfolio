@@ -1,0 +1,18 @@
+# Phi-3-mini QLoRA Training Requirements
+# Install: pip install -r requirements_phi3.txt
+
+# Core
+torch>=2.1.0
+transformers>=4.40.0
+peft>=0.10.0
+accelerate>=0.28.0
+bitsandbytes>=0.43.0
+
+# Dataset
+datasets>=2.18.0
+
+# Monitoring
+tensorboard>=2.16.0
+
+# Inference UI
+gradio>=4.0.0
