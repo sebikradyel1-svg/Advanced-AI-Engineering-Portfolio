@@ -1,0 +1,42 @@
+[
+  {
+    "question": "What is the first section of the TechCorp Solutions Inc. Employee Handbook & HR Policies?",
+    "ground_truth": "Time Off & Leave Policies"
+  },
+  {
+    "question": "How many days of paid time off per year is an employee with 7 years of service entitled to?",
+    "ground_truth": "25 days per year"
+  },
+  {
+    "question": "How many paid sick days do employees receive per year?",
+    "ground_truth": "10"
+  },
+  {
+    "question": "Do I get paid for unused sick days when I leave the company?",
+    "ground_truth": "No, unused sick days are not paid out upon termination."
+  },
+  {
+    "question": "How many days of paid bereavement leave am I eligible for if my grandparent passes away?",
+    "ground_truth": "3 days"
+  },
+  {
+    "question": "How many floating holidays do employees receive per year?",
+    "ground_truth": "2"
+  },
+  {
+    "question": "What is the minimum internet speed required for remote work?",
+    "ground_truth": "50 Mbps"
+  },
+  {
+    "question": "What is the time frame to submit receipts for the home office setup stipend?",
+    "ground_truth": "within 30 days of purchase"
+  },
+  {
+    "question": "When do salary reviews typically occur?",
+    "ground_truth": "Annually in March, following the performance review cycle."
+  },
+  {
+    "question": "What is the company match for 401(k) contributions between 4-6% of my salary?",
+    "ground_truth": "50% match"
+  }
+]

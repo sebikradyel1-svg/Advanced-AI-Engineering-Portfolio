@@ -39,6 +39,7 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_community.document_loaders import TextLoader
 from langchain_core.documents import Document
+from hybrid_retriever import create_hybrid_retriever
 
 
 import logging
@@ -292,6 +293,13 @@ class HRKnowledgeRAGSystem:
             self.setup_llm()
             clear_memory()
             
+            # Create hybrid retriever (BM25 + FAISS)
+            self.hybrid_retriever = create_hybrid_retriever(
+                docs_path="company_policies.txt",
+                faiss_path=index_path,
+                top_k=self.config.top_k_retrieval,
+            )
+            logger.info("Hybrid retriever (BM25 + FAISS) initialized")
             self.is_initialized = True
             self.chat_history = []
             
@@ -347,15 +355,14 @@ Answer:"""
     def chat(self, question: str) -> Tuple[str, str]:
         """Process a question and return answer with sources."""
         start_time = time.time()
+        logger.info(f"chat() called. is_initialized={self.is_initialized}")
         if not self.is_initialized:
             return " System not initialized. Please click 'Load Sample Policies' or upload a document.", ""
         
         try:
             # Retrieve relevant documents
-            docs = self.vector_db.similarity_search(
-                question, 
-                k=self.config.top_k_retrieval
-            )
+            # Hybrid search: BM25 (keyword) + FAISS (semantic) with RRF
+            docs = self.hybrid_retriever.invoke(question)
             
             context = "\n\n".join([doc.page_content for doc in docs])
             

@@ -1,0 +1,107 @@
+{
+  "metadata": {
+    "timestamp": "20260301_205839",
+    "model": "llama-3.3-70b-versatile",
+    "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+    "top_k": 3,
+    "num_questions": 10,
+    "documents": "company_policies.txt"
+  },
+  "aggregate_scores": {
+    "context_precision": 0.5,
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.4028
+  },
+  "per_question_results": [
+    {
+      "question": "",
+      "answer": "",
+      "ground_truth": "",
+      "num_contexts": 0,
+      "context_precision": 1.0,
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.9112
+    },
+    {
+      "question": "",
+      "answer": "",
+      "ground_truth": "",
+      "num_contexts": 0,
+      "context_precision": null,
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "",
+      "answer": "",
+      "ground_truth": "",
+      "num_contexts": 0,
+      "context_precision": 1.0,
+      "faithfulness": null,
+      "answer_relevancy": 0.9727
+    },
+    {
+      "question": "",
+      "answer": "",
+      "ground_truth": "",
+      "num_contexts": 0,
+      "context_precision": null,
+      "faithfulness": null,
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "",
+      "answer": "",
+      "ground_truth": "",
+      "num_contexts": 0,
+      "context_precision": 0.0,
+      "faithfulness": null,
+      "answer_relevancy": -0.0
+    },
+    {
+      "question": "",
+      "answer": "",
+      "ground_truth": "",
+      "num_contexts": 0,
+      "context_precision": null,
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.9697
+    },
+    {
+      "question": "",
+      "answer": "",
+      "ground_truth": "",
+      "num_contexts": 0,
+      "context_precision": null,
+      "faithfulness": null,
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "",
+      "answer": "",
+      "ground_truth": "",
+      "num_contexts": 0,
+      "context_precision": 0.0,
+      "faithfulness": null,
+      "answer_relevancy": -0.0
+    },
+    {
+      "question": "",
+      "answer": "",
+      "ground_truth": "",
+      "num_contexts": 0,
+      "context_precision": null,
+      "faithfulness": null,
+      "answer_relevancy": 0.6513
+    },
+    {
+      "question": "",
+      "answer": "",
+      "ground_truth": "",
+      "num_contexts": 0,
+      "context_precision": null,
+      "faithfulness": null,
+      "answer_relevancy": 0.5234
+    }
+  ]
+}

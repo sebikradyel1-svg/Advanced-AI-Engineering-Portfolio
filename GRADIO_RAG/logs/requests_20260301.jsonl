@@ -1,0 +1,12 @@
+{"timestamp": "2026-03-01T21:28:04.619683", "query": "What is the 401k matching policy?", "response_time": 0.084, "success": true, "error_message": null, "response_length": 82, "model_used": "groq-llama"}
+{"timestamp": "2026-03-01T21:28:48.908002", "query": "How many vacation days do I have per year?", "response_time": 0.058, "success": true, "error_message": null, "response_length": 82, "model_used": "groq-llama"}
+{"timestamp": "2026-03-01T21:28:50.707256", "query": "What are the standard working hours?", "response_time": 0.057, "success": true, "error_message": null, "response_length": 82, "model_used": "groq-llama"}
+{"timestamp": "2026-03-01T21:28:52.130423", "query": "What are the standard working hours?", "response_time": 0.049, "success": true, "error_message": null, "response_length": 82, "model_used": "groq-llama"}
+{"timestamp": "2026-03-01T21:29:10.034788", "query": "What are the standard working hours?", "response_time": 0.06, "success": true, "error_message": null, "response_length": 82, "model_used": "groq-llama"}
+{"timestamp": "2026-03-01T21:30:24.331296", "query": "How many vacation days do I have per year?", "response_time": 0.053, "success": true, "error_message": null, "response_length": 82, "model_used": "groq-llama"}
+{"timestamp": "2026-03-01T21:32:09.372072", "query": "What are the standard working hours?", "response_time": 0.056, "success": true, "error_message": null, "response_length": 82, "model_used": "groq-llama"}
+{"timestamp": "2026-03-01T21:32:39.943600", "query": "What are the standard working hours?", "response_time": 0.055, "success": true, "error_message": null, "response_length": 82, "model_used": "groq-llama"}
+{"timestamp": "2026-03-01T21:38:22.531387", "query": "How many vacation days do I have per year?", "response_time": 1.04, "success": true, "error_message": null, "response_length": 81, "model_used": "groq-llama"}
+{"timestamp": "2026-03-01T21:38:27.194544", "query": "What is the 401k matching policy?", "response_time": 0.76, "success": true, "error_message": null, "response_length": 114, "model_used": "groq-llama"}
+{"timestamp": "2026-03-01T21:38:32.040790", "query": "What medical benefits are provided?", "response_time": 0.9, "success": true, "error_message": null, "response_length": 102, "model_used": "groq-llama"}
+{"timestamp": "2026-03-01T21:38:35.617118", "query": "Is remote work allowed?", "response_time": 0.826, "success": true, "error_message": null, "response_length": 138, "model_used": "groq-llama"}
