@@ -41,6 +41,7 @@ from langchain_community.document_loaders import TextLoader
 from langchain_core.documents import Document
 from hybrid_retriever import create_hybrid_retriever
 
+from conversation_memory import ConversationMemory
 
 import logging
 
@@ -177,7 +178,7 @@ class HRKnowledgeRAGSystem:
         self.llm_pipeline = None
         self.tokenizer = None
         self.model = None
-        self.chat_history: List[Tuple[str, str]] = []
+        self.memory = ConversationMemory(max_tokens=500, max_turns=10)
         self.is_initialized = False
         self.models_ready = False
         self._loading_lock = threading.Lock()
@@ -335,19 +336,14 @@ class HRKnowledgeRAGSystem:
 
     def _build_prompt(self, question: str, context: str) -> str:
         """Build the prompt for the LLM."""
-        history_text = ""
-        if self.chat_history:
-            recent_history = self.chat_history[-2:]  # Keep only 2 for memory
-            history_parts = [f"Q: {q}\nA: {a}" for q, a in recent_history]
-            history_text = "\n".join(history_parts)
-        
-        # Shorter, more efficient prompt
+        history_text = self.memory.get_context()
+
         prompt = f"""Answer based on this context only. Be concise.
 
 Context:
 {context[:1500]}
 
-{f"History:{chr(10)}{history_text}{chr(10)}" if history_text else ""}Question: {question}
+{history_text}Question: {question}
 
 Answer:"""
         return prompt
@@ -362,8 +358,9 @@ Answer:"""
         try:
             # Retrieve relevant documents
             # Hybrid search: BM25 (keyword) + FAISS (semantic) with RRF
-            docs = self.hybrid_retriever.invoke(question)
-            
+            # Enrich follow-up questions with previous context
+            enriched_question = self.memory.enrich_followup(question)
+            docs = self.hybrid_retriever.invoke(enriched_question)
             context = "\n\n".join([doc.page_content for doc in docs])
             
             # Generate answer
@@ -382,9 +379,7 @@ Answer:"""
                 answer = f"Error generating response. Please try again. ({str(e)})"
             
             # Keep limited history
-            self.chat_history.append((question, answer))
-            if len(self.chat_history) > 5:
-                self.chat_history = self.chat_history[-5:]
+            self.memory.add(question, answer)
             
             # Format sources
             sources = []
@@ -412,7 +407,7 @@ Answer:"""
 
     def clear_chat_memory(self):
         """Clear conversation memory."""
-        self.chat_history = []
+        self.memory.clear()
         clear_memory()
         logger.info("Conversation memory cleared")
         return " Conversation history cleared."
