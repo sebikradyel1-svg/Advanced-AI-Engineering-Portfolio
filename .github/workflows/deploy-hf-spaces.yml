@@ -46,7 +46,7 @@ jobs:
           api = HfApi()
           api.upload_folder(
               folder_path='app',
-              repo_id='KradyelSebi/image-classifier',
+              repo_id='KradyelSebi/animal-image-classifier',
               repo_type='space',
               token=os.environ['HF_TOKEN']
           )
