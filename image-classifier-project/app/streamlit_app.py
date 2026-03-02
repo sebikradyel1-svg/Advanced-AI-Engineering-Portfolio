@@ -5,7 +5,7 @@ Transfer Learning with VGG16 | Production-Ready Deployment
 Author: Sebastian
 Stack: TensorFlow, VGG16, Streamlit
 """
-
+from grad_cam import GradCAM
 import streamlit as st
 import numpy as np
 import tensorflow as tf
@@ -183,6 +183,7 @@ def main():
         st.header("🔧 Settings")
         show_details = st.checkbox("Show technical details", value=False)
         show_probabilities = st.checkbox("Show all probabilities", value=False)
+        show_gradcam = st.checkbox("Show Grad-CAM heatmap", value=True)
     
     # Main content - Two columns
     col1, col2 = st.columns([1, 1])
@@ -208,7 +209,7 @@ def main():
             for idx, sample_path in enumerate(sample_images):
                 with sample_cols[idx % 3]:
                     sample_img = Image.open(sample_path)
-                    st.image(sample_img, caption=sample_path.stem, use_column_width=True)
+                    st.image(sample_img, caption=sample_path.stem, use_container_width=True)
                     if st.button(f"Use this", key=f"sample_{idx}"):
                         selected_sample = sample_path
             
@@ -231,7 +232,7 @@ def main():
             if img.mode != 'RGB':
                 img = img.convert('RGB')
             
-            st.image(img, caption="Uploaded Image", use_column_width=True)
+            st.image(img, caption="Uploaded Image", use_container_width=True)
             
             # Make prediction
             results, inference_time = predict_image(model, config, img)
@@ -266,7 +267,42 @@ def main():
                     st.progress(result['confidence'], text=f"{result['class'].replace('_', ' ').title()}")
                 with col_b:
                     st.write(f"**{result['confidence']*100:.1f}%**")
-            
+            # Grad-CAM Visualization
+            if show_gradcam:
+                st.divider()
+                st.subheader("🔍 Grad-CAM: Model Attention")
+                st.caption("Red = high attention, Blue = low attention")
+
+                try:
+                    gcam = GradCAM(model)
+                    img_size_val = config.get("img_size", 224)
+                    img_resized = img.resize((img_size_val, img_size_val))
+                    img_arr = np.expand_dims(
+                        np.array(img_resized, dtype=np.float32) / 255.0, axis=0
+                    )
+                    predictions_raw = model.predict(img_arr, verbose=0)
+                    top_idx = np.argmax(predictions_raw[0])
+
+                    heatmap, overlay = gcam.generate(img_arr, class_idx=top_idx)
+
+                    gcam_cols = st.columns(3)
+                    with gcam_cols[0]:
+                        st.image(img_resized, caption="Original", use_container_width=True)
+                    with gcam_cols[1]:
+                        import matplotlib
+                        matplotlib.use("Agg")
+                        import matplotlib.pyplot as plt
+                        fig, ax = plt.subplots(figsize=(4, 4))
+                        ax.imshow(heatmap, cmap="jet")
+                        ax.axis("off")
+                        st.pyplot(fig)
+                        plt.close()
+                    with gcam_cols[2]:
+                        st.image(overlay, caption="Grad-CAM Overlay", use_container_width=True)
+
+                except Exception as e:
+                    st.warning(f"Grad-CAM unavailable: {e}")
+                    
             # Technical details
             if show_details:
                 st.divider()
