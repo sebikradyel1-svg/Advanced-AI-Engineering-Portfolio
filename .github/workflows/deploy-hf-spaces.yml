@@ -1,0 +1,53 @@
+name: Deploy to HuggingFace Spaces
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'legal-text-generator/**'
+      - 'image-classifier-project/**'
+
+jobs:
+  deploy-legal-text:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy Legal Text Generator
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          pip install huggingface_hub
+          cd legal-text-generator
+          python -c "
+          import os
+          from huggingface_hub import HfApi
+          api = HfApi()
+          api.upload_folder(
+              folder_path='app',
+              repo_id='KradyelSebi/legal-text-generator',
+              repo_type='space',
+              token=os.environ['HF_TOKEN']
+          )
+          "
+
+  deploy-image-classifier:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy Image Classifier
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          pip install huggingface_hub
+          cd image-classifier-project
+          python -c "
+          import os
+          from huggingface_hub import HfApi
+          api = HfApi()
+          api.upload_folder(
+              folder_path='app',
+              repo_id='KradyelSebi/image-classifier',
+              repo_type='space',
+              token=os.environ['HF_TOKEN']
+          )
+          "
