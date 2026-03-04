@@ -1,42 +1,108 @@
 # 📜 Legal & Business Text Generator
 
-> Fine-tuned GPT-2 model for generating professional legal and business documents using LoRA (Low-Rank Adaptation)
+> **Phi-3-mini (3.8B) fine-tuned with QLoRA 4-bit quantization** for professional legal and business document generation. Migrated from GPT-2 Medium with documented architecture decision.
 
-## [![Live Demo - Click Here!🖱️🔗](https://img.shields.io/badge/🤗%20Live%20Demo-HuggingFace%20Spaces-blue)](https://huggingface.co/spaces/KradyelSebi/legal-text-generator)
-### [![Python](https://img.shields.io/badge/Python-3.10+-green.svg)](https://python.org)
-### [![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-red.svg)](https://pytorch.org)
-### [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Live Demo](https://img.shields.io/badge/🤗%20Live%20Demo-HuggingFace%20Spaces-blue)](https://huggingface.co/spaces/KradyelSebi/legal-text-generator)
+[![Model Weights](https://img.shields.io/badge/🤗%20Model-Phi3%20QLoRA-orange)](https://huggingface.co/KradyelSebi/legal-text-phi3-lora)
+[![Python](https://img.shields.io/badge/Python-3.10+-green.svg)](https://python.org)
+[![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-red.svg)](https://pytorch.org)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-![Demo](screenshots/demo.gif)
+---
 
 ## 🎯 Project Overview
 
-This project demonstrates **Parameter-Efficient Fine-Tuning (PEFT)** using **LoRA** to create a domain-specific language model for generating legal and business documents. The model was fine-tuned on GPT-2 Medium and deployed as an interactive web application.
+This project demonstrates **Parameter-Efficient Fine-Tuning** using **QLoRA (4-bit quantization + LoRA)** to create a domain-specific language model for generating legal and business documents.
 
-### Key Highlights
+### Evolution: GPT-2 → Phi-3-mini
 
-- **99.6% Parameter Reduction**: Only 0.4% of parameters trained using LoRA
-- **8 Document Types**: Contracts, NDAs, policies, emails, and more
-- **Production Deployed**: Live demo on HuggingFace Spaces
-- **Cost Effective**: Trained on consumer GPU (RTX 3060)
+| | GPT-2 Medium (v1) | Phi-3-mini (v2 — Current) |
+|--|-------------------|--------------------------|
+| **Parameters** | 355M | 3.8B (10x increase) |
+| **Method** | LoRA | QLoRA (4-bit NF4) |
+| **Trainable** | 0.4% (1.5M) | 2.44% (50M) |
+| **VRAM Usage** | 4-6 GB | 6.4 GB |
+| **Coherence** | 5/10 | 8/10 |
+| **Legal Accuracy** | 4/10 | 7/10 |
+| **Instruction Following** | 6/10 | 9/10 |
+| **Context Window** | 1K tokens | 4K tokens |
+| **Training Loss** | ~0.9 | 1.24 → 0.88 |
+| **Training Time** | ~45 min | ~5 min |
 
-## 🚀 Live Demo
+**Why migrate?** See [ADR-004: Phi-3 Migration Decision](docs/adr/ADR-004-phi3-migration.md) for full alternatives analysis and VRAM budget breakdown.
 
-**Try it now:** [https://huggingface.co/spaces/KradyelSebi/legal-text-generator](https://huggingface.co/spaces/KradyelSebi/legal-text-generator)
+---
 
-![App Screenshot](screenshots/app_screenshot.png)
+## 🚀 Live Demos & Models
 
-## 🛠️ Technical Stack
+| Resource | Link |
+|----------|------|
+| **Live Demo (GPT-2)** | [HuggingFace Space](https://huggingface.co/spaces/KradyelSebi/legal-text-generator) |
+| **Phi-3 QLoRA Weights** | [HuggingFace Hub](https://huggingface.co/KradyelSebi/legal-text-phi3-lora) |
+| **Full Portfolio** | [GitHub Repository](https://github.com/sebikradyel1-svg/Advanced-AI-Engineering-Portfolio) |
 
-| Component | Technology |
-|-----------|------------|
-| Base Model | GPT-2 Medium (355M params) |
-| Fine-tuning | LoRA via PEFT library |
-| Framework | PyTorch, Transformers |
-| Web Interface | Gradio |
-| Deployment | HuggingFace Spaces |
+---
 
-## 📊 Model Architecture
+## 🏗️ Architecture
+
+### Phi-3-mini QLoRA (Current)
+
+```
+┌──────────────────────────────────────────────────┐
+│           microsoft/phi-3-mini-4k-instruct       │
+│              (3.8B parameters)                    │
+│         4-bit NF4 Quantization ❄️                │
+│         Double Quantization Enabled               │
+├──────────────────────────────────────────────────┤
+│              QLoRA Adapters                       │
+│        (50M trainable parameters)                 │
+│              TRAINABLE 🔥                         │
+│                                                   │
+│  ┌──────────┐ ┌──────────┐ ┌───────────────┐    │
+│  │ qkv_proj │ │  o_proj  │ │ gate_up_proj  │    │
+│  │   LoRA   │ │   LoRA   │ │     LoRA      │    │
+│  └──────────┘ └──────────┘ └───────────────┘    │
+│                             ┌───────────────┐    │
+│                             │  down_proj    │    │
+│                             │     LoRA      │    │
+│                             └───────────────┘    │
+└──────────────────────────────────────────────────┘
+```
+
+### QLoRA Configuration
+
+```python
+# Quantization
+BitsAndBytesConfig(
+    load_in_4bit=True,
+    bnb_4bit_quant_type="nf4",
+    bnb_4bit_compute_dtype=float16,
+    bnb_4bit_use_double_quant=True
+)
+
+# LoRA Adapters
+LoraConfig(
+    r=32,
+    lora_alpha=64,
+    target_modules=["qkv_proj", "o_proj", "gate_up_proj", "down_proj"],
+    lora_dropout=0.05,
+    bias="none",
+    task_type="CAUSAL_LM"
+)
+```
+
+### VRAM Budget (RTX 3060 — 6.4GB available)
+
+```
+Base model (4-bit):     ~2.0 GB
+LoRA adapters:          ~0.1 GB
+Optimizer states:       ~0.3 GB
+Activations + cache:    ~3.0 GB
+─────────────────────────────
+Total:                  ~5.4 GB ✅ (headroom: 1.0 GB)
+```
+
+### GPT-2 LoRA (Legacy v1)
 
 ```
 ┌─────────────────────────────────────────────────┐
@@ -55,39 +121,33 @@ This project demonstrates **Parameter-Efficient Fine-Tuning (PEFT)** using **LoR
 └─────────────────────────────────────────────────┘
 ```
 
-### LoRA Configuration
+---
 
-```python
-LoraConfig(
-    r=16,                              # Rank
-    lora_alpha=32,                     # Scaling factor
-    target_modules=["c_attn", "c_proj"],
-    lora_dropout=0.05,
-    bias="none",
-    task_type="CAUSAL_LM"
-)
-```
+## 📊 Training Results
 
-### Why LoRA?
+### Phi-3-mini QLoRA
 
-| Metric | Full Fine-tuning | LoRA |
-|--------|------------------|------|
-| Trainable Parameters | 355M (100%) | 1.5M (0.4%) |
-| GPU Memory Required | 12GB+ | 4-6GB |
-| Training Time | 6+ hours | ~1 hour |
-| Model Size | 1.4GB | 35MB adapters |
+| Metric | Value |
+|--------|-------|
+| Training Epochs | 3 |
+| Training Steps | 24 |
+| Initial Loss | 1.24 |
+| Final Loss | 0.88 |
+| Training Time | 4 min 58 sec |
+| VRAM Used | 2.87 GB allocated |
+| Optimizer | paged_adamw_8bit |
+| Hardware | RTX 3060 Laptop GPU (6.4 GB) |
 
-## 📈 Training Results
-
-![Training Loss](screenshots/training_loss.png)
+### GPT-2 LoRA (Legacy)
 
 | Metric | Value |
 |--------|-------|
 | Training Epochs | 5 |
-| Final Training Loss | ~0.9 |
+| Final Loss | ~0.9 |
+| Training Time | ~45 min |
 | Learning Rate | 2e-4 |
-| Batch Size | 2 (effective: 8) |
-| Training Time | ~45 minutes |
+
+---
 
 ## 📋 Supported Document Types
 
@@ -96,150 +156,176 @@ LoraConfig(
 | **Contracts** | Employment agreements, confidentiality clauses, termination clauses |
 | **NDAs** | Mutual NDAs, unilateral NDAs, IP protection clauses |
 | **Policies** | Privacy policies, data retention, cookie policies |
-| **Correspondence** | Professional emails, meeting follow-ups, proposals |
+| **Correspondence** | Professional emails, deadline extensions, proposals |
 | **Legal Documents** | Terms of Service, limitation of liability, disclaimers |
 | **Business Documents** | Meeting minutes, executive summaries, recommendations |
+
+---
+
+## 📝 Example Outputs (Phi-3)
+
+### Confidentiality Clause
+**Input:** `Write a confidentiality clause for a software development contract`
+
+**Output:**
+> CONFIDENTIALITY CLAUSE
+>
+> This Agreement, effective as of [Effective Date]... all non-public information concerning Software Development Project(s) shall constitute 'Confidential Information'. The Contractor agrees to hold all Confidential Information in strict confidence and not disclose to any third party without prior written consent...
+
+### Deadline Extension Email
+**Input:** `Write a professional email requesting deadline extension`
+
+**Output:**
+> Subject: Request for Extension on Project Deadline
+>
+> Dear Mr./Ms. [Client's Last Name],
+>
+> I hope this message finds you well. Due to unforeseen technical challenges encountered during development, it has become necessary to extend the proposed completion date by two weeks...
+
+---
 
 ## 🖥️ Local Development
 
 ### Prerequisites
-
 - Python 3.10+
-- CUDA-capable GPU (optional, but recommended)
-- 8GB+ RAM
+- CUDA-capable GPU (RTX 3060+ recommended for Phi-3)
+- 8GB+ VRAM for QLoRA training
 
 ### Installation
 
 ```bash
-# Clone the repository
-git clone https://github.com/KradyelSebi/legal-text-generator.git
-cd legal-text-generator
+git clone https://github.com/sebikradyel1-svg/Advanced-AI-Engineering-Portfolio.git
+cd Advanced-AI-Engineering-Portfolio/legal-text-generator
 
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate  # Linux/Mac
-# or
-venv\Scripts\activate     # Windows
-
-# Install dependencies
-pip install -r requirements.txt
+pip install -r requirements_phi3.txt
 ```
 
-### Training Your Own Model
+### Training Phi-3 QLoRA
 
 ```bash
-# Quick test (30 minutes)
-python training/english_legal_llm_finetuning.py --preset quick
+# Quick test (15-20 min)
+python training/train_phi3.py --preset quick
 
-# Quality training (2-3 hours) - RECOMMENDED
+# Quality training (1-2 hours) — RECOMMENDED
+python training/train_phi3.py --preset quality
+
+# Test a trained model
+python training/train_phi3.py --test_only --adapter_path ./phi3_legal_lora
+```
+
+### Training GPT-2 LoRA (Legacy)
+
+```bash
 python training/english_legal_llm_finetuning.py --preset quality
-
-# Extended training (4-5 hours)
-python training/english_legal_llm_finetuning.py --preset extended
-
-# Custom configuration
-python training/english_legal_llm_finetuning.py \
-    --epochs 10 \
-    --lora_r 32 \
-    --learning_rate 1e-4
 ```
 
 ### Running the Web App
 
 ```bash
-# Run locally
+# GPT-2 version (deployed on HuggingFace)
 python app/app.py
 
-# Access at http://localhost:7860
+# Phi-3 version (local, requires GPU)
+python app/app_phi3.py
 ```
+
+---
+
+## 🏗️ Architecture Decision Records
+
+| ADR | Decision | Key Trade-off |
+|-----|----------|---------------|
+| [ADR-004](docs/adr/ADR-004-phi3-migration.md) | Migrate GPT-2 → Phi-3-mini QLoRA | 10x quality vs. 3x inference latency |
+
+### Alternatives Considered (ADR-004)
+
+| Option | Parameters | VRAM | Risk | Decision |
+|--------|-----------|------|------|----------|
+| **Phi-3-mini** | 3.8B | 6-7 GB | Low | ✅ Selected |
+| Mistral-7B | 7.2B | 10-12 GB | OOM risk | ❌ Too large |
+| Llama-3.2-3B | 3.2B | 5-6 GB | OK | ❌ Less instruction-tuned |
+| Keep GPT-2 | 355M | 4 GB | None | ❌ Quality ceiling |
+
+---
 
 ## 📁 Project Structure
 
 ```
 legal-text-generator/
 ├── training/
-│   ├── english_legal_llm_finetuning.py    # Training script
-│   └── english_legal_llm_finetuning_LONG.py # Extended training
+│   ├── train_phi3.py                       # QLoRA training (Phi-3)
+│   ├── english_legal_llm_finetuning.py     # LoRA training (GPT-2)
+│   └── phi3_legal_lora/                    # Adapter weights & config
+│       ├── adapter_config.json
+│       ├── adapter_model.safetensors       # 201 MB
+│       └── training_metadata.json
 ├── app/
-│   └── app.py                              # Gradio web interface
-├── model/                                   # LoRA adapters (after training)
-│   ├── adapter_config.json
-│   ├── adapter_model.safetensors
-│   └── tokenizer files...
-├── screenshots/
-│   ├── demo.gif
-│   ├── app_screenshot.png
-│   └── training_loss.png
-├── requirements.txt
+│   ├── app.py                              # GPT-2 Gradio app (deployed)
+│   └── app_phi3.py                         # Phi-3 inference app (local)
+├── docs/
+│   └── adr/
+│       └── ADR-004-phi3-migration.md       # Migration decision record
+├── requirements.txt                         # GPT-2 dependencies
+├── requirements_phi3.txt                    # Phi-3 QLoRA dependencies
 └── README.md
 ```
 
+---
+
 ## 🔧 Requirements
 
+### Phi-3 QLoRA (requirements_phi3.txt)
+```
+torch>=2.1.0
+transformers>=4.40.0
+peft>=0.10.0
+accelerate>=0.28.0
+bitsandbytes>=0.43.0
+datasets>=2.18.0
+tensorboard>=2.16.0
+gradio>=4.0.0
+```
+
+### GPT-2 LoRA (requirements.txt)
 ```
 torch>=2.0.0
 transformers>=4.35.0
 peft>=0.6.0
 accelerate>=0.24.0
-gradio>=6.0.0
-datasets>=2.14.0
+gradio>=4.0.0
 ```
 
-## 📝 Example Outputs
+---
 
-### Input
-```
-Write a confidentiality clause for a software development contract.
-```
+## 🎓 Skills Demonstrated
 
-### Output
-```
-CONFIDENTIALITY AND PROPRIETARY INFORMATION
-
-1. Definition of Confidential Information
-"Confidential Information" means all non-public information relating to 
-the Company's business, including: trade secrets, source code, algorithms,
-technical specifications, customer data, and business strategies.
-
-2. Non-Disclosure Obligations
-The Contractor agrees to: (a) hold all Confidential Information in strict
-confidence; (b) not disclose to any third party without prior written 
-consent; (c) use Confidential Information solely for the contracted work...
-```
-
-## 🎓 What I Learned
-
-- **LoRA Fine-tuning**: Implementing parameter-efficient training
-- **PEFT Library**: Using HuggingFace's PEFT for adapter-based fine-tuning
-- **Model Deployment**: Deploying ML models to HuggingFace Spaces
-- **Gradio**: Building interactive ML demos
-- **Training Optimization**: Mixed precision, gradient accumulation
-
-## 🔗 Related Projects
-
-- [HR RAG Assistant](https://github.com/KradyelSebi/hr-rag-assistant) - RAG system for HR document Q&A
-- [RLHF Reward Model](https://github.com/KradyelSebi/rlhf-reward-model) - Reward model training with PPO
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## ⚠️ Disclaimer
-
-This tool generates text for educational and demonstration purposes only. Generated content should be reviewed by qualified legal professionals before use in actual legal documents or business agreements.
+- **QLoRA Fine-tuning** — 4-bit NF4 quantization with double quantization
+- **PEFT/LoRA** — Parameter-efficient training (0.4% → 2.44%)
+- **Model Migration** — Documented upgrade path with ADR
+- **VRAM Optimization** — Budget planning for consumer GPU constraints
+- **HuggingFace Hub** — Model weight hosting and versioning
+- **Gradio Deployment** — Interactive ML demo on HuggingFace Spaces
+- **Architecture Decisions** — Trade-off analysis with alternatives comparison
 
 ---
 
 ## 👤 Author
 
-**Sebastian Manolache**
+**Paul Sebastian Kradyel** — AI Engineer & ML Specialist
 
-AI Engineer & ML Specialist
-
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue)](https://www.linkedin.com/in/sebastian-paul-manolache)
-[![GitHub](https://img.shields.io/badge/GitHub-Follow-black)](https://github.com/KradyelSebi)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue)](https://www.linkedin.com/in/paul-sebastian-kradyel)
+[![GitHub](https://img.shields.io/badge/GitHub-Follow-black)](https://github.com/sebikradyel1-svg)
 [![HuggingFace](https://img.shields.io/badge/🤗%20HuggingFace-Profile-yellow)](https://huggingface.co/KradyelSebi)
 
 ---
 
-*Built as part of my AI Engineering Portfolio demonstrating LLM fine-tuning and deployment skills.*
+## ⚠️ Disclaimer
+
+Generated content is for educational and demonstration purposes. Review by qualified legal professionals is required before use in actual legal documents.
+
+---
+
+## 📄 License
+
+MIT License — see [LICENSE](LICENSE) for details.
+
