@@ -259,21 +259,24 @@ docker run -d \
 </div>
 
 ### MLOps Monitoring
-<div align="center">
-  <img src="screenshots/monitoring/04-monitoring-metrics-json.png" width="45%" />
-  <img src="screenshots/monitoring/05-monitoring-summary.png" width="45%" />
-</div>
+<div align="center">   
+    <img src="screenshots/monitoring/04-metrics.png" width="45%" />  
+    <img src="screenshots/monitoring/05-metrics_summary.png" width="45%" />
+    <img src="screenshots/monitoring/06-ssh_logs.png" width="45%" />
+ </div>
 
 ### CI/CD & Testing
-<div align="center">
-  <img src="screenshots/ci-cd/11-github-actions-success.png" width="45%" />
-  <img src="screenshots/testing/15-unit-tests-all-passed.png" width="45%" />
+<div align="center">   
+    <img src="screenshots/ci-cd/07-github-actions-success.png" width="45%" />  
+    <img src="screenshots/testing/08-workflow-jobs-detail.png" width="45%" />
+    <img src="screenshots/testing/09-docker-build-push-logs.png" width="45%" />  
 </div>
 
-### MLflow Experiment Tracking
-<div align="center">
-  <img src="screenshots/mlflow/17-mlflow-experiments.png" width="45%" />
-  <img src="screenshots/mlflow/18-mlflow-runs-metrics.png" width="45%" />
+### MLflow Experiment Tracking 
+<div align="center">   
+    <img src="screenshots/mlflow/12-mlflow-experiments.png" width="45%" />   
+    <img src="screenshots/mlflow/13-mlflow-runs-metrics.png" width="45%" /> 
+    <img src="screenshots/mlflow/14-mlflow-database-files.png" width="45%" /> 
 </div>
 
 ---
