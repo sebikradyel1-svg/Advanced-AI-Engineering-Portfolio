@@ -123,6 +123,7 @@ sequenceDiagram
 
 ### AI/ML Capabilities
 - **Hybrid Retrieval** — BM25 (keyword) + FAISS (semantic) with Reciprocal Rank Fusion
+- **Token-Aware Conversation Memory** — Automatic follow-up detection with context management within LLM token limits
 - **Lightning-Fast Inference** — Groq Llama 3.3 70B with sub-1-second response time
 - **Semantic Search** — FAISS vector database with HuggingFace all-MiniLM-L6-v2 embeddings
 - **RAG Architecture** — LangChain orchestration for context-aware responses
@@ -328,6 +329,7 @@ python evaluate_rag.py -n 10 --save-questions
 GRADIO_RAG/
 ├── app.py                  # Main FastAPI + Gradio application
 ├── hybrid_retriever.py     # BM25 + FAISS hybrid search with RRF
+├── conversation_memory.py  # Token-aware memory with follow-up detection
 ├── evaluate_rag.py         # Ragas evaluation pipeline
 ├── build_index.py          # FAISS index builder
 ├── monitoring.py           # Request tracking & Prometheus metrics
